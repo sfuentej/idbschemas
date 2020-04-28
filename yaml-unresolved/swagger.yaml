@@ -1,0 +1,698 @@
+openapi: 3.0.0
+info:
+  version: "1.0.2"
+  title: Preparation Process API
+  description: Provide necessary resources for handling the operation preparation domain
+paths:
+  '/operations/{operation-number}/steps/{step-id}':
+    get:
+      tags:
+        - Step
+      summary: Step detailed information
+      description: Return the detailed information of a specific step
+      parameters:
+        - name: step-id
+          in: path
+          description: ID of step to return
+          required: true
+          schema:
+            type: string
+        - name: operation-number
+          in: path
+          description: Operation number over which the operation will be performed
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StepDetailsSchema'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/StepDetailsSchema'
+        '400':
+          description: Bad request
+        '401':
+          description: Unathorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+  '/operations/{operation-number}/steps/{step-id}/execute-command':
+    post:
+      tags:
+        - Step
+      summary: Execute a command
+      description: >-
+        Executes a command of a particular step, using the defined business
+        rules.
+      parameters:
+        - name: step-id
+          description: Id of the current step for which the command is executed
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: operation-number
+          in: path
+          description: Operation number over which the operation will be performed
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unathorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+      requestBody:
+        $ref: '#/components/requestBodies/StepCommand'
+  '/organization/user/{criteria}':
+    get:
+      tags:
+        - User
+      summary: Search users in the application directory
+      description: >-
+        By passing a minimum of three characters in the criteria text, you can
+        get all members for organization directory that matches this parameter
+      parameters:
+        - name: criteria
+          in: path
+          description: username or full name criteria to find members on the organization directory
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizationDirectoryMemberSchema'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizationDirectoryMemberSchema'
+        '400':
+          description: Bad request
+        '401':
+          description: Unathorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+  '/operations/{operation-number}/meetings/{meeting-id}/distribution-list-members':
+    post:
+      tags:
+        - Meeting
+      summary: Add distribution list members
+      description: Add members to the distribution list of the provided meeting
+      parameters:
+        - name: meeting-id
+          in: path
+          description: meeting Id to add members to a distribution list
+          required: true
+          schema:
+            type: string
+        - name: operation-number
+          in: path
+          description: Operation number over which the operation will be performed
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad request
+        '401':
+          description: Unathorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/DistributionListMemberSchema'
+        description: The list of member(s) to add.
+        required: true
+  '/operations/{operation-number}/meetings/{meeting-id}/distribution-list-members/{member-id}':
+    delete:
+      tags:
+        - Meeting
+      summary: Delete a distribution list member
+      description: Deletes a member from the distribution list of the provided meeting
+      parameters:
+        - name: meeting-id
+          in: path
+          description: meeting Id to search member to delete
+          required: true
+          schema:
+            type: string
+        - name: operation-number
+          in: path
+          description: Operation number over which the operation will be performed
+          required: true
+          schema:
+            type: string
+        - name: member-id
+          in: path
+          description: member Id to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad request
+        '401':
+          description: Unathorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+  '/operations/{operation-number}/preparation/start-process':
+    post:
+      tags:
+        - Preparation
+      summary: Start a new process
+      description: Start a new operation preparation process for a specific operation. This copies the following entities related to the phase - step, meeting and distribution list; based on the template defined in Life Cycle.
+      parameters:
+        - name: operation-number
+          in: path
+          description: Operation number over which the operation will be performed
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad request
+        '401':
+          description: Unathorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                lifeCycleTemplateCode:
+                  type: string
+                  description: The code of the selected Life Cycle template for the given operation
+                  example: "COMPLETE.SG"
+  '/operations/{operation-number}/preparation/{process-id}':
+    delete:
+      tags:
+        - Preparation
+      summary: Delete instantiated process
+      description: Delete an instance of a process for a specific operation. This inactivates the instantiated process.
+      parameters:
+        - name: process-id
+          in: path
+          description: Process instance id to delete
+          required: true
+          schema:
+            type: string
+        - name: operation-number
+          in: path
+          description: Operation number over which the operation will be performed
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad request
+        '401':
+          description: Unathorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+servers:
+  - url: 'https://virtserver.swaggerhub.com/BI9/distribution-list/1.0.0'
+  - url: 'http://virtserver.swaggerhub.com/BI9/distribution-list/1.0.0'
+components:
+  requestBodies:
+    StepCommand:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StepCommandSchema'
+      description: The user to create.
+      required: true
+  schemas:
+    StepSchema:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: guid
+          example: 413864a7-f8a1-4914-a952-0d2e9ae5b4b4
+        code:
+          type: string
+          example: PP.UPLOAD.PACKAGE
+          description: Unique identification that allows the system to identify the step
+        name:
+          type: string
+          example: Step name test
+          description: Name of the step
+        order:
+          type: integer
+          example: 1
+          description: Order of the step
+        type:
+          type: string
+          description: Step type
+          example: Automatic
+          enum:
+            - Automatic
+            - Manual
+        status:
+          type: string
+          description: Current status of the step
+          example: InProgress
+          enum:
+            - NotStarted
+            - InProgress
+            - Completed
+        startDate:
+          type: string
+          format: date-time
+          example: '2020-03-30T17:32'
+          description: When the step began
+        endDate:
+          type: string
+          format: date-time
+          example: '2020-03-31T17:32'
+          description: When the step ended
+      description: >-
+        A group of commands, actions and information required to advance in the
+        current phase
+    DocumentsPackageSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          format: guid
+          example: d007214f-42e7-4678-9f51-d32bf4846bad
+        type:
+          type: string
+          example: PP
+          enum:
+            - PP
+            - POD
+            - DLP
+            - LP
+        documents:
+          type: array
+          example:
+            - id: 0a63b117-188e-4d07-87a9-702625a134ea
+              name: MOCKED_NAME_1
+              language: ES
+              extension: pdf
+              confidentiality: Public
+              type: MainDocument
+              ezshareId: EZSHARE-1049655098-22
+              blobId: 44c1a257-acb4-474e-a040-8b95a62caa78
+              createdBy: lperezga
+              created: 01/01/2020
+              version: ERM
+              keyDocument: true
+            - id: 28c5dea3-22ba-498f-a8e7-4ec2f48294d3
+              name: MOCKED_NAME_2
+              language: ES
+              extension: pdf
+              confidentiality: Confidential
+              type: Minutes
+              ezshareId: EZSHARE-1049655098-22
+              blobId: 5206d608-8e7d-4c08-9d65-114b92660a15
+              createdBy: lperezga
+              created: 01/01/2020
+              version: ERM
+              keyDocument: false
+          items:
+            $ref: '#/components/schemas/DocumentSchema'
+      description: >-
+        Predefined group of documents that need to be reviewed and approved in a
+        specific phase
+    DocumentSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          format: guid
+          example: 44c1a257-acb4-474e-a040-8b95a62caa78
+        blobId:
+          type: string
+          format: guid
+        ezshareId:
+          type: string
+          example: 44c1a257-acb4-474e-a040-8b95a62caa78
+          description: Unique code to identify the document in EzShare.
+        name:
+          type: string
+          example: MOCKED_NAME
+          description: Name of the document when stored in EzShare.
+        language:
+          type: string
+          example: ES
+          description: Language of the document
+        extension:
+          type: string
+          example: pdf
+          description: Extension of the document
+        confidentiality:
+          type: string
+          description: policy for limitation of access to the documents.
+          example: Public
+          enum:
+            - Public
+            - Confidential
+        type:
+          type: string
+          description: type of document
+          example: MainDocument
+          enum:
+            - MainDocument
+            - Minutes
+            - DraftLegalResolution
+            - LegalResolution
+        createdBy:
+          type: string
+          example: lperezga
+          description: user who created the document.
+        created:
+          type: string
+          format: date
+          example: 01/01/2020
+          description: date when the document was created.
+        keyDocument:
+          type: boolean
+          example: true
+        version:
+          type: string
+          example: ERM
+          description: >-
+            content of a document after a new upload in ezshare. This allows to
+            track changes when its content is updated.
+    MeetingSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          format: guid
+          example: b79953c1-2782-4c74-aa79-2c7ba5da6bba
+        name:
+          type: string
+          enum:
+            - ERM
+            - QRR
+            - OPC
+            - Board
+          description: Designation of the meeting
+          example: ERM
+        distributionList:
+          $ref: '#/components/schemas/DistributionListSchema'
+        circulationPeriod:
+          $ref: '#/components/schemas/CirculationPeriodSchema'
+        faceToFaceMeeting:
+          $ref: '#/components/schemas/FaceToFaceMeetingSchema'
+    PhaseHistorySchema:
+      type: object
+      properties:
+        id:
+          type: string
+          format: guid
+          example: b79953c1-2782-4c74-aa79-2c7ba5da6bba
+        phaseId:
+          type: string
+          format: guid
+          example: b79953c1-2782-4c74-aa79-2c7ba5da6bba
+        stepId:
+          type: string
+          format: guid
+          example: b79953c1-2782-4c74-aa79-2c7ba5da6bba
+        user:
+          type: string
+          example: Test user
+          description: User who enter the registry
+        reason:
+          type: string
+          example: Test reason
+          description: Reason of the registry
+        description:
+          type: string
+          example: Test description
+          description: Description of the registry
+        date:
+          type: string
+          format: date-time
+          example: '2020-03-30T17:32'
+          description: When the phase history was entered
+    DistributionListSchema:
+      type: object
+      properties:
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/DistributionListMemberSchema'
+      description: List of distribution list members that receive a meeting distribution
+    CirculationPeriodSchema:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date
+          example: 01/01/2020
+          description: Marks the initial date of the circulation period
+        endDate:
+          type: string
+          format: date
+          example: 02/02/2020
+          description: Marks the date and time when the circulation period finishes
+        duration:
+          type: integer
+          example: 30
+          description: Amount of days established for the circulation period
+      description: >-
+        Defined by a window of time for participants to comment after the
+        package is distributed
+    FaceToFaceMeetingSchema:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          example: '2020-03-31T17:32'
+          description: Date and time when the face-to-face meeting takes place
+        room:
+          type: string
+          example: ROOM-1
+          description: Room where the face-to-face meeting is held
+      description: >-
+        Only when required, it is the gathering of the meeting members in a
+        specific date in a physical room to review the documents package, and
+        provide face-to-face comments, if necessary
+    DistributionListMemberSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          format: guid
+          example: a100bd73-ee5a-450e-9536-5c46404cbf15
+        memberId:
+          type: string
+          example: member mock
+          description: 'AD username, email address or role within the bank’s domain'
+        accountType:
+          type: string
+          description: >-
+            Determines if the account is linked to a person or to an
+            area/department mailbox
+          example: Area
+          enum:
+            - Area
+            - Department
+        addedBy:
+          type: string
+          example: added by mock
+          description: Who added the member
+        addedDate:
+          type: string
+          format: date-time
+          example: '2020-03-31T17:32'
+          description: When the member was added
+        type:
+          type: string
+          description: Determines if the registry was entered by the system or logged user
+          example: Standard
+          enum:
+            - Standard
+            - AddedByUser
+      description: Distribution list member
+    OrganizationDirectoryMemberSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 0a63b117-188e-4d07-87a9-702625a134ea
+        userName:
+          type: string
+          example: johnd@iadb.org
+        fullName:
+          example: 'Doe, John'
+          type: string
+        organizationUnit:
+          type: string
+          example: VPC/VPC
+        accountType:
+          type: string
+          enum:
+            - Person
+            - Mailbox
+            - Area
+    ErrorSchema:
+      type: object
+      properties:
+        title:
+          type: string
+          example: the provided parameter is invalid
+          description: >-
+            A short, human-readable title for the general error type; the title
+            should not change for given types
+        detail:
+          type: string
+          example: The parameter stepId did not return a valid entity
+          description: A human-readable description of the specific error
+        status:
+          type: integer
+          example: 500
+          description: >-
+            Conveying the HTTP status code; this is so that all information is
+            in one place, but also to correct for changes in the status code due
+            to the usage of proxy servers. The status member, if present, is
+            only advisory as generators MUST use the same status code in the
+            actual HTTP response to assure that generic HTTP software that does
+            not understand this format still behaves correctly
+        developerMessage:
+          type: string
+          example: The entity for the provided id was not found in the database
+          description: >-
+            A message that can be used by a developer for solving the specific
+            issue
+      description: Error contract
+    StepDetailsSchema:
+      allOf:
+        - $ref: '#/components/schemas/StepSchema'
+        - type: object
+          properties:
+            documentsPackage:
+              $ref: '#/components/schemas/DocumentsPackageSchema'
+            meetings:
+              type: array
+              items:
+                $ref: '#/components/schemas/MeetingSchema'
+            phaseHistory:
+              type: array
+              items:
+                $ref: '#/components/schemas/PhaseHistorySchema'
+    StepCommandSchema:
+      allOf:
+        - $ref: '#/components/schemas/StepDetailsSchema'
+        - type: object
+          properties:
+            command:
+              type: string
+              example: ReturnToProjectTeam
+            reason:
+              type: string
+              example: Returned because the document was invalid.
