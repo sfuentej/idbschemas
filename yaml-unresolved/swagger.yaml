@@ -281,7 +281,7 @@ paths:
       tags:
         - Preparation
       summary: Delete instantiated process
-      description: Delete an instance of a process for a specific operation. This inactivates the instantiated process.
+      description: Delete an instance of a process for a specific operation. It changes the state to deleted the instantiated process.
       parameters:
         - name: process-id
           in: path
