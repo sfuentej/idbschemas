@@ -618,10 +618,6 @@ components:
           enum:
             - Standard
             - AddedByUser
-        organizationalUnit:
-          type: string
-          description: Department and sector that the member belongs to
-          example: VPC/VPC
       description: Distribution list member
     OrganizationDirectoryMemberSchema:
       type: object
