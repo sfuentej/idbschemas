@@ -1,0 +1,295 @@
+{
+    "processConfiguration": {
+        "templateVariables": [
+            { "step-code": "Short code used to identify a step" },
+            { "step-name": "User-friendly name of a step" }
+        ],
+        "steps": {
+            "PP.UPLOAD.PACKAGE": {
+                "name": "Upload Package",
+                "translationKey": "pp.upload.package",
+                "commands": [{
+                    "SubmitToDivisionChief": {
+                        "permission": "SubmitToDivisionChiefPermission",
+                        "postCommandActions": [{
+                            "MoveToNexStep": {},
+							"SendNotification": {
+								"NotificationCode": "???"
+							},
+                            "UpdateMilestone": {
+                                "Milestone": "PPDC",
+                                "MilestoneStatus": "Completed"
+                            },
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Submit Package to Division Chief"
+                            }
+                        }]
+                    }
+                }
+			"PP.SUBMIT.VPCMANAGER": {
+                "name": "Submit to VPC Manager",
+                "translationKey": "pp.submit.vpcmanager",
+                "commands": [{
+                    "SubmitToManager": {
+                        "permission": "SubmitToVPCManager",
+                        "postCommandActions": [{
+                            "MoveToNexStep": {},
+							"SendNotification": {
+								"NotificationCode": "???"
+							},
+                            "UpdateMilestone": {
+                                "Milestone": "PERM",
+                                "MilestoneStatus": "Completed"
+                            },
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Submit Package to VPC Manager"
+                            }
+                        }]
+                    }
+                    "ReturnToProjectTeam": {
+                        "permission": "ReturnToProjectTeam",
+                        "postCommandActions": [{
+                            "ReturnToPreviousStep": {},
+							"SendNotification": {
+								"NotificationCode": "???"
+							},
+                            "UpdateMilestone": {
+                                "Milestone": "PPDC",
+                                "MilestoneStatus": "Not Started"
+                            },
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Return Package to Project Team"
+                            }
+                        }]
+                    }                
+				}]
+            }
+			"PP.DISTRIBUTE.ERM": {
+                "name": "Distribute and Start Meeting",
+                "translationKey": "pp.distribute.start.meeting",
+                "commands": [{
+                    "SubmitToManager": {
+                        "permission": "DistributeERM",
+                        "postCommandActions": [{
+                            "MoveToNexStep": {},
+							"SendNotification": {
+								"NotificationCode": "???"
+							},
+                            "UpdateMilestone": {
+                                "Milestone": "PPD",
+                                "MilestoneStatus": "Completed"
+                            },
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Distribute and Start Meeting"
+                            }
+                        }]
+                    }
+                    "ReturnToProjectTeam": {
+                        "permission": "ReturnToProjectTeam",
+                        "postCommandActions": [{
+                            "ReturnToPreviousStep": {},
+							"SendNotification": {
+								"NotificationCode": "???"
+							},
+                            "UpdateMilestone": {
+                                "Milestone": "PERM",
+                                "MilestoneStatus": "Not Started"
+                            },
+                            "UpdateMilestone": {
+                                "Milestone": "PPDC",
+                                "MilestoneStatus": "Not Started"
+                            },
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Return Package to Project Team"
+                            }
+                        }]
+                    }                
+                }]
+            }
+			"PP.ERM.CIRCULATION.PERIOD": {
+                "name": "ERM Circulation Period",
+                "translationKey": "pp.erm.circulation.period",
+                "commands": [{
+                    "ReduceExtendCirculationPeriod": {
+                        "permission": "ReduceExtendCirculationPeriodPermission",
+                        "postCommandActions": [{
+                            "MoveToNexStep": {},
+							"SendMeetingInvitationUpdate": {
+								"NotificationCode": "???"
+							},
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Extend/Reduce Circulation Period"
+                            }
+                        }]
+                    }
+                    "ScheduleF2FMeeting": {
+                        "permission": "ScheduleF2FMeetingPermission",
+                        "postCommandActions": [{
+							"SendMeetingInvitation": {
+								"NotificationCode": "???"
+							},
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Schedule Face-to-Face Meeting"
+                            }
+                        }]
+                    }
+                    "RescheduleF2FMeeting": {
+                        "permission": "RescheduleF2FMeetingPermission",
+                        "postCommandActions": [{
+							"SendMeetingInvitationUpdate": {
+								"NotificationCode": "???"
+							},
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Reschedule Face-to-Face Meeting"
+                            }
+                        }]
+                    }
+                    "CancelF2FMeeting": {
+                        "permission": "CancelF2FMeetingPermission",
+                        "postCommandActions": [{
+							"SendMeetingCancellation": {
+								"NotificationCode": "???"
+							},
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Cancel Face-to-Face Meeting"
+                            }
+                        }]
+                    }
+                    "WithdrawPackage": {
+                        "permission": "WithdrawPackagePermission",
+                        "postCommandActions": [{
+							"SendNotification": {
+								"NotificationCode": "???"
+							},
+							"SendMeetingCancellation": {
+								"NotificationCode": "???"
+							},
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Withdraw and Return Package"
+                            }
+                        }]
+                    }
+                }]
+            }
+			"PP.AWAITING.F2F.MEETING": {
+                "name": "Awaiting Face-to-Face Meeting",
+                "translationKey": "pp.awaiting.f2f.meeting",
+                "commands": [{
+                    "RescheduleF2FMeeting": {
+                        "permission": "RescheduleF2FMeetingPermission",
+                        "postCommandActions": [{
+							"SendMeetingInvitationUpdate": {
+								"NotificationCode": "???"
+							},
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Reschedule Face-to-face Meeting"
+                            }
+                        }]
+                    }
+                    "WithdrawPackage": {
+                        "permission": "WithdrawPackagePermission",
+                        "postCommandActions": [{
+							"SendNotification": {
+								"NotificationCode": "???"
+							},
+                            "UpdateMilestone": {
+                                "Milestone": "???",
+                                "MilestoneStatus": "Not Started"
+                            },
+							"SendMeetingCancellation": {
+								"NotificationCode": "???"
+							},
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Withdraw and Return Package"
+                            }
+                        }]
+                    }
+                }]
+            }
+			"PP.ERM.F2F.MEETING": {
+                "name": "ERM Face-to-Face Meeting",
+                "translationKey": "pp.erm.f2f.meeting",
+                "commands": [{
+                    "WithdrawPackage": {
+                        "permission": "WithdrawPackagePermission",
+                        "postCommandActions": [{
+							"SendNotification": {
+								"NotificationCode": "???"
+							},
+							"SendMeetingCancellation": {
+								"NotificationCode": "???"
+							},
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Withdraw and Return PACKAGE"
+                            }
+                        }]
+                    }
+                }]
+            }
+			"PP.COMPLETE.ANSWERS": {
+                "name": "Prepare Minutes - Complete Answers",
+                "translationKey": "pp.complete.answers",
+                "commands": [{
+                    "SubmitAnswersVPCManager": {
+                        "permission": "SubmitAnswersVPCManagerPermission",
+                        "postCommandActions": [{
+                            "CloseStep": {},
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Submit Answers to VPC Manager"
+                            }
+                        }]
+                    }
+                    "RecallSubmittedAnswers": {
+                        "permission": "RecallSubmittedAnswersPermission",
+                        "postCommandActions": [{
+                            "ReopenStep": {},
+                            "UpdateMilestone": {
+                                "Milestone": "PPUP",
+                                "MilestoneStatus": "Completed"
+                            },
+							"SendNotification": {
+								"NotificationCode": "???"
+							},
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Recall Submitted Answers"
+                            }
+                        }]
+                    }
+                }]
+            }
+			"PP.UPLOAD.MAIN.MINUTES": {
+                "name": "Prepare Minutes - Upload Main Minutes",
+                "translationKey": "pp.upload.main.minutes",
+                "commands": [{
+                    "ConfirmMinutes": {
+                        "permission": "ConfirmMainMinutesPermission",
+                        "postCommandActions": [{
+                            "CloseStep": {},
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Confirm Main Minutes Document upload"
+                            }
+                        }]
+                    }
+                    "WithdrawPackage": {
+                        "permission": "WithdrawPackagePermission",
+                        "postCommandActions": [{
+							"SendNotification": {
+								"NotificationCode": "???"
+							},
+                            "UpdateMilestone": {
+                                "Milestone": "???",
+                                "MilestoneStatus": "Not Started"
+                            },
+							"SendMeetingCancellation": {
+								"NotificationCode": "???"
+							},
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Withdraw and Return Package"
+                            }
+                        }]
+                    }
+                }]
+            }
+		}	
+    }
+}
