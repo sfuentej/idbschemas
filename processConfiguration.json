@@ -13,9 +13,9 @@
                         "permission": "SubmitToDivisionChiefPermission",
                         "postCommandActions": [{
                             "MoveToNexStep": {},
-							"SendNotification": {
-								"NotificationCode": "???"
-							},
+			"SendNotification": {
+				"NotificationCode": "???"
+			},
                             "UpdateMilestone": {
                                 "Milestone": "PPDC",
                                 "MilestoneStatus": "Completed"
