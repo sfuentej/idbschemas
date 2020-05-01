@@ -6,16 +6,16 @@
         ],
         "steps": {
             "PP.UPLOAD.PACKAGE": {
-                "name": "Upload Package",
+                "name": "Upload Package and Submit to Division Chief",
                 "translationKey": "pp.upload.package",
                 "commands": [{
                     "SubmitToDivisionChief": {
                         "permission": "SubmitToDivisionChiefPermission",
                         "postCommandActions": [{
-                            "MoveToNexStep": {},
-			"SendNotification": {
-				"NotificationCode": "???"
-			},
+                            "MoveToNextStep": {},
+							"SendNotification": {
+								"NotificationCode": "OP-PP-001"
+							},
                             "UpdateMilestone": {
                                 "Milestone": "PPDC",
                                 "MilestoneStatus": "Completed"
@@ -31,12 +31,16 @@
                 "translationKey": "pp.submit.vpcmanager",
                 "commands": [{
                     "SubmitToManager": {
-                        "permission": "SubmitToVPCManager",
+                        "permission": "SubmitToManagerPermission",
                         "postCommandActions": [{
-                            "MoveToNexStep": {},
+                            "MoveToNextStep": {},
 							"SendNotification": {
-								"NotificationCode": "???"
+								"NotificationCode": "OP-PP-002"
 							},
+							"SendNotification": {
+								"NotificationCode": "OP-PP-003"
+							},
+
                             "UpdateMilestone": {
                                 "Milestone": "PERM",
                                 "MilestoneStatus": "Completed"
@@ -47,11 +51,11 @@
                         }]
                     }
                     "ReturnToProjectTeam": {
-                        "permission": "ReturnToProjectTeam",
+                        "permission": "ReturnToProjectTeamPermission",
                         "postCommandActions": [{
                             "ReturnToPreviousStep": {},
 							"SendNotification": {
-								"NotificationCode": "???"
+								"NotificationCode": "OP-PP-004"
 							},
                             "UpdateMilestone": {
                                 "Milestone": "PPDC",
@@ -65,31 +69,30 @@
 				}]
             }
 			"PP.DISTRIBUTE.ERM": {
-                "name": "Distribute and Start Meeting",
-                "translationKey": "pp.distribute.start.meeting",
+                "name": "Distribute and Start ERM Meeting",
+                "translationKey": "pp.distribute.start.erm.meeting",
                 "commands": [{
                     "SubmitToManager": {
-                        "permission": "DistributeERM",
+                        "permission": "DistributeStartERMPermission",
                         "postCommandActions": [{
-                            "MoveToNexStep": {},
-							"SendNotification": {
-								"NotificationCode": "???"
-							},
+                            "MoveToNextStep": {},
                             "UpdateMilestone": {
                                 "Milestone": "PPD",
                                 "MilestoneStatus": "Completed"
                             },
                             "AddPhaseHistory": {
-                                "DescriptionTemplate": "Distribute and Start Meeting"
+                                "DescriptionTemplate": "Distribute and Start ERM Meeting"
                             }
                         }]
                     }
                     "ReturnToProjectTeam": {
-                        "permission": "ReturnToProjectTeam",
+                        "permission": "ReturnToProjectTeamPermission",
                         "postCommandActions": [{
-                            "ReturnToPreviousStep": {},
+                            "ReturnToSpecificStep": {
+								"StepCode": "PP.UPLOAD.PACKAGE"
+							},
 							"SendNotification": {
-								"NotificationCode": "???"
+								"NotificationCode": "OP-PP-005"
 							},
                             "UpdateMilestone": {
                                 "Milestone": "PERM",
@@ -113,7 +116,7 @@
                     "ReduceExtendCirculationPeriod": {
                         "permission": "ReduceExtendCirculationPeriodPermission",
                         "postCommandActions": [{
-                            "MoveToNexStep": {},
+                            "MoveToNextStep": {},
 							"SendMeetingInvitationUpdate": {
 								"NotificationCode": "???"
 							},
