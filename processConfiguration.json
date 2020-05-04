@@ -45,6 +45,7 @@
                                 "Milestone": "PERM",
                                 "MilestoneStatus": "Completed"
                             },
+							"SetStandardCirculationPeriod": {}
                             "AddPhaseHistory": {
                                 "DescriptionTemplate": "Submit Package to VPC Manager"
                             }
@@ -106,8 +107,30 @@
                                 "DescriptionTemplate": "Return Package to Project Team"
                             }
                         }]
-                    }                
-                }]
+                    }
+                    "Day4EOD": {
+                        "permission": "???",
+                        "postCommandActions": [{
+                            "ReturnToSpecificStep": {
+								"StepCode": "PP.UPLOAD.PACKAGE"
+							},
+							"SendNotification": {
+								"NotificationCode": "OP-PP-006"
+							},
+                            "UpdateMilestone": {
+                                "Milestone": "PERM",
+                                "MilestoneStatus": "Not Started"
+                            },
+                            "UpdateMilestone": {
+                                "Milestone": "PPDC",
+                                "MilestoneStatus": "Not Started"
+                            },
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "Package automatically returned to Project Team"
+                            }
+                        }]
+                    }
+				}]
             }
 			"PP.ERM.CIRCULATION.PERIOD": {
                 "name": "ERM Circulation Period",
@@ -162,7 +185,10 @@
                         "permission": "WithdrawPackagePermission",
                         "postCommandActions": [{
 							"SendNotification": {
-								"NotificationCode": "???"
+								"NotificationCode": "OP-PP-007"
+							},
+							"SendNotification": {
+								"NotificationCode": "OP-PP-008"
 							},
 							"SendMeetingCancellation": {
 								"NotificationCode": "???"
@@ -172,7 +198,16 @@
                             }
                         }]
                     }
-                }]
+                    "EndCirculationPeriod": {
+                        "permission": "???",
+                        "postCommandActions": [{
+                            "MoveToNextStep": {},
+                            "AddPhaseHistory": {
+                                "DescriptionTemplate": "End of ERM Circulation Period"
+                            }
+                        }]
+                    }
+				}]
             }
 			"PP.AWAITING.F2F.MEETING": {
                 "name": "Awaiting Face-to-Face Meeting",
@@ -193,12 +228,11 @@
                         "permission": "WithdrawPackagePermission",
                         "postCommandActions": [{
 							"SendNotification": {
-								"NotificationCode": "???"
+								"NotificationCode": "OP-PP-007"
 							},
-                            "UpdateMilestone": {
-                                "Milestone": "???",
-                                "MilestoneStatus": "Not Started"
-                            },
+							"SendNotification": {
+								"NotificationCode": "OP-PP-008"
+							},
 							"SendMeetingCancellation": {
 								"NotificationCode": "???"
 							},
@@ -207,7 +241,16 @@
                             }
                         }]
                     }
-                }]
+                    "StartFaceToFaceMeeting": {
+                        "permission": "???",
+                        "postCommandActions": [{
+                            "MoveToNextStep": {},
+							"AddPhaseHistory": {
+								"DescriptionTemplate": "Start of ERM Face-to-Face Meeting"
+                            }
+                        }]
+                    }
+				}]
             }
 			"PP.ERM.F2F.MEETING": {
                 "name": "ERM Face-to-Face Meeting",
@@ -217,17 +260,29 @@
                         "permission": "WithdrawPackagePermission",
                         "postCommandActions": [{
 							"SendNotification": {
-								"NotificationCode": "???"
+								"NotificationCode": "OP-PP-007"
+							},
+							"SendNotification": {
+								"NotificationCode": "OP-PP-008"
 							},
 							"SendMeetingCancellation": {
 								"NotificationCode": "???"
 							},
                             "AddPhaseHistory": {
-                                "DescriptionTemplate": "Withdraw and Return PACKAGE"
+                                "DescriptionTemplate": "Withdraw and Return Package"
                             }
                         }]
                     }
-                }]
+                    "EndFaceToFaceMeeting": {
+                        "permission": "???",
+                        "postCommandActions": [{
+                            "MoveToNextStep": {},
+							"AddPhaseHistory": {
+								"DescriptionTemplate": "End of ERM Face-to-Face Meeting"
+                            }
+                        }]
+                    }
+				}]
             }
 			"PP.COMPLETE.ANSWERS": {
                 "name": "Prepare Minutes - Complete Answers",
@@ -236,7 +291,10 @@
                     "SubmitAnswersVPCManager": {
                         "permission": "SubmitAnswersVPCManagerPermission",
                         "postCommandActions": [{
-                            "CloseStep": {},
+							"SendNotification": {
+								"NotificationCode": "???"
+							},
+						"CloseStep": {},
                             "AddPhaseHistory": {
                                 "DescriptionTemplate": "Submit Answers to VPC Manager"
                             }
@@ -245,7 +303,10 @@
                     "RecallSubmittedAnswers": {
                         "permission": "RecallSubmittedAnswersPermission",
                         "postCommandActions": [{
-                            "ReopenStep": {},
+							"SendNotification": {
+								"NotificationCode": "???"
+							},
+							"OpenStep": {},
                             "UpdateMilestone": {
                                 "Milestone": "PPUP",
                                 "MilestoneStatus": "Completed"
@@ -277,14 +338,10 @@
                         "permission": "WithdrawPackagePermission",
                         "postCommandActions": [{
 							"SendNotification": {
-								"NotificationCode": "???"
+								"NotificationCode": "OP-PP-007"
 							},
-                            "UpdateMilestone": {
-                                "Milestone": "???",
-                                "MilestoneStatus": "Not Started"
-                            },
-							"SendMeetingCancellation": {
-								"NotificationCode": "???"
+							"SendNotification": {
+								"NotificationCode": "OP-PP-008"
 							},
                             "AddPhaseHistory": {
                                 "DescriptionTemplate": "Withdraw and Return Package"
