@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: "1.0.2"
+  version: "1.0.4"
   title: Preparation Process API
   description: Provide necessary resources for handling the operation preparation domain
 paths:
@@ -30,9 +30,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StepDetailsSchema'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/StepDetailsSchema'
         '400':
           description: Bad request
         '401':
@@ -45,9 +42,6 @@ paths:
           description: Internal server error
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorSchema'
-            application/xml:
               schema:
                 $ref: '#/components/schemas/ErrorSchema'
   '/operations/{operation-number}/steps/{step-id}/execute-command':
@@ -88,9 +82,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorSchema'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ErrorSchema'
       requestBody:
         $ref: '#/components/requestBodies/StepCommand'
   '/organization/user/{criteria}':
@@ -104,7 +95,9 @@ paths:
       parameters:
         - name: criteria
           in: path
-          description: username or full name criteria to find members on the organization directory
+          description: >-
+            username or full name criteria to find members on the organization
+            directory
           required: true
           schema:
             type: string
@@ -113,11 +106,6 @@ paths:
           description: OK
           content:
             application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/OrganizationDirectoryMemberSchema'
-            application/xml:
               schema:
                 type: array
                 items:
@@ -134,9 +122,6 @@ paths:
           description: Internal server error
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorSchema'
-            application/xml:
               schema:
                 $ref: '#/components/schemas/ErrorSchema'
   '/operations/{operation-number}/meetings/{meeting-id}/distribution-list-members':
@@ -173,9 +158,6 @@ paths:
           description: Internal server error
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorSchema'
-            application/xml:
               schema:
                 $ref: '#/components/schemas/ErrorSchema'
       requestBody:
@@ -229,15 +211,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorSchema'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ErrorSchema'
   '/operations/{operation-number}/preparation/start-process':
     post:
       tags:
         - Preparation
       summary: Start a new process
-      description: Start a new operation preparation process for a specific operation. This copies the following entities related to the phase - step, meeting and distribution list; based on the template defined in Life Cycle.
+      description: >-
+        Start a new operation preparation process for a specific operation. This
+        copies the following entities related to the phase - step, meeting and
+        distribution list; based on the template defined in Life Cycle.
       parameters:
         - name: operation-number
           in: path
@@ -262,9 +244,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorSchema'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ErrorSchema'
       requestBody:
         required: true
         content:
@@ -274,14 +253,18 @@ paths:
               properties:
                 lifeCycleTemplateCode:
                   type: string
-                  description: The code of the selected Life Cycle template for the given operation
-                  example: "COMPLETE.SG"
+                  description: >-
+                    The code of the selected Life Cycle template for the given
+                    operation
+                  example: COMPLETE.SG
   '/operations/{operation-number}/preparation/{process-id}':
     delete:
       tags:
         - Preparation
       summary: Delete instantiated process
-      description: Delete an instance of a process for a specific operation. It changes the state to deleted the instantiated process.
+      description: >-
+        Delete an instance of a process for a specific operation. It changes the
+        state to deleted the instantiated process.
       parameters:
         - name: process-id
           in: path
@@ -312,7 +295,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorSchema'
-            application/xml:
+  '/operations/{operation-number}/preparation/timeline':
+    get:
+      tags:
+        - Preparation
+      summary: Get process instance timeline
+      description: Get all the phases and processes of a given operation
+      parameters:
+        - name: operation-number
+          in: path
+          description: Operation number over which the operation will be performed
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  templateCode:
+                    type: string
+                    example: Complete
+                  phases:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PhaseSchema'
+        '400':
+          description: Bad request
+        '401':
+          description: Unathorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
               schema:
                 $ref: '#/components/schemas/ErrorSchema'
 servers:
@@ -332,6 +354,11 @@ components:
       type: object
       required:
         - id
+        - code
+        - name
+        - order
+        - type
+        - status
       properties:
         id:
           type: string
@@ -374,6 +401,10 @@ components:
           format: date-time
           example: '2020-03-31T17:32'
           description: When the step ended
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/StepSchema'
       description: >-
         A group of commands, actions and information required to advance in the
         current phase
@@ -618,6 +649,10 @@ components:
           enum:
             - Standard
             - AddedByUser
+        organizationalUnit:
+          type: string
+          description: Department and sector that the member belongs to
+          example: VPC/VPC
       description: Distribution list member
     OrganizationDirectoryMemberSchema:
       type: object
@@ -696,3 +731,48 @@ components:
             reason:
               type: string
               example: Returned because the document was invalid.
+    PhaseSchema:
+      allOf:
+        - $ref: '#/components/schemas/PhaseSchema'
+        - type: object
+      type: object
+      required:
+        - id
+        - code
+        - name
+        - order
+        - status
+      properties:
+        id:
+          type: string
+          format: guid
+          example: 413864a7-f8a1-4914-a952-0d2e9ae5b4b4
+        code:
+          type: string
+          example: PP
+          description: >-
+            Unique identification that allows the system to distinguish the
+            phase
+        name:
+          type: string
+          example: Project Profile
+          description: Name of the phase
+        order:
+          type: integer
+          example: 1
+          description: Order of the phase
+        status:
+          type: string
+          description: Current status of the step
+          example: Active
+          enum:
+            - Active
+            - Completed
+            - Withdrawn
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/StepSchema'
+      description: >-
+        A group of steps required to approve an official preparation document
+        package.
