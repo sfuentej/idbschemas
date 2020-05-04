@@ -318,11 +318,13 @@ paths:
                 properties:
                   templateCode:
                     type: string
-                    example: Complete
+                    example: COMPLETE
+                    description: Code of the template instantiated for the process of the given operation. This property can be empty, in case there is still no process created.
                   phases:
                     type: array
                     items:
                       $ref: '#/components/schemas/PhaseSchema'
+                    description: List of phases for the process. This list will have no records in case the process is still not created.
         '400':
           description: Bad request
         '401':
