@@ -560,8 +560,7 @@ components:
           type: string
           example: ERM
           description: >-
-            content of a document after a new upload in ezshare. This allows to
-            track changes when its content is updated.
+            content of a document after a new upload in ezshare. This allows to track changes when its content is updated.
     MeetingSchema:
       type: object
       properties:
