@@ -500,8 +500,7 @@ components:
           items:
             $ref: '#/components/schemas/DocumentSchema'
       description: >-
-        Predefined group of documents that need to be reviewed and approved in a
-        specific phase
+        Predefined group of documents that need to be reviewed and approved in a specific phase
     DocumentSchema:
       type: object
       properties:
