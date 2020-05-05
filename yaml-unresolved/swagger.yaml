@@ -736,7 +736,28 @@ components:
           description: Current status of the comment (“Saved as Draft” or “Submitted”).
           example: SaveAsDraft
         answer:
-          $ref: '#/components/schemas/answer'
+          $ref: '#/components/schemas/Answer'
+    Answer:
+      type: object
+      properties:
+        text:
+          type: string
+          description: response given to one of the comments.
+          example: Answer given t oa comment
+        answerType:
+          type: string
+          enum:
+            - TeamAnswer
+            - EVPResponse
+          description: Type of the answer.
+          example: TeamAnswer
+        answerStatus:
+          type: string
+          enum:
+            - SaveAsDraft
+            - Submitted
+          description: Current status of the answer (“Saved as Draft” or “Submitted”).
+          example: SaveAsDraft
     OrganizationDirectoryMemberSchema:
       type: object
       properties:
