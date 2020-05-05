@@ -254,7 +254,7 @@ paths:
               type: array
               items:
                 $ref: '#/components/schemas/CommentsSchema'
-        description: The list of member(s) to add.
+        description: The list of comment(s) to add.
         required: true              
   '/operations/{operation-number}/preparation/start-process':
     post:
