@@ -453,8 +453,7 @@ components:
           items:
             $ref: '#/components/schemas/StepSchema'
       description: >-
-        A group of commands, actions and information required to advance in the
-        current phase
+        A group of commands, actions and information required to advance in the current phase
     DocumentsPackageSchema:
       type: object
       properties:
