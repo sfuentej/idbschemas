@@ -728,6 +728,15 @@ components:
           type: string
           description: action performed in the system by a user representing a different user or mailbox. 
           example: On behal Of User Two
+        commentStatus:
+          type: string
+          enum:
+            - SaveAsDraft
+            - Submitted
+          description: Current status of the comment (“Saved as Draft” or “Submitted”).
+          example: SaveAsDraft
+        answer:
+          $ref: '#/components/schemas/answer'
     OrganizationDirectoryMemberSchema:
       type: object
       properties:
