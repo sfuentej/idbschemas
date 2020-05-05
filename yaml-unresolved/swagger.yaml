@@ -716,6 +716,18 @@ components:
             - NonObjectionComment
           description: Type of the comment, related to the period of the meeting it is created.
           example: MeetingComment
+        title:
+          type: string
+          description: Short description of the topic or section of the document that the comment relates to.
+          example: New Meeting Title
+        text: 
+          type: string
+          description: Content of the comment.
+          example: Content example comment
+        onBehalfOf:
+          type: string
+          description: action performed in the system by a user representing a different user or mailbox. 
+          example: On behal Of User Two
     OrganizationDirectoryMemberSchema:
       type: object
       properties:
