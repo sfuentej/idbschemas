@@ -708,6 +708,14 @@ components:
           type: string
           format: guid
           example: 413864a7-f8a1-4914-a952-0d2e9ae5b4b4  
+        commentType:
+          type: string
+          enum:
+            - MeetingComment
+            - FaceToFaceComment
+            - NonObjectionComment
+          description: Type of the comment, related to the period of the meeting it is created.
+          example: MeetingComment
     OrganizationDirectoryMemberSchema:
       type: object
       properties:
