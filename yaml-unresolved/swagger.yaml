@@ -255,6 +255,51 @@ paths:
               items:
                 $ref: '#/components/schemas/CommentsSchema'
         description: The list of comment(s) to add.
+        required: true
+  '/operations/{operation-number}/meetings/{meeting-id}/comments':
+    get:
+      tags:
+        - Meeting
+      summary: Add comments
+      description: Add comments to the provided meeting
+      parameters:
+        - name: meeting-id
+          in: path
+          description: meeting Id to add comments
+          required: true
+          schema:
+            type: string
+        - name: operation-number
+          in: path
+          description: Operation number over which the operation will be performed
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad request
+        '401':
+          description: Unathorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CommentsSchema'
+        description: The list of comment(s) to add.
         required: true              
   '/operations/{operation-number}/preparation/start-process':
     post:
@@ -453,7 +498,8 @@ components:
           items:
             $ref: '#/components/schemas/StepSchema'
       description: >-
-        A group of commands, actions and information required to advance in the current phase
+        A group of commands, actions and information required to advance in the
+        current phase
     DocumentsPackageSchema:
       type: object
       properties:
@@ -499,7 +545,8 @@ components:
           items:
             $ref: '#/components/schemas/DocumentSchema'
       description: >-
-        Predefined group of documents that need to be reviewed and approved in a specific phase
+        Predefined group of documents that need to be reviewed and approved in a
+        specific phase
     DocumentSchema:
       type: object
       properties:
@@ -558,7 +605,8 @@ components:
           type: string
           example: ERM
           description: >-
-            content of a document after a new upload in ezshare. This allows to track changes when its content is updated.
+            content of a document after a new upload in ezshare. This allows to
+            track changes when its content is updated.
     MeetingSchema:
       type: object
       properties:
