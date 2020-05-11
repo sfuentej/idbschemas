@@ -1,71 +1,72 @@
 openapi: 3.0.0
 info:
   version: "1.0.5"
-  title: Notification Contracts
-  description: These are the available schemas for sending notifications
+  title: User 
+  description: These are operations that can be used to interact with users available in the service bus
 paths:
-  '/':
-    get:
+  '/users.notification':
+    post:
       responses:
         '200':
           description: OK
+      requestBody:
+        $ref: '#/components/requestBodies/SendUserNotification'
+  
 components:
-  schemas:
+  requestBodies:
     SendUserNotification:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SendUserNotificationMessage'
+      description: The user to create.
+      required: true
+  schemas:
+    SendUserNotificationMessage:
       type: object
       required:
         - id
-        - code
-        - name
-        - order
-        - type
-        - status
+        - template
+        - to
+        - subject
+        - channel
       properties:
         id:
           type: string
           format: guid
+          description: Unique identifier for the notification processing
           example: 413864a7-f8a1-4914-a952-0d2e9ae5b4b4
-        code:
+        template:
           type: string
-          example: PP.UPLOAD.PACKAGE
-          description: Unique identification that allows the system to identify the step
-        name:
-          type: string
-          example: Step name test
-          description: Name of the step
-        order:
-          type: integer
-          example: 1
-          description: Order of the step
-        type:
-          type: string
-          description: Step type
-          example: Automatic
-          enum:
-            - Automatic
-            - Manual
-        status:
-          type: string
-          description: Current status of the step
-          example: InProgress
-          enum:
-            - NotStarted
-            - InProgress
-            - Completed
-        startDate:
-          type: string
-          format: date-time
-          example: '2020-03-30T17:32'
-          description: When the step began
-        endDate:
-          type: string
-          format: date-time
-          example: '2020-03-31T17:32'
-          description: When the step ended
-        steps:
+          example: pp-usernotification-stepcompleted
+          description: Code of the template to be used when sending the notification
+        to:
           type: array
+          description: List of users that will receive the notification
           items:
-            $ref: '#/components/schemas/SendUserNotification'
-      description: >-
-        A group of commands, actions and information required to advance in the
-        current phase
+            type: object
+            properties:
+              email:
+                type: string
+                description: email address of the account that will receive the notification
+                example: johndoe@iadb.org
+        variables:
+          type: array
+          description: List of variables to replace in the notification template. These variables may be in either the subject or the body
+          items:
+            type: object
+            properties:
+              key:
+                description: Unique identifier of the value to be replaced. For instance, in the template a variable can be specified like  [operation-number]. In this case you should provide operation-numer only as key
+                example: operation-number
+              value:
+                description: Replace value for the variable
+                example: UR-L1050
+                
+        channel:
+          type: string
+          description: Notification channel through which the notification is sent
+          example: email
+          enum:
+            - email
+            - application
