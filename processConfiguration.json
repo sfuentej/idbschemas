@@ -1,355 +1,249 @@
 {
-    "processConfiguration": {
-        "templateVariables": [
-            { "step-code": "Short code used to identify a step" },
-            { "step-name": "User-friendly name of a step" }
-        ],
-        "steps": {
-            "PP.UPLOAD.PACKAGE": {
-                "name": "Upload Package and Submit to Division Chief",
-                "translationKey": "pp.upload.package",
-                "commands": [{
-                    "SubmitToDivisionChief": {
-                        "permission": "SubmitToDivisionChiefPermission",
-                        "postCommandActions": [{
-                            "MoveToNextStep": {},
-							"SendNotification": {
-								"NotificationCode": "OP-PP-001"
-							},
-                            "UpdateMilestone": {
-                                "Milestone": "PPDC",
-                                "MilestoneStatus": "Completed"
-                            },
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Submit Package to Division Chief"
-                            }
-                        }]
-                    }
-                }
-			"PP.SUBMIT.VPCMANAGER": {
-                "name": "Submit to VPC Manager",
-                "translationKey": "pp.submit.vpcmanager",
-                "commands": [{
-                    "SubmitToManager": {
-                        "permission": "SubmitToManagerPermission",
-                        "postCommandActions": [{
-                            "MoveToNextStep": {},
-							"SendNotification": {
-								"NotificationCode": "OP-PP-002"
-							},
-							"SendNotification": {
-								"NotificationCode": "OP-PP-003"
-							},
-
-                            "UpdateMilestone": {
-                                "Milestone": "PERM",
-                                "MilestoneStatus": "Completed"
-                            },
-							"SetStandardCirculationPeriod": {}
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Submit Package to VPC Manager"
-                            }
-                        }]
-                    }
-                    "ReturnToProjectTeam": {
-                        "permission": "ReturnToProjectTeamPermission",
-                        "postCommandActions": [{
-                            "ReturnToPreviousStep": {},
-							"SendNotification": {
-								"NotificationCode": "OP-PP-004"
-							},
-                            "UpdateMilestone": {
-                                "Milestone": "PPDC",
-                                "MilestoneStatus": "Not Started"
-                            },
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Return Package to Project Team"
-                            }
-                        }]
-                    }                
-				}]
-            }
-			"PP.DISTRIBUTE.ERM": {
-                "name": "Distribute and Start ERM Meeting",
-                "translationKey": "pp.distribute.start.erm.meeting",
-                "commands": [{
-                    "SubmitToManager": {
-                        "permission": "DistributeStartERMPermission",
-                        "postCommandActions": [{
-                            "MoveToNextStep": {},
-                            "UpdateMilestone": {
-                                "Milestone": "PPD",
-                                "MilestoneStatus": "Completed"
-                            },
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Distribute and Start ERM Meeting"
-                            }
-                        }]
-                    }
-                    "ReturnToProjectTeam": {
-                        "permission": "ReturnToProjectTeamPermission",
-                        "postCommandActions": [{
-                            "ReturnToSpecificStep": {
-								"StepCode": "PP.UPLOAD.PACKAGE"
-							},
-							"SendNotification": {
-								"NotificationCode": "OP-PP-005"
-							},
-                            "UpdateMilestone": {
-                                "Milestone": "PERM",
-                                "MilestoneStatus": "Not Started"
-                            },
-                            "UpdateMilestone": {
-                                "Milestone": "PPDC",
-                                "MilestoneStatus": "Not Started"
-                            },
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Return Package to Project Team"
-                            }
-                        }]
-                    }
-                    "Day4EOD": {
-                        "permission": "???",
-                        "postCommandActions": [{
-                            "ReturnToSpecificStep": {
-								"StepCode": "PP.UPLOAD.PACKAGE"
-							},
-							"SendNotification": {
-								"NotificationCode": "OP-PP-006"
-							},
-                            "UpdateMilestone": {
-                                "Milestone": "PERM",
-                                "MilestoneStatus": "Not Started"
-                            },
-                            "UpdateMilestone": {
-                                "Milestone": "PPDC",
-                                "MilestoneStatus": "Not Started"
-                            },
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Package automatically returned to Project Team"
-                            }
-                        }]
-                    }
-				}]
-            }
-			"PP.ERM.CIRCULATION.PERIOD": {
-                "name": "ERM Circulation Period",
-                "translationKey": "pp.erm.circulation.period",
-                "commands": [{
-                    "ReduceExtendCirculationPeriod": {
-                        "permission": "ReduceExtendCirculationPeriodPermission",
-                        "postCommandActions": [{
-                            "MoveToNextStep": {},
-							"SendMeetingInvitationUpdate": {
-								"NotificationCode": "???"
-							},
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Extend/Reduce Circulation Period"
-                            }
-                        }]
-                    }
-                    "ScheduleF2FMeeting": {
-                        "permission": "ScheduleF2FMeetingPermission",
-                        "postCommandActions": [{
-							"SendMeetingInvitation": {
-								"NotificationCode": "???"
-							},
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Schedule Face-to-Face Meeting"
-                            }
-                        }]
-                    }
-                    "RescheduleF2FMeeting": {
-                        "permission": "RescheduleF2FMeetingPermission",
-                        "postCommandActions": [{
-							"SendMeetingInvitationUpdate": {
-								"NotificationCode": "???"
-							},
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Reschedule Face-to-Face Meeting"
-                            }
-                        }]
-                    }
-                    "CancelF2FMeeting": {
-                        "permission": "CancelF2FMeetingPermission",
-                        "postCommandActions": [{
-							"SendMeetingCancellation": {
-								"NotificationCode": "???"
-							},
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Cancel Face-to-Face Meeting"
-                            }
-                        }]
-                    }
-                    "WithdrawPackage": {
-                        "permission": "WithdrawPackagePermission",
-                        "postCommandActions": [{
-							"SendNotification": {
-								"NotificationCode": "OP-PP-007"
-							},
-							"SendNotification": {
-								"NotificationCode": "OP-PP-008"
-							},
-							"SendMeetingCancellation": {
-								"NotificationCode": "???"
-							},
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Withdraw and Return Package"
-                            }
-                        }]
-                    }
-                    "EndCirculationPeriod": {
-                        "permission": "???",
-                        "postCommandActions": [{
-                            "MoveToNextStep": {},
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "End of ERM Circulation Period"
-                            }
-                        }]
-                    }
-				}]
-            }
-			"PP.AWAITING.F2F.MEETING": {
-                "name": "Awaiting Face-to-Face Meeting",
-                "translationKey": "pp.awaiting.f2f.meeting",
-                "commands": [{
-                    "RescheduleF2FMeeting": {
-                        "permission": "RescheduleF2FMeetingPermission",
-                        "postCommandActions": [{
-							"SendMeetingInvitationUpdate": {
-								"NotificationCode": "???"
-							},
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Reschedule Face-to-face Meeting"
-                            }
-                        }]
-                    }
-                    "WithdrawPackage": {
-                        "permission": "WithdrawPackagePermission",
-                        "postCommandActions": [{
-							"SendNotification": {
-								"NotificationCode": "OP-PP-007"
-							},
-							"SendNotification": {
-								"NotificationCode": "OP-PP-008"
-							},
-							"SendMeetingCancellation": {
-								"NotificationCode": "???"
-							},
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Withdraw and Return Package"
-                            }
-                        }]
-                    }
-                    "StartFaceToFaceMeeting": {
-                        "permission": "???",
-                        "postCommandActions": [{
-                            "MoveToNextStep": {},
-							"AddPhaseHistory": {
-								"DescriptionTemplate": "Start of ERM Face-to-Face Meeting"
-                            }
-                        }]
-                    }
-				}]
-            }
-			"PP.ERM.F2F.MEETING": {
-                "name": "ERM Face-to-Face Meeting",
-                "translationKey": "pp.erm.f2f.meeting",
-                "commands": [{
-                    "WithdrawPackage": {
-                        "permission": "WithdrawPackagePermission",
-                        "postCommandActions": [{
-							"SendNotification": {
-								"NotificationCode": "OP-PP-007"
-							},
-							"SendNotification": {
-								"NotificationCode": "OP-PP-008"
-							},
-							"SendMeetingCancellation": {
-								"NotificationCode": "???"
-							},
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Withdraw and Return Package"
-                            }
-                        }]
-                    }
-                    "EndFaceToFaceMeeting": {
-                        "permission": "???",
-                        "postCommandActions": [{
-                            "MoveToNextStep": {},
-							"AddPhaseHistory": {
-								"DescriptionTemplate": "End of ERM Face-to-Face Meeting"
-                            }
-                        }]
-                    }
-				}]
-            }
-			"PP.COMPLETE.ANSWERS": {
-                "name": "Prepare Minutes - Complete Answers",
-                "translationKey": "pp.complete.answers",
-                "commands": [{
-                    "SubmitAnswersVPCManager": {
-                        "permission": "SubmitAnswersVPCManagerPermission",
-                        "postCommandActions": [{
-							"SendNotification": {
-								"NotificationCode": "???"
-							},
-						"CloseStep": {},
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Submit Answers to VPC Manager"
-                            }
-                        }]
-                    }
-                    "RecallSubmittedAnswers": {
-                        "permission": "RecallSubmittedAnswersPermission",
-                        "postCommandActions": [{
-							"SendNotification": {
-								"NotificationCode": "???"
-							},
-							"OpenStep": {},
-                            "UpdateMilestone": {
-                                "Milestone": "PPUP",
-                                "MilestoneStatus": "Completed"
-                            },
-							"SendNotification": {
-								"NotificationCode": "???"
-							},
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Recall Submitted Answers"
-                            }
-                        }]
-                    }
-                }]
-            }
-			"PP.UPLOAD.MAIN.MINUTES": {
-                "name": "Prepare Minutes - Upload Main Minutes",
-                "translationKey": "pp.upload.main.minutes",
-                "commands": [{
-                    "ConfirmMinutes": {
-                        "permission": "ConfirmMainMinutesPermission",
-                        "postCommandActions": [{
-                            "CloseStep": {},
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Confirm Main Minutes Document upload"
-                            }
-                        }]
-                    }
-                    "WithdrawPackage": {
-                        "permission": "WithdrawPackagePermission",
-                        "postCommandActions": [{
-							"SendNotification": {
-								"NotificationCode": "OP-PP-007"
-							},
-							"SendNotification": {
-								"NotificationCode": "OP-PP-008"
-							},
-                            "AddPhaseHistory": {
-                                "DescriptionTemplate": "Withdraw and Return Package"
-                            }
-                        }]
-                    }
-                }]
-            }
-		}	
+    "lifeCycleTemplates":[{
+        "lifeCycleTemplateCode":"complete",
+        "processTemplateCode": "COMPLETE_PROCESS"
+     }],
+    "templateVariables": [
+        { "code":"step-code", "description":"Short code used to identify a step" },
+        { "code":"step-name", "description":"User-friendly name of a step" }
+    ],
+    "globalSettings":[
+        {"key":"circulation-period-qrr", "value":5}
+    ],
+    "stepCommands":{
+        "SubmitToDivisionChief": {
+            "type":"User",
+            "permission": "SubmitToDivisionChiefPermission",
+            "eventHandlers":[
+                {
+                    "handler": "MoveToNextStep"
+                },
+                {
+                    "handler":"SendNotification",
+                    "notificationCode": "op.pp.001",
+                    "destinationRoles":["Division Chief"],
+                },
+                {
+                    "handler":"UpdateMilestone",
+                    "milestoneCode": "PPDC",
+                    "milestoneStatus": "Completed"
+                },
+                {
+                    "handler":"AddPhaseHistory",
+                    "descriptionTemplate": "op.phasehistory.SubmitToDivisionChief"
+                },
+            ]
+        }
+        "SubmitToVPCManager": {
+            "type":"User",
+            "permission": "SubmitToVPCManagerPermission",
+            "eventHandlers":[
+                {
+                    "handler": "MoveToNextStep"
+                },
+                {
+                    "handler":"SendNotification",
+                    "notificationCode": "op.pp.002",
+                    "destinationRoles":["VPC Manager"],
+                },
+                {
+                    "handler":"SendNotification",
+                    "notificationCode": "op.pp.003",
+                    "destinationRoles":["Team Leader","Alternate Team Leader","Operation Ananlyst", "Project Assistant"],
+                },
+                {
+                    "handler":"UpdateMilestone",
+                    "milestoneCode": "PERM",
+                    "milestoneStatus": "Completed"
+                },
+                {
+                    "handler":"AddPhaseHistory",
+                    "descriptionTemplate": "op.phasehistory.SubmitToVPCManager"
+                },
+            ]
+        }
+        "ReturnToTeamDivisionChief": {
+            "type":"User",
+            "permission": "ReturToTeamDivisionChiefPermission",
+            "eventHandlers":[
+                {
+                    "handler": "ReturnToPreviousStep"
+                },
+                {
+                    "handler":"SendNotification",
+                    "notificationCode": "op.pp.004",
+                    "destinationRoles":["Team Leader","Alternate Team Leader","Operation Analyst","Project Assistant"],
+                },
+                {
+                    "handler":"UpdateMilestone",
+                    "milestoneCode": "PPDC",
+                    "milestoneStatus": "Not Started"
+                },
+                {
+                    "handler":"AddPhaseHistory",
+                    "descriptionTemplate": "op.phasehistory.RetunToTeamDivisionChief"
+                },
+            ]
+        }
+        "ReturnToTeamVPCManager": {
+            "type":"User",
+            "permission": "ReturToTeamVPCManagerPermission",
+            "eventHandlers":[
+                {
+                    "handler": "ReturnToSpecificStep"
+					"stepCode": "PP.UPLOAD.PACKAGE"
+                },
+                {
+                    "handler":"SendNotification",
+                    "notificationCode": "op.pp.005",
+                    "destinationRoles":["Team Leader","Alternate Team Leader","Operation Analyst","Project Assistant"],
+                },
+                {
+                    "handler":"UpdateMilestone",
+                    "milestoneCode": "PERM",
+                    "milestoneStatus": "Not Started"
+                },
+                {
+                    "handler":"UpdateMilestone",
+                    "milestoneCode": "PPDC",
+                    "milestoneStatus": "Not Started"
+                },
+                {
+                    "handler":"AddPhaseHistory",
+                    "descriptionTemplate": "op.phasehistory.RetunToTeamVPCManager"
+                },
+            ]
+        }
+        "DistributeAndStartERMMeeting": {
+            "type":"User",
+            "permission": "DistributeStartERMMeetingPermission",
+            "eventHandlers":[
+                {
+                    "handler": "MoveToNextStep"
+                },
+                {
+                    "handler":"UpdateMilestone",
+                    "milestoneCode": "PPD",
+                    "milestoneStatus": "Completed"
+                },
+                {
+                    "handler":"AddPhaseHistory",
+                    "descriptionTemplate": "op.phasehistory.DistributeStartERMMeeting"
+                },
+            ]
+        }
+        "AutomaticReturnToTeam": {
+            "type":"System",
+            "permission": "AutomaticReturnTeamPermission",
+            "eventHandlers":[
+                {
+                    "handler": "ReturnToSpecificStep"
+					"stepCode": "PP.UPLOAD.PACKAGE"
+                },
+                {
+                    "handler":"SendNotification",
+                    "notificationCode": "op.pp.006",
+                    "destinationRoles":["Team Leader","Alternate Team Leader","Operation Analyst","Project Assistant"],
+                },
+                {
+                    "handler":"SendNotification",
+                    "notificationCode": "op.pp.007",
+                    "destinationRoles":["VPC Manager"],
+                },
+                {
+                    "handler":"UpdateMilestone",
+                    "milestoneCode": "PERM",
+                    "milestoneStatus": "Not Started"
+                },
+                {
+                    "handler":"UpdateMilestone",
+                    "milestoneCode": "PPDC",
+                    "milestoneStatus": "Not Started"
+                },
+                {
+                    "handler":"AddPhaseHistory",
+                    "descriptionTemplate": "op.phasehistory.AutomaticReturnToTeam"
+                },
+            ]
+        }
+        "ReduceExtendCirculationPeriod": {
+            "type":"User",
+            "permission": "ReduceExtendCirculationPeriodPermission",
+            "eventHandlers":[
+                {
+                    "handler":"AddPhaseHistory",
+                    "descriptionTemplate": "op.phasehistory.ReduceExtendCirculationPeriod"
+                },
+            ]
+        }
+        "ScheduleF2FMeeting": {
+            "type":"User",
+            "permission": "ScheduleF2FMeetingPermission",
+            "eventHandlers":[
+                {
+                    "handler":"AddPhaseHistory",
+                    "descriptionTemplate": "op.phasehistory.ScheduleF2FMeeting"
+                },
+            ]
+        }
+        "RescheduleF2FMeeting": {
+            "type":"User",
+            "permission": "RescheduleF2FMeetingPermission",
+            "eventHandlers":[
+                {
+                    "handler":"AddPhaseHistory",
+                    "descriptionTemplate": "op.phasehistory.RescheduleF2FMeeting"
+                },
+            ]
+        }
+        "CancelF2FMeeting": {
+            "type":"User",
+            "permission": "CancelF2FMeetingPermission",
+            "eventHandlers":[
+                {
+                    "handler":"AddPhaseHistory",
+                    "descriptionTemplate": "op.phasehistory.CancelF2FMeeting"
+                },
+            ]
+        }
+        "EndCirculationPeriod": {
+            "type":"System",
+            "permission": "EndCirculationPeriodPermission",
+            "eventHandlers":[
+                 {
+                    "handler": "MoveToNextStep"
+                },
+               {
+                    "handler":"AddPhaseHistory",
+                    "descriptionTemplate": "op.phasehistory.EndCirculationPeriod"
+                },
+            ]
+        }
+        "StartF2FMeeting": {
+            "type":"System",
+            "permission": "StartF2FMeetingPermission",
+            "eventHandlers":[
+                 {
+                    "handler": "MoveToNextStep"
+                },
+               {
+                    "handler":"AddPhaseHistory",
+                    "descriptionTemplate": "op.phasehistory.StartF2FMeeting"
+                },
+            ]
+        }
+        "EndF2FMeeting": {
+            "type":"System",
+            "permission": "StartF2FMeetingPermission",
+            "eventHandlers":[
+                 {
+                    "handler": "MoveToNextStep"
+                },
+               {
+                    "handler":"AddPhaseHistory",
+                    "descriptionTemplate": "op.phasehistory.EndF2FMeeting"
+                },
+            ]
+        }
     }
 }
