@@ -1,6 +1,6 @@
 # IDB APIs
 
-## User notifications
+## user/notifications
 
 This API allows applications to send notifications to users using either the email channel or the application ajax notification
 
