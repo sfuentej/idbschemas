@@ -21,7 +21,7 @@
                 {
                     "handler":"SendNotification",
                     "notificationCode": "op.pp.001",
-                    "destinationRoles":["Division Chief"],
+                    "destinationRoles":["Division Chief"]
                 },
                 {
                     "handler":"UpdateMilestone",
@@ -31,9 +31,9 @@
                 {
                     "handler":"AddPhaseHistory",
                     "descriptionTemplate": "op.phasehistory.SubmitToDivisionChief"
-                },
+                }
             ]
-        }
+        },
         "SubmitToVPCManager": {
             "type":"User",
             "permission": "SubmitToVPCManagerPermission",
@@ -59,9 +59,9 @@
                 {
                     "handler":"AddPhaseHistory",
                     "descriptionTemplate": "op.phasehistory.SubmitToVPCManager"
-                },
+                }
             ]
-        }
+        },
         "ReturnToTeamDivisionChief": {
             "type":"User",
             "permission": "ReturToTeamDivisionChiefPermission",
@@ -82,9 +82,9 @@
                 {
                     "handler":"AddPhaseHistory",
                     "descriptionTemplate": "op.phasehistory.RetunToTeamDivisionChief"
-                },
+                }
             ]
-        }
+        },
         "ReturnToTeamVPCManager": {
             "type":"User",
             "permission": "ReturToTeamVPCManagerPermission",
@@ -111,9 +111,9 @@
                 {
                     "handler":"AddPhaseHistory",
                     "descriptionTemplate": "op.phasehistory.RetunToTeamVPCManager"
-                },
+                }
             ]
-        }
+        },
         "DistributeAndStartERMMeeting": {
             "type":"User",
             "permission": "DistributeStartERMMeetingPermission",
@@ -129,15 +129,15 @@
                 {
                     "handler":"AddPhaseHistory",
                     "descriptionTemplate": "op.phasehistory.DistributeStartERMMeeting"
-                },
+                }
             ]
-        }
+        },
         "AutomaticReturnToTeam": {
             "type":"System",
             "permission": "AutomaticReturnTeamPermission",
             "eventHandlers":[
                 {
-                    "handler": "ReturnToSpecificStep"
+                    "handler": "ReturnToSpecificStep",
 					"stepCode": "PP.UPLOAD.PACKAGE"
                 },
                 {
@@ -163,9 +163,9 @@
                 {
                     "handler":"AddPhaseHistory",
                     "descriptionTemplate": "op.phasehistory.AutomaticReturnToTeam"
-                },
+                }
             ]
-        }
+        },
         "ReduceExtendCirculationPeriod": {
             "type":"User",
             "permission": "ReduceExtendCirculationPeriodPermission",
@@ -173,9 +173,9 @@
                 {
                     "handler":"AddPhaseHistory",
                     "descriptionTemplate": "op.phasehistory.ReduceExtendCirculationPeriod"
-                },
+                }
             ]
-        }
+        },
         "ScheduleF2FMeeting": {
             "type":"User",
             "permission": "ScheduleF2FMeetingPermission",
@@ -183,9 +183,9 @@
                 {
                     "handler":"AddPhaseHistory",
                     "descriptionTemplate": "op.phasehistory.ScheduleF2FMeeting"
-                },
+                }
             ]
-        }
+        },
         "RescheduleF2FMeeting": {
             "type":"User",
             "permission": "RescheduleF2FMeetingPermission",
@@ -193,9 +193,9 @@
                 {
                     "handler":"AddPhaseHistory",
                     "descriptionTemplate": "op.phasehistory.RescheduleF2FMeeting"
-                },
+                }
             ]
-        }
+        },
         "CancelF2FMeeting": {
             "type":"User",
             "permission": "CancelF2FMeetingPermission",
@@ -203,9 +203,9 @@
                 {
                     "handler":"AddPhaseHistory",
                     "descriptionTemplate": "op.phasehistory.CancelF2FMeeting"
-                },
+                }
             ]
-        }
+        },
         "EndCirculationPeriod": {
             "type":"System",
             "permission": "EndCirculationPeriodPermission",
@@ -216,9 +216,9 @@
                {
                     "handler":"AddPhaseHistory",
                     "descriptionTemplate": "op.phasehistory.EndCirculationPeriod"
-                },
+                }
             ]
-        }
+        },
         "StartF2FMeeting": {
             "type":"System",
             "permission": "StartF2FMeetingPermission",
@@ -229,9 +229,9 @@
                {
                     "handler":"AddPhaseHistory",
                     "descriptionTemplate": "op.phasehistory.StartF2FMeeting"
-                },
+                }
             ]
-        }
+        },
         "EndF2FMeeting": {
             "type":"System",
             "permission": "StartF2FMeetingPermission",
@@ -242,7 +242,7 @@
                {
                     "handler":"AddPhaseHistory",
                     "descriptionTemplate": "op.phasehistory.EndF2FMeeting"
-                },
+                }
             ]
         }
     }
