@@ -1,0 +1,71 @@
+openapi: 3.0.0
+info:
+  version: "1.0.5"
+  title: Notification Contracts
+  description: These are the available schemas for sending notifications
+paths:
+  '/':
+    get:
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    SendUserNotification:
+      type: object
+      required:
+        - id
+        - code
+        - name
+        - order
+        - type
+        - status
+      properties:
+        id:
+          type: string
+          format: guid
+          example: 413864a7-f8a1-4914-a952-0d2e9ae5b4b4
+        code:
+          type: string
+          example: PP.UPLOAD.PACKAGE
+          description: Unique identification that allows the system to identify the step
+        name:
+          type: string
+          example: Step name test
+          description: Name of the step
+        order:
+          type: integer
+          example: 1
+          description: Order of the step
+        type:
+          type: string
+          description: Step type
+          example: Automatic
+          enum:
+            - Automatic
+            - Manual
+        status:
+          type: string
+          description: Current status of the step
+          example: InProgress
+          enum:
+            - NotStarted
+            - InProgress
+            - Completed
+        startDate:
+          type: string
+          format: date-time
+          example: '2020-03-30T17:32'
+          description: When the step began
+        endDate:
+          type: string
+          format: date-time
+          example: '2020-03-31T17:32'
+          description: When the step ended
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/SendUserNotification'
+      description: >-
+        A group of commands, actions and information required to advance in the
+        current phase
