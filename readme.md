@@ -1,4 +1,4 @@
-# Available schemas
+# IDB APIs
 
 ## User notifications
 
