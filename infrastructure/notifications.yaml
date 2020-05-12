@@ -1,10 +1,10 @@
 openapi: 3.0.0
 info:
-  version: "1.0.5"
+  version: "1.0.1"
   title: User notifications 
   description: These are operations that can be used to interact with users available in the service bus
 paths:
-  '/users.notification':
+  '/notifications':
     post:
       responses:
         '200':
