@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
   version: "1.0.1"
-  title: User notifications 
-  description: These are operations that can be used to interact with users available in the service bus
+  title: Notifications 
+  description: These are operations that can be used to send notification to users using a service bus queue
 paths:
   '/notifications':
     post:
