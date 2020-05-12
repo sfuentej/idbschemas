@@ -8,7 +8,7 @@ Common services used by different parts of the application that does not affect 
 
 This API allows applications to send notifications to users using either the email channel or the application ajax notification
 
-### [/users](https://editor.swagger.io/?url=https://raw.githubusercontent.com/fabs-co/idbschemas/master/infrastructure/users.yaml)
+### [/users](https://editor.swagger.io/?url=https://raw.githubusercontent.com/fabs-co/idbschemas/master/infrastructure/user.yaml)
 
 API that returns security information for a given user
 
