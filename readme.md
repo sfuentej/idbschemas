@@ -15,3 +15,7 @@ These API are aimed to support specific business requirements
 ### [/prepration](https://editor.swagger.io/?url=https://raw.githubusercontent.com/fabs-co/idbschemas/master/business/preparation.yaml)
 
 API used by to handle the operation preparation process
+
+### [/user](https://editor.swagger.io/?url=https://raw.githubusercontent.com/fabs-co/idbschemas/master/infrastructure/user.yaml)
+
+API that returns security information for a given user
