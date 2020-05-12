@@ -1,0 +1,30 @@
+error:
+  base:
+      type: object
+      properties:
+        title:
+          type: string
+          example: the provided parameter is invalid
+          description: >-
+            A short, human-readable title for the general error type; the title
+            should not change for given types
+        detail:
+          type: string
+          example: The parameter stepId did not return a valid entity
+          description: A human-readable description of the specific error
+        status:
+          type: integer
+          example: 500
+          description: >-
+            Conveying the HTTP status code; this is so that all information is
+            in one place, but also to correct for changes in the status code due
+            to the usage of proxy servers. The status member, if present, is
+            only advisory as generators MUST use the same status code in the
+            actual HTTP response to assure that generic HTTP software that does
+            not understand this format still behaves correctly
+        developerMessage:
+          type: string
+          example: The entity for the provided id was not found in the database
+          description: >-
+            A message that can be used by a developer for solving the specific
+            issue
