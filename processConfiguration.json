@@ -1,249 +1,286 @@
 {
-    "lifeCycleTemplates":[{
-        "lifeCycleTemplateCode":"complete",
-        "processTemplateCode": "COMPLETE_PROCESS"
-     }],
-    "templateVariables": [
-        { "code":"step-code", "description":"Short code used to identify a step" },
-        { "code":"step-name", "description":"User-friendly name of a step" }
-    ],
-    "globalSettings":[
-        {"key":"circulation-period-qrr", "value":5}
-    ],
-    "stepCommands":{
-        "SubmitToDivisionChief": {
-            "type":"User",
-            "permission": "SubmitToDivisionChiefPermission",
-            "eventHandlers":[
-                {
-                    "handler": "MoveToNextStep"
-                },
-                {
-                    "handler":"SendNotification",
-                    "notificationCode": "op.pp.001",
-                    "destinationRoles":["Division Chief"]
-                },
-                {
-                    "handler":"UpdateMilestone",
-                    "milestoneCode": "PPDC",
-                    "milestoneStatus": "Completed"
-                },
-                {
-                    "handler":"AddPhaseHistory",
-                    "descriptionTemplate": "op.phasehistory.SubmitToDivisionChief"
-                }
-            ]
-        },
-        "SubmitToVPCManager": {
-            "type":"User",
-            "permission": "SubmitToVPCManagerPermission",
-            "eventHandlers":[
-                {
-                    "handler": "MoveToNextStep"
-                },
-                {
-                    "handler":"SendNotification",
-                    "notificationCode": "op.pp.002",
-                    "destinationRoles":["VPC Manager"],
-                },
-                {
-                    "handler":"SendNotification",
-                    "notificationCode": "op.pp.003",
-                    "destinationRoles":["Team Leader","Alternate Team Leader","Operation Ananlyst", "Project Assistant"],
-                },
-                {
-                    "handler":"UpdateMilestone",
-                    "milestoneCode": "PERM",
-                    "milestoneStatus": "Completed"
-                },
-                {
-                    "handler":"AddPhaseHistory",
-                    "descriptionTemplate": "op.phasehistory.SubmitToVPCManager"
-                }
-            ]
-        },
-        "ReturnToTeamDivisionChief": {
-            "type":"User",
-            "permission": "ReturToTeamDivisionChiefPermission",
-            "eventHandlers":[
-                {
-                    "handler": "ReturnToPreviousStep"
-                },
-                {
-                    "handler":"SendNotification",
-                    "notificationCode": "op.pp.004",
-                    "destinationRoles":["Team Leader","Alternate Team Leader","Operation Analyst","Project Assistant"],
-                },
-                {
-                    "handler":"UpdateMilestone",
-                    "milestoneCode": "PPDC",
-                    "milestoneStatus": "Not Started"
-                },
-                {
-                    "handler":"AddPhaseHistory",
-                    "descriptionTemplate": "op.phasehistory.RetunToTeamDivisionChief"
-                }
-            ]
-        },
-        "ReturnToTeamVPCManager": {
-            "type":"User",
-            "permission": "ReturToTeamVPCManagerPermission",
-            "eventHandlers":[
-                {
-                    "handler": "ReturnToSpecificStep"
-					"stepCode": "PP.UPLOAD.PACKAGE"
-                },
-                {
-                    "handler":"SendNotification",
-                    "notificationCode": "op.pp.005",
-                    "destinationRoles":["Team Leader","Alternate Team Leader","Operation Analyst","Project Assistant"],
-                },
-                {
-                    "handler":"UpdateMilestone",
-                    "milestoneCode": "PERM",
-                    "milestoneStatus": "Not Started"
-                },
-                {
-                    "handler":"UpdateMilestone",
-                    "milestoneCode": "PPDC",
-                    "milestoneStatus": "Not Started"
-                },
-                {
-                    "handler":"AddPhaseHistory",
-                    "descriptionTemplate": "op.phasehistory.RetunToTeamVPCManager"
-                }
-            ]
-        },
-        "DistributeAndStartERMMeeting": {
-            "type":"User",
-            "permission": "DistributeStartERMMeetingPermission",
-            "eventHandlers":[
-                {
-                    "handler": "MoveToNextStep"
-                },
-                {
-                    "handler":"UpdateMilestone",
-                    "milestoneCode": "PPD",
-                    "milestoneStatus": "Completed"
-                },
-                {
-                    "handler":"AddPhaseHistory",
-                    "descriptionTemplate": "op.phasehistory.DistributeStartERMMeeting"
-                }
-            ]
-        },
-        "AutomaticReturnToTeam": {
-            "type":"System",
-            "permission": "AutomaticReturnTeamPermission",
-            "eventHandlers":[
-                {
-                    "handler": "ReturnToSpecificStep",
-					"stepCode": "PP.UPLOAD.PACKAGE"
-                },
-                {
-                    "handler":"SendNotification",
-                    "notificationCode": "op.pp.006",
-                    "destinationRoles":["Team Leader","Alternate Team Leader","Operation Analyst","Project Assistant"],
-                },
-                {
-                    "handler":"SendNotification",
-                    "notificationCode": "op.pp.007",
-                    "destinationRoles":["VPC Manager"],
-                },
-                {
-                    "handler":"UpdateMilestone",
-                    "milestoneCode": "PERM",
-                    "milestoneStatus": "Not Started"
-                },
-                {
-                    "handler":"UpdateMilestone",
-                    "milestoneCode": "PPDC",
-                    "milestoneStatus": "Not Started"
-                },
-                {
-                    "handler":"AddPhaseHistory",
-                    "descriptionTemplate": "op.phasehistory.AutomaticReturnToTeam"
-                }
-            ]
-        },
-        "ReduceExtendCirculationPeriod": {
-            "type":"User",
-            "permission": "ReduceExtendCirculationPeriodPermission",
-            "eventHandlers":[
-                {
-                    "handler":"AddPhaseHistory",
-                    "descriptionTemplate": "op.phasehistory.ReduceExtendCirculationPeriod"
-                }
-            ]
-        },
-        "ScheduleF2FMeeting": {
-            "type":"User",
-            "permission": "ScheduleF2FMeetingPermission",
-            "eventHandlers":[
-                {
-                    "handler":"AddPhaseHistory",
-                    "descriptionTemplate": "op.phasehistory.ScheduleF2FMeeting"
-                }
-            ]
-        },
-        "RescheduleF2FMeeting": {
-            "type":"User",
-            "permission": "RescheduleF2FMeetingPermission",
-            "eventHandlers":[
-                {
-                    "handler":"AddPhaseHistory",
-                    "descriptionTemplate": "op.phasehistory.RescheduleF2FMeeting"
-                }
-            ]
-        },
-        "CancelF2FMeeting": {
-            "type":"User",
-            "permission": "CancelF2FMeetingPermission",
-            "eventHandlers":[
-                {
-                    "handler":"AddPhaseHistory",
-                    "descriptionTemplate": "op.phasehistory.CancelF2FMeeting"
-                }
-            ]
-        },
-        "EndCirculationPeriod": {
-            "type":"System",
-            "permission": "EndCirculationPeriodPermission",
-            "eventHandlers":[
-                 {
-                    "handler": "MoveToNextStep"
-                },
-               {
-                    "handler":"AddPhaseHistory",
-                    "descriptionTemplate": "op.phasehistory.EndCirculationPeriod"
-                }
-            ]
-        },
-        "StartF2FMeeting": {
-            "type":"System",
-            "permission": "StartF2FMeetingPermission",
-            "eventHandlers":[
-                 {
-                    "handler": "MoveToNextStep"
-                },
-               {
-                    "handler":"AddPhaseHistory",
-                    "descriptionTemplate": "op.phasehistory.StartF2FMeeting"
-                }
-            ]
-        },
-        "EndF2FMeeting": {
-            "type":"System",
-            "permission": "StartF2FMeetingPermission",
-            "eventHandlers":[
-                 {
-                    "handler": "MoveToNextStep"
-                },
-               {
-                    "handler":"AddPhaseHistory",
-                    "descriptionTemplate": "op.phasehistory.EndF2FMeeting"
-                }
-            ]
-        }
-    }
+   "lifeCycleTemplates":[
+      {
+         "lifeCycleTemplateCode":"complete",
+         "processTemplateCode":"COMPLETE_PROCESS"
+      }
+   ],
+   "templateVariables":[
+      {
+         "code":"step-code",
+         "description":"Short code used to identify a step"
+      },
+      {
+         "code":"step-name",
+         "description":"User-friendly name of a step"
+      }
+   ],
+   "globalSettings":[
+      {
+         "key":"circulation-period-qrr",
+         "value":5
+      }
+   ],
+   "stepCommands":{
+      "SubmitToDivisionChief":{
+         "type":"User",
+         "permission":"SubmitToDivisionChiefPermission",
+         "eventHandlers":[
+            {
+               "handler":"MoveToNextStep"
+            },
+            {
+               "handler":"SendNotification",
+               "notificationCode":"op.pp.001",
+               "destinationRoles":[
+                  "Division Chief"
+               ]
+            },
+            {
+               "handler":"UpdateMilestone",
+               "milestoneCode":"PPDC",
+               "milestoneStatus":"Completed"
+            },
+            {
+               "handler":"AddPhaseHistory",
+               "descriptionTemplate":"op.phasehistory.SubmitToDivisionChief"
+            }
+         ]
+      },
+      "SubmitToVPCManager":{
+         "type":"User",
+         "permission":"SubmitToVPCManagerPermission",
+         "eventHandlers":[
+            {
+               "handler":"MoveToNextStep"
+            },
+            {
+               "handler":"SendNotification",
+               "notificationCode":"op.pp.002",
+               "destinationRoles":[
+                  "VPC Manager"
+               ]
+            },
+            {
+               "handler":"SendNotification",
+               "notificationCode":"op.pp.003",
+               "destinationRoles":[
+                  "Team Leader",
+                  "Alternate Team Leader",
+                  "Operation Ananlyst",
+                  "Project Assistant"
+               ]
+            },
+            {
+               "handler":"UpdateMilestone",
+               "milestoneCode":"PERM",
+               "milestoneStatus":"Completed"
+            },
+            {
+               "handler":"AddPhaseHistory",
+               "descriptionTemplate":"op.phasehistory.SubmitToVPCManager"
+            }
+         ]
+      },
+      "ReturnToTeamDivisionChief":{
+         "type":"User",
+         "permission":"ReturToTeamDivisionChiefPermission",
+         "eventHandlers":[
+            {
+               "handler":"ReturnToPreviousStep"
+            },
+            {
+               "handler":"SendNotification",
+               "notificationCode":"op.pp.004",
+               "destinationRoles":[
+                  "Team Leader",
+                  "Alternate Team Leader",
+                  "Operation Analyst",
+                  "Project Assistant"
+               ]
+            },
+            {
+               "handler":"UpdateMilestone",
+               "milestoneCode":"PPDC",
+               "milestoneStatus":"Not Started"
+            },
+            {
+               "handler":"AddPhaseHistory",
+               "descriptionTemplate":"op.phasehistory.RetunToTeamDivisionChief"
+            }
+         ]
+      },
+      "ReturnToTeamVPCManager":{
+         "type":"User",
+         "permission":"ReturToTeamVPCManagerPermission",
+         "eventHandlers":[
+            {
+               "handler":"ReturnToSpecificStep",
+               "stepCode":"PP.UPLOAD.PACKAGE"
+            },
+            {
+               "handler":"SendNotification",
+               "notificationCode":"op.pp.005",
+               "destinationRoles":[
+                  "Team Leader",
+                  "Alternate Team Leader",
+                  "Operation Analyst",
+                  "Project Assistant"
+               ]
+            },
+            {
+               "handler":"UpdateMilestone",
+               "milestoneCode":"PERM",
+               "milestoneStatus":"Not Started"
+            },
+            {
+               "handler":"UpdateMilestone",
+               "milestoneCode":"PPDC",
+               "milestoneStatus":"Not Started"
+            },
+            {
+               "handler":"AddPhaseHistory",
+               "descriptionTemplate":"op.phasehistory.RetunToTeamVPCManager"
+            }
+         ]
+      },
+      "DistributeAndStartERMMeeting":{
+         "type":"User",
+         "permission":"DistributeStartERMMeetingPermission",
+         "eventHandlers":[
+            {
+               "handler":"MoveToNextStep"
+            },
+            {
+               "handler":"UpdateMilestone",
+               "milestoneCode":"PPD",
+               "milestoneStatus":"Completed"
+            },
+            {
+               "handler":"AddPhaseHistory",
+               "descriptionTemplate":"op.phasehistory.DistributeStartERMMeeting"
+            }
+         ]
+      },
+      "AutomaticReturnToTeam":{
+         "type":"System",
+         "permission":"AutomaticReturnTeamPermission",
+         "eventHandlers":[
+            {
+               "handler":"ReturnToSpecificStep",
+               "stepCode":"PP.UPLOAD.PACKAGE"
+            },
+            {
+               "handler":"SendNotification",
+               "notificationCode":"op.pp.006",
+               "destinationRoles":[
+                  "Team Leader",
+                  "Alternate Team Leader",
+                  "Operation Analyst",
+                  "Project Assistant"
+               ]
+            },
+            {
+               "handler":"SendNotification",
+               "notificationCode":"op.pp.007",
+               "destinationRoles":[
+                  "VPC Manager"
+               ]
+            },
+            {
+               "handler":"UpdateMilestone",
+               "milestoneCode":"PERM",
+               "milestoneStatus":"Not Started"
+            },
+            {
+               "handler":"UpdateMilestone",
+               "milestoneCode":"PPDC",
+               "milestoneStatus":"Not Started"
+            },
+            {
+               "handler":"AddPhaseHistory",
+               "descriptionTemplate":"op.phasehistory.AutomaticReturnToTeam"
+            }
+         ]
+      },
+      "ReduceExtendCirculationPeriod":{
+         "type":"User",
+         "permission":"ReduceExtendCirculationPeriodPermission",
+         "eventHandlers":[
+            {
+               "handler":"AddPhaseHistory",
+               "descriptionTemplate":"op.phasehistory.ReduceExtendCirculationPeriod"
+            }
+         ]
+      },
+      "ScheduleF2FMeeting":{
+         "type":"User",
+         "permission":"ScheduleF2FMeetingPermission",
+         "eventHandlers":[
+            {
+               "handler":"AddPhaseHistory",
+               "descriptionTemplate":"op.phasehistory.ScheduleF2FMeeting"
+            }
+         ]
+      },
+      "RescheduleF2FMeeting":{
+         "type":"User",
+         "permission":"RescheduleF2FMeetingPermission",
+         "eventHandlers":[
+            {
+               "handler":"AddPhaseHistory",
+               "descriptionTemplate":"op.phasehistory.RescheduleF2FMeeting"
+            }
+         ]
+      },
+      "CancelF2FMeeting":{
+         "type":"User",
+         "permission":"CancelF2FMeetingPermission",
+         "eventHandlers":[
+            {
+               "handler":"AddPhaseHistory",
+               "descriptionTemplate":"op.phasehistory.CancelF2FMeeting"
+            }
+         ]
+      },
+      "EndCirculationPeriod":{
+         "type":"System",
+         "permission":"EndCirculationPeriodPermission",
+         "eventHandlers":[
+            {
+               "handler":"MoveToNextStep"
+            },
+            {
+               "handler":"AddPhaseHistory",
+               "descriptionTemplate":"op.phasehistory.EndCirculationPeriod"
+            }
+         ]
+      },
+      "StartF2FMeeting":{
+         "type":"System",
+         "permission":"StartF2FMeetingPermission",
+         "eventHandlers":[
+            {
+               "handler":"MoveToNextStep"
+            },
+            {
+               "handler":"AddPhaseHistory",
+               "descriptionTemplate":"op.phasehistory.StartF2FMeeting"
+            }
+         ]
+      },
+      "EndF2FMeeting":{
+         "type":"System",
+         "permission":"StartF2FMeetingPermission",
+         "eventHandlers":[
+            {
+               "handler":"MoveToNextStep"
+            },
+            {
+               "handler":"AddPhaseHistory",
+               "descriptionTemplate":"op.phasehistory.EndF2FMeeting"
+            }
+         ]
+      }
+   }
 }
