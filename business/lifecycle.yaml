@@ -1,0 +1,87 @@
+openapi: 3.0.0
+info:
+  version: "1.0.1"
+  title: Lifecycle 
+  description: These APIs allow a client to interact with the lifecycle information
+paths:
+  '/operation/{operation-number}/lifecycle/template':
+    get:
+      parameters:
+        - name: operation-number
+          in: path
+          description: Operation number over which the operation will be performed
+          required: true
+          schema:
+            type: string    
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Template code configured for the current operation. Or null if there is not a template configured
+                example: process-complete
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/fabs-co/idbschemas/master/global/baseapi.yaml#/error/base'
+  '/operation/{operation-number}/lifecycle/milestones/status':
+    post:
+      parameters:
+        - name: operation-number
+          in: path
+          description: Operation number over which the operation will be performed
+          required: true
+          schema:
+            type: string    
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/fabs-co/idbschemas/master/global/baseapi.yaml#/error/base'
+      requestBody:
+        $ref: '#/components/requestBodies/MilestoneStatusRequest'
+
+components:
+  requestBodies:
+    MilestoneStatusRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MilestoneStatusSchema'
+      description: Activity item data to change
+      required: true
+  schemas:
+    MilestoneStatusSchema:
+      type: object
+      required:
+        - code
+        - statusCode
+        - startDate
+        - endDate
+        - forceStatusChange
+      properties:
+        code:
+          type: string
+          description: Code of the milestone to update
+          example: CCPD
+        statusCode:
+          type: string
+          description: Code of the milestone status code
+          example: in-progress
+        startDate:
+          type: string
+          format: datetime
+          description: Start date of the activity item
+        endDate:
+          type: string
+          format: datetime
+          description: End date of the activity item. For milestones this date must be equal to the start date
+
