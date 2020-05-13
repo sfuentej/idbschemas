@@ -1,0 +1,68 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: OData 
+  description: These APIs allow a client to interact with the calendar of countries
+paths:
+  '/country/{country-iso-code}/calendar/{year}':
+    get:
+      parameters:
+        - name: country-iso-code
+          in: path
+          description: Country ISO code over which the operation will be performed
+          required: true
+          schema:
+            type: string
+        - name: year
+          in: path
+          description: Year over which the operation will be performed
+          required: true
+          schema:
+            type: string  
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CalendarSchema'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/fabs-co/idbschemas/master/global/baseapi.yaml#/error/base'
+components:
+  schemas:
+    CalendarSchema:
+      type: object
+      required:
+        - code
+        - statusCode
+        - startDate
+        - endDate
+        - forceStatusChange
+      properties:
+        countryCode:
+          type: string
+          description: ISO Code of the country
+          example: US
+        countryName:
+          type: string
+          description: Name of the country
+          example: UNITED STATES
+        calendarDate:
+          type: string
+          format: datetime
+          description: Date
+          example: '2020-07-04 00:00:00.000'
+        isHoliday:
+          type: boolean
+          description: Holidays flag
+        dayCode:
+          type: string
+          description: Type of the day
+          example: Weekend
+
