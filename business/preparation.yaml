@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: "1.0.8"
+  version: "1.0.9"
   title: Preparation Process API
   description: Provide necessary resources for handling the operation preparation domain
 paths:
@@ -523,6 +523,24 @@ components:
           type: string
           format: guid
           example: 413864a7-f8a1-4914-a952-0d2e9ae5b4b4
+        created:
+          type: string
+          format: date-time
+          example: '2020-03-30T17:32'
+          description: Date when the step was created
+        createdBy:
+          type: string
+          example: 'tr_cnv01'
+          description: User who created the step
+        modified:
+          type: string
+          format: date-time
+          example: '2020-03-32T17:32'
+          description: Date when the step was modified
+        modifiedBy:
+          type: string
+          example: 'tr_cnv01'
+          description: User who modified the step
         steps:
           type: array
           items:
