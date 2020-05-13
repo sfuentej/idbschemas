@@ -31,11 +31,10 @@ components:
     SecurityUserInformationSchema:
       type: object
       required:
-        - code
-        - statusCode
-        - startDate
-        - endDate
-        - forceStatusChange
+        - userName
+        - fullName
+        - userMail
+        - isExternal
       properties:
         userName:
           type: string
