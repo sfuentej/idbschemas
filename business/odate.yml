@@ -4,21 +4,51 @@ info:
   title: OData 
   description: These APIs allow a client to interact with the calendar of countries
 paths:
-  '/country/{country-iso-code}/calendar/{year}':
+  '/v1/countryCalendar':
     get:
       parameters:
-        - name: country-iso-code
-          in: path
-          description: Country ISO code over which the operation will be performed
+        - name: $select
+          in: query
+          description: Limits the properties returned in the result.
           required: true
           schema:
             type: string
-        - name: year
-          in: path
-          description: Year over which the operation will be performed
+        - name: $expand
+          in: query
+          description: Indicates the related entities to be represented inline. The maximum depth is 2.
           required: true
           schema:
-            type: string  
+            type: string
+        - name: $filter
+          in: query
+          description: Restricts the set of items returned. The maximum number of expressions is 100. The allowed functions are allfunctions.
+          required: true
+          schema:
+            type: string
+        - name: $orderby
+          in: query
+          description: Specifies the order in which items are returned. The maximum number of expressions is 5.
+          required: true
+          schema:
+            type: string
+        - name: $top
+          in: query
+          description: Limits the number of items returned from a collection.
+          required: true
+          schema:
+            type: integer
+        - name: $skip
+          in: query
+          description: Excludes the specified number of items of the queried collection from the result.
+          required: true
+          schema:
+            type: integer
+        - name: $count
+          in: query
+          description: Indicates whether the total count of items within a collection are returned in the result.
+          required: true
+          schema:
+            type: boolean
       responses:
         '200':
           description: OK
@@ -27,7 +57,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CalendarSchema'
+                  $ref: '#/components/schemas/CountryCalendarSchema'
         '500':
           description: Internal server error
           content:
@@ -36,14 +66,14 @@ paths:
                 $ref: 'https://raw.githubusercontent.com/fabs-co/idbschemas/master/global/baseapi.yaml#/error/base'
 components:
   schemas:
-    CalendarSchema:
+    CountryCalendarSchema:
       type: object
       required:
-        - code
-        - statusCode
-        - startDate
-        - endDate
-        - forceStatusChange
+        - countryCode
+        - countryName
+        - calendarDate
+        - isHoliday
+        - dayCode
       properties:
         countryCode:
           type: string
