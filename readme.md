@@ -12,6 +12,10 @@ This API allows applications to send notifications to users using either the ema
 
 API that returns security information for a given user
 
+### [/officeapi](https://editor.swagger.io/?url=https://raw.githubusercontent.com/fabs-co/idbschemas/master/infrastructure/officegraph.yaml)
+
+API resposible for handling communication to the graph API from the Convergence application
+
 ## domain
 
 These APIs are aimed to support specific business requirements
