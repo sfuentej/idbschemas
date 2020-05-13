@@ -1,0 +1,85 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: Security 
+  description: Convergence Core ACL Process API
+paths:
+  '/users/{user-id}/security-information':
+    get:
+      parameters:
+        - name: user-id
+          in: path
+          description: User Id which the operation will be performed
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecurityUserInformationSchema'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/fabs-co/idbschemas/master/global/baseapi.yaml#/error/base'
+components:
+  schemas:
+    SecurityUserInformationSchema:
+      type: object
+      required:
+        - userName
+        - fullName
+        - userMail
+        - isExternal
+      properties:
+        userName:
+          type: string
+          description: Username of provided user
+          example: tr_cnv01
+        fullName:
+          type: string
+          description: Complete name of provided user
+        userMail:
+          type: string
+          description: Mail of user provided
+          example: tr_cnv01@iadb.org
+        isExternal:
+          type: boolean
+          description: Flag for external user
+        userPermissions:
+          type: array
+          items:
+            type: string
+          description: Array of current permission of provided user
+          example: Disbursement Write
+        userRoles:
+          type: array
+          items:
+            type: string
+          description: Array of current roles of provided user
+          example: Team Leader
+        externalUserDataModel:
+          type: array
+          items:
+              $ref: '#/components/schemas/ExternalUserData'
+          description: Array of external user data
+    ExternalUserData:
+      type: object
+      properties:
+        contract:
+          type: string
+          description: Contract associated with the external user
+          example: 2912/OC-BR
+        operationNumber:
+          type: string
+          description: Operation number associated with the external user
+          example: HQ-C1080
+        institution:
+          type: string
+          description: Institution associated with the external user
+          example: KO-SKKU
+
