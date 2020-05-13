@@ -1,0 +1,88 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: Microsoft Graph Integration
+  description: Allows to interaction against the Micrososft graph API to perform delegated actions with the application
+paths:
+  '/calendars':
+    get:
+      tags:
+        - calendars
+      summary: Get user calendars
+      description: Return the calendar to which the user has access. These calendars need to be added in my calendars through the office portal. The user must be authenticated using the ADD
+      parameters: 
+        - name: userToken
+          in: header
+          description: Identify the current authenticated user
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CalendarSchema'
+  '/calendars/{calendar-id}':
+    post:
+      tags:
+        - calendars
+      summary: Create calendar invitation
+      description: Create calendar invitation
+      parameters: 
+        - name: calendar-id
+          in: path
+          required: true
+          description: Identify the current authenticated user
+          schema:
+            type: string
+            description: Id of office online calendar element
+            example: AQMkADg4ATdmYzVhLTQxYzctNDUzNS04NjBlLTdjYjIyATFhZDI2ZQBGAAADNOG_5wQdxUao2Tg14XQBegcAsAY1ki5x0E6JhU_6vrKeAgAAAgEGAAAAsAY1ki5x0E6JhU_6vrKeAgAAAhW-AAAA
+      requestBody:
+        $ref: '#/components/requestBodies/Event'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CalendarSchema'
+components:
+  requestBodies:
+    Event:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EventSchema'
+      description: The user to create.
+      required: true
+  schemas:
+    EventSchema:
+      type: object
+      required: 
+        - calendarId
+      properties:
+        startDate:
+          type: string
+          format: datetime
+          example: 2020-01-01
+    CalendarSchema:
+      type: object
+      required:
+        - name
+        - id
+      properties:
+        id:
+          type: string
+          description: Id of office online calendar element
+          example: AQMkADg4ATdmYzVhLTQxYzctNDUzNS04NjBlLTdjYjIyATFhZDI2ZQBGAAADNOG_5wQdxUao2Tg14XQBegcAsAY1ki5x0E6JhU_6vrKeAgAAAgEGAAAAsAY1ki5x0E6JhU_6vrKeAgAAAhW-AAAA
+        name:
+          type: string
+          description: User friendly name showed to users in the office interface
+          example: VPC/VPC
+
+    
