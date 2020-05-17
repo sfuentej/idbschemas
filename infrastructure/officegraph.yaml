@@ -35,7 +35,32 @@ paths:
         - name: calendar-id
           in: path
           required: true
-          description: Identify the current authenticated user
+          description: Identify the calendar where the event will be created
+          schema:
+            type: string
+            description: Id of office online calendar element
+            example: AQMkADg4ATdmYzVhLTQxYzctNDUzNS04NjBlLTdjYjIyATFhZDI2ZQBGAAADNOG_5wQdxUao2Tg14XQBegcAsAY1ki5x0E6JhU_6vrKeAgAAAgEGAAAAsAY1ki5x0E6JhU_6vrKeAgAAAhW-AAAA
+      requestBody:
+        $ref: '#/components/requestBodies/Event'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CalendarSchema'
+    put:
+      tags:
+        - calendars
+      summary: Update calendar invitation
+      description: Update calendar invitation
+      parameters: 
+        - name: calendar-id
+          in: path
+          required: true
+          description: Identify the calendar where the event will be modified
           schema:
             type: string
             description: Id of office online calendar element
@@ -63,13 +88,120 @@ components:
   schemas:
     EventSchema:
       type: object
-      required: 
-        - calendarId
       properties:
-        startDate:
+        attendees: 
+          type: array
+          items: 
+            $ref: "#/components/schemas/AttendeeSchema"
+        body: 
+            type: object
+            items: 
+              $ref: "#/components/schemas/BodySchema"
+        bodyPreview: 
+            type: string
+        categories: 
+            type: string
+        changeKey: 
+            type: string
+        createdDateTime:
+            type: string
+        end: 
+            type: array
+            items: 
+              $ref: "#/components/schemas/EventSchema"
+        hasAttachments: 
+            type: boolean
+        iCalUId: 
+            type: string
+        id:
+            type: string
+        importance: 
           type: string
-          format: datetime
-          example: 2020-01-01
+        isAllDay:
+          type: boolean
+        isCancelled: 
+          type: boolean
+        isOnlineMeeting: 
+          type: boolean
+        isOrganizer: 
+          type: boolean
+        isReminderOn: 
+          type: boolean
+        lastModifiedDateTime: 
+          type: string
+        location: 
+            type: object
+            items: 
+              $ref: "#/components/schemas/LocationSchema"
+        locations: 
+            type: array
+            items: 
+              $ref: "#/components/schemas/LocationSchema"
+        onlineMeeting: 
+            type: object
+            items: 
+              $ref: "#/components/schemas/OnlineMeetingInfoSchema"
+        onlineMeetingProvider: 
+          type: string
+        onlineMeetingUrl: 
+          type: string
+        organizer: 
+            type: object
+            items: 
+              $ref: "#/components/schemas/RecipientSchema"
+        originalEndTimeZone: 
+          type: string
+        originalStart:
+          type: string
+        originalStartTimeZone: 
+          type: string
+        recurrence:
+            type: object
+            items: 
+              $ref: "#/components/schemas/PatternedRecurrenceSchema"
+        reminderMinutesBeforeStart: 
+            type: integer
+        responseRequested: 
+          type: boolean
+        responseStatus:
+            type: object
+            items: 
+              $ref: "#/components/schemas/ResponseStatusSchema"
+        sensitivity: 
+          type: string
+        seriesMasterId: 
+          type: string
+        showAs: 
+          type: string
+        start:
+            type: object
+            items: 
+              $ref: "#/components/schemas/DateTimeTimeZoneSchema"
+        subject: 
+          type: string
+        eventType: 
+          type: string
+        webLink: 
+          type: string
+        attachments:
+            type: array
+            items: 
+              $ref: "#/components/schemas/AttachmentSchema"
+        calendar: 
+            type: object
+            items: 
+              $ref: "#/components/schemas/CalendarSchema"
+        extensions: 
+            type: array
+            items: 
+              $ref: "#/components/schemas/ExtensionSchema"
+        instances: 
+            type: array
+            items: 
+              $ref: "#/components/schemas/EventSchema"
+      externalDocs:
+        description: event resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/event?view=graph-rest-1.0
     CalendarSchema:
       type: object
       required:
@@ -84,5 +216,264 @@ components:
           type: string
           description: User friendly name showed to users in the office interface
           example: VPC/VPC
-
-    
+        allowedOnlineMeetingProviders:
+          type: array
+          items:
+            type: string
+        canEdit: 
+          type: boolean
+        canShare: 
+          type: boolean
+        canViewPrivateItems: 
+          type: boolean
+        changeKey: 
+          type: string
+        color: 
+          type: string
+        defaultOnlineMeetingProvider: 
+          type: string
+        isDefaultCalendar: 
+          type: boolean
+        isRemovable: 
+          type: boolean
+        isTallyingResponses: 
+          type: boolean
+        owner:
+          type: object
+          items:
+            $ref : '#/components/schemas/EmailAddressSchema'
+      externalDocs:
+        description: calendar resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/calendar?view=graph-rest-1.0
+    AttendeeSchema:
+      type: object
+      properties:
+        status: 
+          type: object
+          items:
+            $ref: '#/components/schemas/ResponseStatusSchema'
+        attendeeType:
+            type: string
+        emailAddress:
+          type: object
+          items:
+            $ref : '#/components/schemas/EmailAddressSchema'
+      externalDocs:
+        description: attendee resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/attendee?view=graph-rest-1.0
+    EmailAddressSchema:
+      type: object
+      properties:
+        address:
+          type: string
+        name:
+          type: string
+      externalDocs:
+        description: emailAddress resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/emailaddress?view=graph-rest-1.0
+    BodySchema:
+      type: object
+      properties:
+        content: 
+          type: string
+        contentType:
+          type: string
+      externalDocs:
+        description: itemBody resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/itembody?view=graph-rest-1.0
+    LocationSchema:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/PhysicalAddressSchema'
+        coordinates:
+          $ref: '#/components/schemas/OutlookGeoCoordinates'
+        displayName: 
+          type: string
+        locationEmailAddress: 
+          type: string
+        locationUri: 
+          type: string
+        locationType: 
+          type: string
+        uniqueId: 
+          type: string
+        uniqueIdType: 
+          type: string
+      externalDocs:
+        description: Location resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/location?view=graph-rest-1.0
+    OnlineMeetingInfoSchema:
+      type: object
+      properties:
+        conferenceId: 
+          type: string
+        joinUrl: 
+          type: string
+        phones:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneSchema'
+        quickDial: 
+          type: string
+        tollFreeNumbers:
+          type: string
+        tollNumber: 
+          type: string
+      externalDocs:
+        description: Location resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/location?view=graph-rest-1.0
+    RecipientSchema:
+      type: object
+      properties:
+        emailAddress:
+          type: object
+          items:
+            $ref: '#/components/schemas/EmailAddressSchema'
+      externalDocs:
+        description: recipient resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/recipient?view=graph-rest-1.0
+    PatternedRecurrenceSchema:
+      type: object
+      properties:
+        Pattern:
+          type: object
+          items:
+            $ref: '#/components/schemas/RecurrencePatternSchema'
+        Range:
+          type: object
+          items:
+            $ref: '#/components/schemas/RecurrenceRangeSchema'
+      externalDocs:
+        description: patternedRecurrence resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/patternedrecurrence?view=graph-rest-1.0
+    RecurrenceRangeSchema:
+      type: object
+      properties:
+        endDate: 
+          type: string
+        numberOfOccurrences: 
+          type: integer
+        recurrenceTimeZone: 
+          type: string
+        startDate: 
+          type: string
+        type: 
+          type: string
+      externalDocs:
+        description: recurrenceRange resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/recurrencerange?view=graph-rest-1.0
+    RecurrencePatternSchema:
+      type: object
+      properties:
+        dayOfMonth:
+          type: integer
+        daysOfWeek:
+          type: array
+          items:
+            type: string
+        firstDayOfWeek: 
+          type: string
+        index: 
+          type: string
+        interval: 
+          type: integer
+        month:
+          type: integer
+        type:
+          type: string
+      externalDocs:
+        description: recurrencePattern resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/recurrencepattern?view=graph-rest-1.0
+    OutlookGeoCoordinates:
+      type: object
+      properties:
+        accuracy: 
+          type: integer
+        altitude: 
+          type: integer
+        altitudeAccuracy: 
+          type: integer
+        latitude: 
+          type: integer
+        longitude: 
+          type: integer
+      externalDocs:
+        description: outlookGeoCoordinates resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/outlookgeocoordinates?view=graph-rest-1.0
+    PhoneSchema:
+      type: object
+      properties:
+        number:
+          type: string
+        PhoneType:
+          type: string
+      externalDocs:
+        description: phone resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/phone?view=graph-rest-1.0
+    PhysicalAddressSchema:
+      type: object
+      properties:
+        city: 
+          type: string
+        countryOrRegion:
+          type: string
+        postalCode: 
+          type: string
+        state: 
+          type: string
+        street: 
+          type: string
+      externalDocs:
+        description: physicalAddress resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/physicaladdress?view=graph-rest-1.0
+    ResponseStatusSchema:
+      type: object
+      properties:
+        response:
+          type: string
+        time:
+          type: string
+      externalDocs:
+        description: responseStatus resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/ResponseStatus?view=graph-rest-1.0
+    DateTimeTimeZoneSchema:
+      type: object
+      properties:
+        dateTime:
+          type: string
+        timeZone:
+          type: string
+      externalDocs:
+        description: dateTimeTimeZone resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/DateTimeTimeZone?view=graph-rest-1.0
+    AttachmentSchema:
+      type: object
+      properties:
+        contentType:
+          type: string
+        id:
+          type: string
+        isInline:
+          type: boolean
+        lastModifiedDateTime:
+          type: string
+        name: 
+          type: string
+        size:
+          type: integer
+      externalDocs:
+        description: attachment resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/attachment?view=graph-rest-1.0
+    ExtensionSchema:
+      type: object
+      properties:
+        id:
+          type: string
+      externalDocs:
+        description: extension resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/Extension?view=graph-rest-1.0
+# Added by API Auto Mocking Plugin
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/Kavoku/MSGraph/1.0.0
