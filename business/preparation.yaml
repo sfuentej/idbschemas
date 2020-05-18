@@ -509,6 +509,8 @@ components:
             - NotStarted
             - InProgress
             - Completed
+            - Returned
+            - Deleted
         startDate:
           type: string
           format: date-time
