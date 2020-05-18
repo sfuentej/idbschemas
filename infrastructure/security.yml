@@ -4,12 +4,18 @@ info:
   title: Security 
   description: Convergence Core ACL Process API
 paths:
-  '/users/{user-id}/security-information':
+  '/users/{user-id}/security-information/{operation-number}':
     get:
       parameters:
         - name: user-id
           in: path
           description: User Id which the operation will be performed
+          required: true
+          schema:
+            type: string
+        - name: operation-number
+          in: path
+          description: Operation number which the operation will be performed
           required: true
           schema:
             type: string
