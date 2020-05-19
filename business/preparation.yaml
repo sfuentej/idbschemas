@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: "1.0.9"
+  version: "1.0.10"
   title: Preparation Process API
   description: Provide necessary resources for handling the operation preparation domain
 paths:
@@ -694,6 +694,9 @@ components:
           type: string
           format: guid
           example: b79953c1-2782-4c74-aa79-2c7ba5da6bba
+        stepCode:
+          type: string
+          example: PP.SUBMIT.VPCMANAGER
         user:
           type: string
           example: Test user
@@ -1021,6 +1024,10 @@ components:
     TimelineSchema:
       type: object
       properties:
+        processId:
+          type: string
+          format: guid
+          example: 413864a7-f8a1-4914-a952-0d2e9ae5b4b4
         templateCode:
           type: string
           example: COMPLETE
