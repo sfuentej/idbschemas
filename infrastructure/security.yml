@@ -4,7 +4,7 @@ info:
   title: Security 
   description: Convergence Core ACL Process API
 paths:
-  '/users/{user-id}/security-information/{operation-number}':
+  '/users/{user-id}/security-information':
     get:
       parameters:
         - name: user-id
@@ -14,9 +14,9 @@ paths:
           schema:
             type: string
         - name: operation-number
-          in: path
+          in: query
           description: Operation number which the operation will be performed
-          required: true
+          required: false
           schema:
             type: string
       responses:
@@ -40,7 +40,6 @@ components:
         - userName
         - fullName
         - userMail
-        - isExternal
       properties:
         userName:
           type: string
@@ -53,9 +52,6 @@ components:
           type: string
           description: Mail of user provided
           example: tr_cnv01@iadb.org
-        isExternal:
-          type: boolean
-          description: Flag for external user
         userPermissions:
           type: array
           items:
@@ -67,25 +63,3 @@ components:
           items:
             type: string
           description: Array of current roles of provided user
-          example: Team Leader
-        externalUserDataModel:
-          type: array
-          items:
-              $ref: '#/components/schemas/ExternalUserData'
-          description: Array of external user data
-    ExternalUserData:
-      type: object
-      properties:
-        contract:
-          type: string
-          description: Contract associated with the external user
-          example: 2912/OC-BR
-        operationNumber:
-          type: string
-          description: Operation number associated with the external user
-          example: HQ-C1080
-        institution:
-          type: string
-          description: Institution associated with the external user
-          example: KO-SKKU
-
