@@ -22,6 +22,21 @@
       }
    ],
    "stepCommands":{
+      "StartProcess": {
+         "type":"User",
+         "permission": "StartProcessPermission",
+         "eventHandlers":[
+             {
+                 "handler":"UpdateMilestone",
+                 "milestoneCode": "PPPP",
+                 "milestoneStatus": "Completed"
+             },
+             {
+                 "handler":"AddPhaseHistory",
+                 "descriptionTemplate": "op.phasehistory.StartProcess"
+             }
+         ]
+      },
       "SubmitToDivisionChief":{
          "type":"User",
          "permission":"SubmitToDivisionChiefPermission",
