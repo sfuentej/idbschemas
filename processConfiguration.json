@@ -17,7 +17,23 @@
    ],
    "globalSettings":[
       {
-         "key":"circulation-period-qrr",
+         "key":"standard-circulation-period-erm",
+         "value":5
+      },
+      {
+         "key":"standard-circulation-period-qrr",
+         "value":10
+      },
+      {
+         "key":"maximum-meeting-days",
+         "value":10
+      },
+	  {
+         "key":"minimum-circulation-period-days-erm",
+         "value":3
+      },
+	  {
+         "key":"minimum-circulation-period-days-qrr",
          "value":5
       }
    ],
