@@ -35,6 +35,10 @@
 	  {
          "key":"minimum-circulation-period-days-qrr",
          "value":5
+      },
+	  {
+         "key":"meeting-last-possible-day",
+         "value":10
       }
    ],
    "stepCommands":{
