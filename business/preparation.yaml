@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: "1.0.10"
+  version: "1.0.11"
   title: Preparation Process API
   description: Provide necessary resources for handling the operation preparation domain
 paths:
@@ -749,6 +749,16 @@ components:
           format: date-time
           example: '2020-03-30T17:32'
           description: Marks the date and time until this calculation is valid
+        firstMeetingDay:
+          type: string
+          format: date-time
+          example: '2020-03-30T17:32'
+          description: Marks the first day of the meeting
+        lastPossibleDay:
+          type: string
+          format: date-time
+          example: '2020-03-30T17:32'
+          description: Marks the last possible day of the meeting
       description: >-
         Defined by a window of time for participants to comment after the
         package is distributed
