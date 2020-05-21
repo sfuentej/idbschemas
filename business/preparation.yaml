@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: "1.0.11"
+  version: "1.0.12"
   title: Preparation Process API
   description: Provide necessary resources for handling the operation preparation domain
 paths:
@@ -759,17 +759,26 @@ components:
           format: date-time
           example: '2020-03-30T17:32'
           description: Marks the last possible day of the meeting
+        isExtendedOrReduced:
+          type: boolean
+          example: false
+          description: Indicates if the circulation period has been extended or reduced
       description: >-
         Defined by a window of time for participants to comment after the
         package is distributed
     FaceToFaceMeetingSchema:
       type: object
       properties:
-        date:
+        startDate:
           type: string
           format: date-time
           example: '2020-03-31T17:32'
-          description: Date and time when the face-to-face meeting takes place
+          description: Start date and time when the face-to-face meeting takes place
+        endDate:
+          type: string
+          format: date-time
+          example: '2020-03-31T17:32'
+          description: End date and time when the face-to-face meeting takes place
         room:
           type: string
           example: ROOM-1
