@@ -212,9 +212,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorSchema'
   '/operations/{operation-number}/meetings/{meeting-id}/comments':
-    post:
+    put:
       tags:
-        - Meeting
+        - Comments
       summary: Add comments
       description: Add comments to the provided meeting
       parameters:
@@ -251,12 +251,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CommentListSchema'
+              type: array
+              items:
+                $ref: '#/components/schemas/CommentSchema'
         description: The list of comment(s) to add.
         required: true
     get:
       tags:
-        - Meeting
+        - Comments
       summary: Get comments
       description: Get comments to the provided meeting
       parameters:
@@ -828,17 +830,6 @@ components:
           description: Department and sector that the member belongs to
           example: VPC/VPC
       description: Distribution list member
-    CommentListSchema:
-      type: object
-      properties:
-        isSave: 
-          type: boolean
-          description: Save or Submit
-          example: true
-        comments:
-          type: array
-          items:
-            $ref: '#/components/schemas/CommentSchema'
     CommentSchema:
       type: object
       properties:
@@ -846,20 +837,26 @@ components:
           type: string
           format: guid
           example: 413864a7-f8a1-4914-a952-0d2e9ae5b4b4
+          description: Id of the stored comment
+        state: 
+          type: string
+          description: Identify the state of the comment. When is send from the client-side it identifies the action the back-end must take
+          enum:
+            - SavedAsDraft
+            - Submitted
+            - Deleted
         commentType:
           type: string
           enum:
             - MeetingComment
             - FaceToFaceComment
             - NonObjectionComment
-          description: >-
-            Type of the comment, related to the period of the meeting it is
+          description: Type of the comment, related to the period of the meeting it is
             created.
           example: MeetingComment
         title:
           type: string
-          description: >-
-            Short description of the topic or section of the document that the
+          description: Short description of the topic or section of the document that the
             comment relates to.
           example: New Meeting Title
         text:
@@ -868,8 +865,7 @@ components:
           example: Content example comment
         onBehalfOf:
           type: string
-          description: >-
-            action performed in the system by a user representing a different
+          description: action performed in the system by a user representing a different
             user or mailbox.
           example: On behal Of User Two
         commentStatus:
