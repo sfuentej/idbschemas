@@ -37,6 +37,15 @@
          "value":5
       }
    ],
+   "healthCheckSettings":[
+      {
+         "function":"GetWorkingDays",
+         "params":{
+            "circulationWorkingDays":"3",
+            "startDate":"01/01/2020"
+         }
+      }
+   ],
    "stepCommands":{
       "StartProcess": {
          "type":"User",
