@@ -838,13 +838,6 @@ components:
           format: guid
           example: 413864a7-f8a1-4914-a952-0d2e9ae5b4b4
           description: Id of the stored comment
-        state: 
-          type: string
-          description: Identify the state of the comment. When is send from the client-side it identifies the action the back-end must take
-          enum:
-            - SavedAsDraft
-            - Submitted
-            - Deleted
         commentType:
           type: string
           enum:
@@ -871,19 +864,29 @@ components:
         commentStatus:
           type: string
           enum:
-            - SaveAsDraft
+            - SavedAsDraft
             - Submitted
+            - Deleted
           description: Current status of the comment (“Saved as Draft” or “Submitted”).
           example: SaveAsDraft
         createdBy:
           type: string
           example: lperezga
-          description: user who created the document.
+          description: user who created the comment.
         created:
           type: string
           format: date
           example: 01/01/2020
-          description: date when the document was created.
+          description: date when the comment was created.
+        modifiedBy:
+          type: string
+          example: lperezga
+          description: user who last updated the comment.
+        modified:
+          type: string
+          format: date
+          example: 01/01/2020
+          description: date when the comment was last updated.
         answer:
           $ref: '#/components/schemas/AnswerSchema'
     AnswerSchema:
@@ -910,12 +913,21 @@ components:
         createdBy:
           type: string
           example: lperezga
-          description: user who created the document.
+          description: user who created the answer.
         created:
           type: string
           format: date
           example: 01/01/2020
-          description: date when the document was created.
+          description: date when the answer was created.
+        modifiedBy:
+          type: string
+          example: lperezga
+          description: user who last updated the answer.
+        modified:
+          type: string
+          format: date
+          example: 01/01/2020
+          description: date when the answer was last updated.
     OrganizationDirectoryMemberSchema:
       type: object
       properties:
