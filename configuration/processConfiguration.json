@@ -184,6 +184,16 @@
             }
          ]
       },
+      "AddPODDDPassedReason":{
+         "type":"User",
+         "permission":"AddPODDDPassedReasonPermission",
+         "eventHandlers":[
+            {
+               "handler":"AddPhaseHistory",
+               "descriptionTemplate":"op.phasehistory.AddPODDDPassedReason"
+            }
+         ]
+      },
       "DistributeAndStartERMMeeting":{
          "type":"User",
          "permission":"DistributeStartERMMeetingPermission",
