@@ -4,27 +4,6 @@ info:
   title: Microsoft Graph Integration
   description: Allows to interaction against the Micrososft graph API to perform delegated actions with the application
 paths:
-  '/calendars':
-    get:
-      tags:
-        - calendars
-      summary: Get user calendars
-      description: Return the calendar to which the user has access. These calendars need to be added in my calendars through the office portal. The user must be authenticated using the ADD
-      parameters: 
-        - name: userToken
-          in: header
-          description: Identify the current authenticated user
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/CalendarSchema'
   '/calendars/{calendar-id}':
     post:
       tags:
@@ -32,14 +11,21 @@ paths:
       summary: Create calendar invitation
       description: Create calendar invitation
       parameters: 
-        - name: calendar-id
-          in: path
-          required: true
-          description: Identify the calendar where the event will be created
-          schema:
-            type: string
-            description: Id of office online calendar element
-            example: AQMkADg4ATdmYzVhLTQxYzctNDUzNS04NjBlLTdjYjIyATFhZDI2ZQBGAAADNOG_5wQdxUao2Tg14XQBegcAsAY1ki5x0E6JhU_6vrKeAgAAAgEGAAAAsAY1ki5x0E6JhU_6vrKeAgAAAhW-AAAA
+      - name: token
+        in: header
+        required: true
+        description: session token provided by MS Graph
+        schema:
+          type: string
+        
+      - name: calendar-id
+        in: path
+        required: true
+        description: Identify the calendar where the event will be created
+        schema:
+          type: string
+          description: Id of office online calendar element
+          example: AQMkADg4ATdmYzVhLTQxYzctNDUzNS04NjBlLTdjYjIyATFhZDI2ZQBGAAADNOG_5wQdxUao2Tg14XQBegcAsAY1ki5x0E6JhU_6vrKeAgAAAgEGAAAAsAY1ki5x0E6JhU_6vrKeAgAAAhW-AAAA
       requestBody:
         $ref: '#/components/requestBodies/Event'
       responses:
@@ -48,9 +34,21 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/CalendarSchema'
+                $ref: '#/components/schemas/EventSchema'
+        '400':
+          description: Bad request
+        '401':
+          description: Unathorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
     put:
       tags:
         - calendars
@@ -73,9 +71,60 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/CalendarSchema'
+                $ref: '#/components/schemas/EventSchema'
+        '400':
+          description: Bad request
+        '401':
+          description: Unathorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+  '/calendars/{event-id}':
+    delete:
+      tags:
+        - calendars
+      summary: Deletes calendar invitation
+      description: Deletes calendar invitation
+      parameters: 
+      - name: token
+        in: header
+        required: true
+        description: session token provided by MS Graph
+        schema:
+          type: string
+        
+      - name: event-id
+        in: path
+        required: true
+        description: Identify the calendar event to be deleted
+        schema:
+          type: string
+          description: Id of office online calendar event element
+          example: AAMkADg4ATdmYzVhLTQxYzctNDUzNS04NjBlLTdjYjIyATFhZDI2ZQBGAAADNOG_5wQdxUao2Tg14XQBegcAsAY1ki5x0E6JhU_6vrKeAgAAAgEGAAAAsAY1ki5x0E6JhU_6vrKeAgAAAhW-AAAA
+      responses:
+          '200':
+            description: OK
+          '400':
+            description: Bad request
+          '401':
+            description: Unathorized
+          '403':
+            description: Forbidden
+          '404':
+            description: Not found
+          '500':
+            description: Internal server error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorSchema'
 components:
   requestBodies:
     Event:
@@ -93,10 +142,8 @@ components:
           type: array
           items: 
             $ref: "#/components/schemas/AttendeeSchema"
-        body: 
-            type: object
-            items: 
-              $ref: "#/components/schemas/BodySchema"
+        body:
+          $ref: "#/components/schemas/BodySchema"
         bodyPreview: 
             type: string
         categories: 
@@ -105,10 +152,8 @@ components:
             type: string
         createdDateTime:
             type: string
-        end: 
-            type: array
-            items: 
-              $ref: "#/components/schemas/EventSchema"
+        end:
+          $ref: "#/components/schemas/DateTimeTimeZoneSchema"
         hasAttachments: 
             type: boolean
         iCalUId: 
@@ -130,25 +175,19 @@ components:
         lastModifiedDateTime: 
           type: string
         location: 
-            type: object
-            items: 
-              $ref: "#/components/schemas/LocationSchema"
+           $ref: "#/components/schemas/LocationSchema"
         locations: 
             type: array
             items: 
               $ref: "#/components/schemas/LocationSchema"
         onlineMeeting: 
-            type: object
-            items: 
-              $ref: "#/components/schemas/OnlineMeetingInfoSchema"
+            $ref: "#/components/schemas/OnlineMeetingInfoSchema"
         onlineMeetingProvider: 
           type: string
         onlineMeetingUrl: 
           type: string
         organizer: 
-            type: object
-            items: 
-              $ref: "#/components/schemas/RecipientSchema"
+            $ref: "#/components/schemas/RecipientSchema"
         originalEndTimeZone: 
           type: string
         originalStart:
@@ -156,17 +195,13 @@ components:
         originalStartTimeZone: 
           type: string
         recurrence:
-            type: object
-            items: 
-              $ref: "#/components/schemas/PatternedRecurrenceSchema"
+             $ref: "#/components/schemas/PatternedRecurrenceSchema"
         reminderMinutesBeforeStart: 
             type: integer
         responseRequested: 
           type: boolean
         responseStatus:
-            type: object
-            items: 
-              $ref: "#/components/schemas/ResponseStatusSchema"
+          $ref: "#/components/schemas/ResponseStatusSchema"
         sensitivity: 
           type: string
         seriesMasterId: 
@@ -174,9 +209,7 @@ components:
         showAs: 
           type: string
         start:
-            type: object
-            items: 
-              $ref: "#/components/schemas/DateTimeTimeZoneSchema"
+            $ref: "#/components/schemas/DateTimeTimeZoneSchema"
         subject: 
           type: string
         eventType: 
@@ -188,8 +221,6 @@ components:
             items: 
               $ref: "#/components/schemas/AttachmentSchema"
         calendar: 
-            type: object
-            items: 
               $ref: "#/components/schemas/CalendarSchema"
         extensions: 
             type: array
@@ -199,6 +230,12 @@ components:
             type: array
             items: 
               $ref: "#/components/schemas/EventSchema"
+      required: 
+        - start
+        - attendees
+        - body
+        - end
+        - subject
       externalDocs:
         description: event resource type
         url: https://docs.microsoft.com/en-us/graph/api/resources/event?view=graph-rest-1.0
@@ -239,9 +276,7 @@ components:
         isTallyingResponses: 
           type: boolean
         owner:
-          type: object
-          items:
-            $ref : '#/components/schemas/EmailAddressSchema'
+          $ref : '#/components/schemas/EmailAddressSchema'
       externalDocs:
         description: calendar resource type
         url: https://docs.microsoft.com/en-us/graph/api/resources/calendar?view=graph-rest-1.0
@@ -249,15 +284,11 @@ components:
       type: object
       properties:
         status: 
-          type: object
-          items:
-            $ref: '#/components/schemas/ResponseStatusSchema'
+          $ref: '#/components/schemas/ResponseStatusSchema'
         attendeeType:
             type: string
         emailAddress:
-          type: object
-          items:
-            $ref : '#/components/schemas/EmailAddressSchema'
+          $ref : '#/components/schemas/EmailAddressSchema'
       externalDocs:
         description: attendee resource type
         url: https://docs.microsoft.com/en-us/graph/api/resources/attendee?view=graph-rest-1.0
@@ -327,9 +358,7 @@ components:
       type: object
       properties:
         emailAddress:
-          type: object
-          items:
-            $ref: '#/components/schemas/EmailAddressSchema'
+          $ref: '#/components/schemas/EmailAddressSchema'
       externalDocs:
         description: recipient resource type
         url: https://docs.microsoft.com/en-us/graph/api/resources/recipient?view=graph-rest-1.0
@@ -337,13 +366,9 @@ components:
       type: object
       properties:
         Pattern:
-          type: object
-          items:
-            $ref: '#/components/schemas/RecurrencePatternSchema'
+          $ref: '#/components/schemas/RecurrencePatternSchema'
         Range:
-          type: object
-          items:
-            $ref: '#/components/schemas/RecurrenceRangeSchema'
+          $ref: '#/components/schemas/RecurrenceRangeSchema'
       externalDocs:
         description: patternedRecurrence resource type
         url: https://docs.microsoft.com/en-us/graph/api/resources/patternedrecurrence?view=graph-rest-1.0
@@ -473,6 +498,36 @@ components:
       externalDocs:
         description: extension resource type
         url: https://docs.microsoft.com/en-us/graph/api/resources/Extension?view=graph-rest-1.0
+    ErrorSchema:
+      type: object
+      properties:
+        title:
+          type: string
+          example: the provided parameter is invalid
+          description: >-
+            A short, human-readable title for the general error type; the title
+            should not change for given types
+        detail:
+          type: string
+          example: The parameter stepId did not return a valid entity
+          description: A human-readable description of the specific error
+        status:
+          type: integer
+          example: 500
+          description: >-
+            Conveying the HTTP status code; this is so that all information is
+            in one place, but also to correct for changes in the status code due
+            to the usage of proxy servers. The status member, if present, is
+            only advisory as generators MUST use the same status code in the
+            actual HTTP response to assure that generic HTTP software that does
+            not understand this format still behaves correctly
+        developerMessage:
+          type: string
+          example: The entity for the provided id was not found in the database
+          description: >-
+            A message that can be used by a developer for solving the specific
+            issue
+          
 # Added by API Auto Mocking Plugin
 servers:
   - description: SwaggerHub API Auto Mocking
