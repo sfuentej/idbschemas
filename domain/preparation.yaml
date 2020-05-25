@@ -765,6 +765,10 @@ components:
           type: boolean
           example: false
           description: Indicates if the circulation period has been extended or reduced
+          reason:
+            type: string
+            example: Test reason
+            description: Given reason when the circulation period has been extended or reduced
       description: >-
         Defined by a window of time for participants to comment after the
         package is distributed
@@ -785,6 +789,10 @@ components:
           type: string
           example: ROOM-1
           description: Room where the face-to-face meeting is held
+        reason:
+          type: string
+          example: Test reason
+          description: Given reason when the face-to-face meeting has been extended or reduced
       description: >-
         Only when required, it is the gathering of the meeting members in a
         specific date in a physical room to review the documents package, and
