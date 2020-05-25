@@ -184,7 +184,7 @@
             }
          ]
       },
-      "AddPODDDPassedReason":{
+      "AddPodddPassedReason":{
          "type":"User",
          "permission":"AddPODDDPassedReasonPermission",
          "eventHandlers":[
