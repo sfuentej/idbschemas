@@ -765,10 +765,10 @@ components:
           type: boolean
           example: false
           description: Indicates if the circulation period has been extended or reduced
-          reason:
-            type: string
-            example: Test reason
-            description: Given reason when the circulation period has been extended or reduced
+        reason:
+          type: string
+          example: Test reason
+          description: Given reason when the circulation period has been extended or reduced
       description: >-
         Defined by a window of time for participants to comment after the
         package is distributed
