@@ -815,8 +815,8 @@ components:
             area/department mailbox
           example: Area
           enum:
-            - Area
-            - Department
+            - Person
+            - Group
         addedBy:
           type: string
           example: added by mock
