@@ -253,43 +253,11 @@
             }
          ]
       },
-      "ReduceExtendCirculationPeriod":{
+      "EditMeetingDetails":{
          "type":"User",
-         "permission":"ReduceExtendCirculationPeriodPermission",
+         "permission":"EditMeetingDetailsPermission",
          "eventHandlers":[
             {
-               "handler":"AddPhaseHistory",
-               "descriptionTemplate":"op.phasehistory.ReduceExtendCirculationPeriod"
-            }
-         ]
-      },
-      "ScheduleF2FMeeting":{
-         "type":"User",
-         "permission":"ScheduleF2FMeetingPermission",
-         "eventHandlers":[
-            {
-               "handler":"AddPhaseHistory",
-               "descriptionTemplate":"op.phasehistory.ScheduleF2FMeeting"
-            }
-         ]
-      },
-      "RescheduleF2FMeeting":{
-         "type":"User",
-         "permission":"RescheduleF2FMeetingPermission",
-         "eventHandlers":[
-            {
-               "handler":"AddPhaseHistory",
-               "descriptionTemplate":"op.phasehistory.RescheduleF2FMeeting"
-            }
-         ]
-      },
-      "CancelF2FMeeting":{
-         "type":"User",
-         "permission":"CancelF2FMeetingPermission",
-         "eventHandlers":[
-            {
-               "handler":"AddPhaseHistory",
-               "descriptionTemplate":"op.phasehistory.CancelF2FMeeting"
             }
          ]
       },

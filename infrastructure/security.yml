@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: "1.0.0"
+  version: "1.0.1"
   title: Security 
   description: Convergence Core ACL Process API
 paths:
@@ -16,7 +16,7 @@ paths:
         - name: operation-number
           in: query
           description: Operation number which the operation will be performed
-          required: false
+          required: true
           schema:
             type: string
       responses:
@@ -38,20 +38,11 @@ components:
       type: object
       required:
         - userName
-        - fullName
-        - userMail
       properties:
         userName:
           type: string
           description: Username of provided user
           example: tr_cnv01
-        fullName:
-          type: string
-          description: Complete name of provided user
-        userMail:
-          type: string
-          description: Mail of user provided
-          example: tr_cnv01@iadb.org
         userPermissions:
           type: array
           items:
