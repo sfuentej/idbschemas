@@ -49,22 +49,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorSchema'
+  '/calendars/event/{event-id}':
     put:
       tags:
         - calendars
       summary: Update calendar invitation
       description: Update calendar invitation
       parameters: 
-        - name: calendar-id
-          in: path
+        - name: token
+          in: header
           required: true
-          description: Identify the calendar where the event will be modified
+          description: session token provided by MS Graph
           schema:
             type: string
-            description: Id of office online calendar element
+        - name: event-id
+          in: path
+          required: true
+          description: Identify the event that will be updated
+          schema:
+            type: string
+            description: Id of office online calendar event element
             example: AQMkADg4ATdmYzVhLTQxYzctNDUzNS04NjBlLTdjYjIyATFhZDI2ZQBGAAADNOG_5wQdxUao2Tg14XQBegcAsAY1ki5x0E6JhU_6vrKeAgAAAgEGAAAAsAY1ki5x0E6JhU_6vrKeAgAAAhW-AAAA
       requestBody:
-        $ref: '#/components/requestBodies/Event'
+        $ref: '#/components/requestBodies/EventUpdate'
       responses:
         '200':
           description: OK
@@ -86,7 +93,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorSchema'
-  '/calendars/{event-id}':
     delete:
       tags:
         - calendars
@@ -132,6 +138,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/EventSchema'
+      description: The user to create.
+      required: true
+    EventUpdate:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EventUpdateSchema'
       description: The user to create.
       required: true
   schemas:
@@ -212,7 +225,7 @@ components:
             $ref: "#/components/schemas/DateTimeTimeZoneSchema"
         subject: 
           type: string
-        eventType: 
+        type: 
           type: string
         webLink: 
           type: string
@@ -239,6 +252,52 @@ components:
       externalDocs:
         description: event resource type
         url: https://docs.microsoft.com/en-us/graph/api/resources/event?view=graph-rest-1.0
+    EventUpdateSchema:
+      type: object
+      properties:
+        attendees: 
+          type: array
+          items: 
+            $ref: "#/components/schemas/AttendeeSchema"
+        body:
+          $ref: "#/components/schemas/BodySchema"
+        bodyPreview: 
+            type: string
+        end:
+          $ref: "#/components/schemas/DateTimeTimeZoneSchema"
+        importance: 
+          type: string
+        isAllDay:
+          type: boolean
+        isOnlineMeeting: 
+          type: boolean
+        isReminderOn: 
+          type: boolean
+        location: 
+           $ref: "#/components/schemas/LocationSchema"
+        locations: 
+            type: array
+            items: 
+              $ref: "#/components/schemas/LocationSchema"
+        onlineMeetingProvider: 
+          type: string
+        recurrence:
+             $ref: "#/components/schemas/PatternedRecurrenceSchema"
+        reminderMinutesBeforeStart: 
+            type: integer
+        responseRequested: 
+          type: boolean
+        sensitivity: 
+          type: string
+        showAs: 
+          type: string
+        start:
+            $ref: "#/components/schemas/DateTimeTimeZoneSchema"
+        subject: 
+          type: string
+      externalDocs:
+        description: event resource type
+        url: https://docs.microsoft.com/en-us/graph/api/resources/event?view=graph-rest-1.0    
     CalendarSchema:
       type: object
       required:
@@ -285,7 +344,7 @@ components:
       properties:
         status: 
           $ref: '#/components/schemas/ResponseStatusSchema'
-        attendeeType:
+        type:
             type: string
         emailAddress:
           $ref : '#/components/schemas/EmailAddressSchema'
@@ -318,7 +377,7 @@ components:
         address:
           $ref: '#/components/schemas/PhysicalAddressSchema'
         coordinates:
-          $ref: '#/components/schemas/OutlookGeoCoordinates'
+          $ref: '#/components/schemas/OutlookGeoCoordinatesSchema'
         displayName: 
           type: string
         locationEmailAddress: 
@@ -410,7 +469,7 @@ components:
       externalDocs:
         description: recurrencePattern resource type
         url: https://docs.microsoft.com/en-us/graph/api/resources/recurrencepattern?view=graph-rest-1.0
-    OutlookGeoCoordinates:
+    OutlookGeoCoordinatesSchema:
       type: object
       properties:
         accuracy: 
@@ -431,7 +490,7 @@ components:
       properties:
         number:
           type: string
-        PhoneType:
+        type:
           type: string
       externalDocs:
         description: phone resource type
@@ -487,6 +546,8 @@ components:
           type: string
         size:
           type: integer
+        contentBytes:
+          type: string
       externalDocs:
         description: attachment resource type
         url: https://docs.microsoft.com/en-us/graph/api/resources/attachment?view=graph-rest-1.0
