@@ -4,6 +4,66 @@ info:
   title: OData 
   description: These APIs allow a client to interact with the calendar of countries
 paths:
+  '/v1/activeTemplate':
+    get:
+      parameters:
+        - name: $select
+          in: query
+          description: Limits the properties returned in the result.
+          required: true
+          schema:
+            type: string
+        - name: $expand
+          in: query
+          description: Indicates the related entities to be represented inline. The maximum depth is 2.
+          required: true
+          schema:
+            type: string
+        - name: $filter
+          in: query
+          description: Restricts the set of items returned. The maximum number of expressions is 100. The allowed functions are allfunctions.
+          required: true
+          schema:
+            type: string
+        - name: $orderby
+          in: query
+          description: Specifies the order in which items are returned. The maximum number of expressions is 5.
+          required: true
+          schema:
+            type: string
+        - name: $top
+          in: query
+          description: Limits the number of items returned from a collection.
+          required: true
+          schema:
+            type: integer
+        - name: $skip
+          in: query
+          description: Excludes the specified number of items of the queried collection from the result.
+          required: true
+          schema:
+            type: integer
+        - name: $count
+          in: query
+          description: Indicates whether the total count of items within a collection are returned in the result.
+          required: true
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActiveTemplate'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/fabs-co/idbschemas/master/global/baseapi.yaml#/error/base'
   '/v1/countryCalendar':
     get:
       parameters:
@@ -57,7 +117,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CountryCalendarSchema'
+                  $ref: '#/components/schemas/CountryCalendar'
         '500':
           description: Internal server error
           content:
@@ -66,7 +126,26 @@ paths:
                 $ref: 'https://raw.githubusercontent.com/fabs-co/idbschemas/master/global/baseapi.yaml#/error/base'
 components:
   schemas:
-    CountryCalendarSchema:
+    ActiveTemplate:
+      type: object
+      required:
+        - caseTemplateCode
+        - operationId
+        - operationNumber
+      properties:
+        caseTemplateCode:
+          type: string
+          description: The code of the CASE TEMPLATE.
+          example: ALL_APR
+        operationId:
+          type: integer
+          description: The identifier of the Operation.
+          example: 1953
+        operationNumber:
+          type: string
+          description: Date
+          example: EC0215
+    CountryCalendar:
       type: object
       required:
         - countryCode
