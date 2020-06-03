@@ -16,7 +16,7 @@ API that returns security information for a given user
 
 API resposible for handling communication to the graph API from the Convergence application
 
-### [/document](https://editor.swagger.io/?url=https://raw.githubusercontent.com/fabs-co/idbschemas/master/infrastructure/document.yaml)
+### [/documents](https://editor.swagger.io/?url=https://raw.githubusercontent.com/fabs-co/idbschemas/master/infrastructure/documents.yaml)
 
 API to send, search, and retrieve files from the operation repository
 
