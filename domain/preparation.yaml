@@ -705,7 +705,7 @@ components:
           description: User who enter the registry
         reason:
           type: string
-          example: Test reason
+          example: A reason the user specified
           description: Reason of the registry
         description:
           type: string
@@ -765,10 +765,10 @@ components:
           type: boolean
           example: false
           description: Indicates if the circulation period has been extended or reduced
-          reason:
-            type: string
-            example: Test reason
-            description: Given reason when the circulation period has been extended or reduced
+        reason:
+          type: string
+          example: A reason the user specified for changing the circulation period end date
+          description: Given reason when the circulation period has been extended or reduced
       description: >-
         Defined by a window of time for participants to comment after the
         package is distributed
@@ -791,7 +791,7 @@ components:
           description: Room where the face-to-face meeting is held
         reason:
           type: string
-          example: Test reason
+          example: A reason the user specified for changing the face to face end date
           description: Given reason when the face-to-face meeting has been extended or reduced
       description: >-
         Only when required, it is the gathering of the meeting members in a
