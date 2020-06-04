@@ -119,6 +119,7 @@ paths:
         in: formData
         type: string
         description: Operation number to which the files belong
+        required: true
       - name: BusinessArea
         in: formData
         required: true
@@ -135,6 +136,7 @@ paths:
       - name: AccessInformation
         in: formData
         type: string
+        required: true
         description: Public or Confidential attribute. When it is marked as Public the workflow to disclose the document externally is triggered
       - name: MultiTopics
         in: formData
@@ -159,14 +161,17 @@ paths:
       - name: Language
         in: formData
         type: string
+        required: true
         description: Language of the document in ISO two characters format, i.e, EN
       - name: Author
         in: formData
         type: string
+        required: true
         description: Username of the user that is creating the document, i.e., jorgeger
       - name: Replace
         in: formData
         type: boolean
+        required: true
         description: If true the document and the document exists, the system creates a new version of the file
       consumes:
       - multipart/form-data
