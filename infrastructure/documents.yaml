@@ -1,0 +1,926 @@
+---
+swagger: '2.0'
+info:
+  title: Convergence Core Documents Process API dev
+  version: dev
+  description: Convergence Core Documents Process API
+host: apim-np-d-idb-integration.iadb.org
+basePath: "/ext/process/cnvg/core/document/dev"
+schemes:
+- https
+securityDefinitions:
+  apiKeyHeader:
+    type: apiKey
+    name: Ocp-Apim-Subscription-Key
+    in: header
+  apiKeyQuery:
+    type: apiKey
+    name: subscription-key
+    in: query
+security:
+- apiKeyHeader: []
+- apiKeyQuery: []
+paths:
+  "/AzureAD/Account/SignIn/{scheme}":
+    get:
+      operationId: SignIn
+      summary: SignIn
+      tags:
+      - Account
+      parameters:
+      - name: scheme
+        in: path
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Success
+  "/AzureAD/Account/SignOut/{scheme}":
+    get:
+      operationId: SignOut
+      summary: SignOut
+      tags:
+      - Account
+      parameters:
+      - name: scheme
+        in: path
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Success
+  "/SearchAsync":
+    get:
+      operationId: SearchAsync
+      summary: SearchAsync
+      tags:
+      - Document
+      parameters:
+      - name: OperationNumber
+        in: query
+        type: string
+      - name: ContractNumber
+        in: query
+        type: string
+      - name: DocumentNumber
+        in: query
+        type: string
+      - name: DocumentName
+        in: query
+        type: string
+      - name: Description
+        in: query
+        type: string
+      - name: AuthorId
+        in: query
+        type: string
+      - name: ChkInputCorrespondence
+        in: query
+        type: boolean
+      - name: InputNumber
+        in: query
+        type: string
+      - name: InputYear
+        in: query
+        description: Format - int32.
+        type: integer
+      - name: SiscorNumber
+        in: query
+        type: string
+      - name: FunctionOperations
+        in: query
+        type: string
+      - name: ApprovalNumber
+        in: query
+        type: string
+      - name: ReturnProperties
+        in: query
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            "$ref": "#/definitions/NodeDocumentDtoArray"
+  "/UploadAsync":
+    post:
+      operationId: UploadAsync
+      summary: UploadAsync
+      tags:
+      - Document
+      parameters:
+      - name: Files
+        in: formData
+        required: true
+        type: string
+        description: File content formatted in base64
+      - name: OperationNumber
+        in: formData
+        type: string
+        description: Operation number to which the files belong
+        required: true
+      - name: BusinessArea
+        in: formData
+        required: true
+        type: string
+        description: Area from which the file is uploaded, i.e. LifeCycle
+      - name: TrusteeList
+        in: formData
+        type: string
+        description: List of users and permission assigned to the document
+      - name: Folder
+        in: formData
+        type: string
+        description: Folder used to separate different files inside a business area
+      - name: AccessInformation
+        in: formData
+        type: string
+        required: true
+        description: Public or Confidential attribute. When it is marked as Public the workflow to disclose the document externally is triggered
+      - name: MultiTopics
+        in: formData
+        type: string
+        description: When a document belongs to more than one operation. This field contains additional operations separated by comma
+      - name: FormName
+        in: formData
+        type: string
+      - name: TypeId
+        in: formData
+        type: string
+      - name: StageCode
+        in: formData
+        type: string
+      - name: StageDescription
+        in: formData
+        type: string
+      - name: KeyDocument
+        in: formData
+        type: boolean
+        description: Mark important documents inside convergence
+      - name: Language
+        in: formData
+        type: string
+        required: true
+        description: Language of the document in ISO two characters format, i.e, EN
+      - name: Author
+        in: formData
+        type: string
+        required: true
+        description: Username of the user that is creating the document, i.e., jorgeger
+      - name: Replace
+        in: formData
+        type: boolean
+        required: true
+        description: If true the document and the document exists, the system creates a new version of the file
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            "$ref": "#/definitions/UploadResultDtoArray"
+  "/CreateDocumentsToLink":
+    post:
+      operationId: CheckIsInDb
+      summary: CheckIsInDb
+      tags:
+      - Document
+      parameters:
+      - name: OperationNumber
+        in: formData
+        type: string
+      - name: BusinessArea
+        in: formData
+        type: string
+      - name: DocumentNumbers
+        in: formData
+        required: true
+        type: string
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            "$ref": "#/definitions/DocumentsToLinkResponseArray"
+  "/ReplaceAsync":
+    post:
+      operationId: ReplaceAsync
+      summary: ReplaceAsync
+      tags:
+      - Document
+      parameters:
+      - name: DocumentNumber
+        in: formData
+        required: true
+        type: string
+      - name: Files
+        in: formData
+        required: true
+        type: string
+      - name: Author
+        in: formData
+        required: true
+        type: string
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            "$ref": "#/definitions/UploadResultDto"
+  "/DiscloseAsync":
+    post:
+      operationId: DiscloseAsync
+      summary: DiscloseAsync
+      tags:
+      - Document
+      parameters:
+      - name: OperationNumber
+        in: formData
+        type: string
+      - name: StageId
+        in: formData
+        description: Format - int32.
+        type: integer
+      - name: StageCode
+        in: formData
+        type: string
+      - name: StageDescription
+        in: formData
+        type: string
+      - name: LanguageId
+        in: formData
+        description: Format - int32.
+        type: integer
+      - name: Language
+        in: formData
+        required: true
+        type: string
+      - name: DisclosureAuthor
+        in: formData
+        required: true
+        type: string
+      - name: AuthorGroup
+        in: formData
+        type: string
+      - name: DocumentNumber
+        in: formData
+        required: true
+        type: string
+      - name: DocumentName
+        in: formData
+        required: true
+        type: string
+      - name: FileExtension
+        in: formData
+        required: true
+        type: string
+      - name: OrganizationalUnit
+        in: formData
+        type: string
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            "$ref": "#/definitions/DiscloseResultDto"
+  "/SearchAuthorAsync":
+    get:
+      operationId: SearchAuthorAsync
+      summary: SearchAuthorAsync
+      tags:
+      - Document
+      parameters:
+      - name: searchText
+        in: query
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            "$ref": "#/definitions/CatalogDataDtoArray"
+  "/GetVersionAsync":
+    get:
+      operationId: GetVersionAsync
+      summary: GetVersionAsync
+      tags:
+      - Document
+      parameters:
+      - name: DocumentNumber
+        in: query
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            "$ref": "#/definitions/FileVersionModelArray"
+  "/GetInternetPublicationInfoAsync":
+    get:
+      operationId: GetInternetPublicationInfoAsync
+      summary: GetInternetPublicationInfoAsync
+      tags:
+      - Document
+      parameters:
+      - name: DocumentNumber
+        in: query
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            "$ref": "#/definitions/InternetPublicationResultModel"
+  "/AuthorizeInternetAsync":
+    post:
+      operationId: AuthorizeInternetAsync
+      summary: AuthorizeInternetAsync
+      tags:
+      - Document
+      parameters:
+      - name: documentInfoRequest
+        in: body
+        schema:
+          "$ref": "#/definitions/DocumentInfoRequest"
+      consumes:
+      - application/json-patch+json
+      - application/json
+      - text/json
+      - application/*+json
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            "$ref": "#/definitions/BaseResponse"
+  "/SetDocumentPermissionAsync":
+    post:
+      operationId: SetDocumentPermissionAsync
+      summary: SetDocumentPermissionAsync
+      tags:
+      - Document
+      parameters:
+      - name: documentSecurityRequest
+        in: body
+        schema:
+          "$ref": "#/definitions/DocumentSecurityRequest"
+      consumes:
+      - application/json-patch+json
+      - application/json
+      - text/json
+      - application/*+json
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            "$ref": "#/definitions/BaseResponse"
+  "/CreateFileTransactionAsync":
+    post:
+      operationId: CreateFileTransactionAsync
+      summary: CreateFileTransactionAsync
+      tags:
+      - Document
+      parameters:
+      - name: Files
+        in: formData
+        required: true
+        type: string
+      - name: OperationNumber
+        in: formData
+        type: string
+      - name: BusinessArea
+        in: formData
+        required: true
+        type: string
+      - name: TrusteeList
+        in: formData
+        type: string
+      - name: Folder
+        in: formData
+        type: string
+      - name: AccessInformation
+        in: formData
+        type: string
+      - name: MultiTopics
+        in: formData
+        type: string
+      - name: FormName
+        in: formData
+        type: string
+      - name: TypeId
+        in: formData
+        type: string
+      - name: StageCode
+        in: formData
+        type: string
+      - name: StageDescription
+        in: formData
+        type: string
+      - name: KeyDocument
+        in: formData
+        type: boolean
+      - name: Language
+        in: formData
+        type: string
+      - name: Author
+        in: formData
+        type: string
+      - name: Replace
+        in: formData
+        type: boolean
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            "$ref": "#/definitions/CreateTransactionResultArray"
+  "/CopyFileAsync":
+    post:
+      operationId: CopyFileAsync
+      summary: CopyFileAsync
+      tags:
+      - Document
+      parameters:
+      - name: copyFileRequest
+        in: body
+        schema:
+          "$ref": "#/definitions/CopyFileRequest"
+      consumes:
+      - application/json-patch+json
+      - application/json
+      - text/json
+      - application/*+json
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            "$ref": "#/definitions/CreateTransactionResultArray"
+  "/DeleteAsync":
+    post:
+      operationId: DeleteAsync
+      summary: DeleteAsync
+      tags:
+      - Document
+      parameters:
+      - name: documentInfoRequest
+        in: body
+        schema:
+          "$ref": "#/definitions/DocumentInfoRequest"
+      consumes:
+      - application/json-patch+json
+      - application/json
+      - text/json
+      - application/*+json
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            "$ref": "#/definitions/BaseResponse"
+  "/DownloadAsync":
+    get:
+      operationId: DownloadAsync
+      summary: DownloadAsync
+      tags:
+      - Document
+      parameters:
+      - name: DocumentNumber
+        in: query
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            "$ref": "#/definitions/FileContentResult"
+        '204':
+          description: Success
+          schema:
+            "$ref": "#/definitions/StatusCodeResult"
+  "/app.log":
+    get:
+      operationId: GetAppLog
+      summary: GetAppLog
+      tags:
+      - Logs
+      produces:
+      - text/plain
+      responses:
+        '200':
+          description: Success
+          schema:
+            "$ref": "#/definitions/IActionResult"
+        '400':
+          description: Bad Request
+  "/trace.log":
+    get:
+      operationId: GetTraceLog
+      summary: GetTraceLog
+      tags:
+      - Logs
+      produces:
+      - text/plain
+      responses:
+        '200':
+          description: Success
+          schema:
+            "$ref": "#/definitions/IActionResult"
+        '400':
+          description: Bad Request
+definitions:
+  NodeDocumentDto:
+    type: object
+    properties:
+      operationNumber:
+        type: string
+      documentNumber:
+        type: string
+      documentName:
+        type: string
+      abstract:
+        type: string
+      description:
+        type: string
+      language:
+        type: string
+      authorName:
+        type: string
+      authorId:
+        type: string
+      editUser:
+        type: string
+      downloadLink:
+        type: string
+      date:
+        type: string
+      siscorNumber:
+        type: string
+      accessInformation:
+        type: string
+      countryCode:
+        type: string
+      businessAreaName:
+        type: string
+      discloseDate:
+        type: string
+      link:
+        type: string
+  IFormFile:
+    type: object
+    properties:
+      contentType:
+        type: string
+        readOnly: true
+      contentDisposition:
+        type: string
+        readOnly: true
+      headers:
+        type: object
+        additionalProperties:
+          uniqueItems: false
+          type: array
+          items:
+            type: string
+        readOnly: true
+      length:
+        format: int64
+        type: integer
+        readOnly: true
+      name:
+        type: string
+        readOnly: true
+      fileName:
+        type: string
+        readOnly: true
+  UploadResultDto:
+    type: object
+    properties:
+      resultDocument:
+        "$ref": "#/definitions/ResultDocumentDto"
+      operationResult:
+        "$ref": "#/definitions/OperationResultDto"
+      isValid:
+        type: boolean
+      errorMessage:
+        type: string
+      fileName:
+        type: string
+      documentId:
+        format: int32
+        type: integer
+  ResultDocumentDto:
+    type: object
+    properties:
+      searchLib:
+        type: string
+      criteria:
+        type: string
+      command:
+        type: string
+      action:
+        type: string
+      documentNumber:
+        type: string
+      downloadLink:
+        type: string
+      documentName:
+        type: string
+      authorId:
+        type: string
+      date:
+        type: string
+  OperationResultDto:
+    type: object
+    properties:
+      code:
+        format: int32
+        type: integer
+      status:
+        type: string
+      statusReason:
+        type: string
+      logGUID:
+        type: string
+  DocumentsToLinkResponse:
+    type: object
+    properties:
+      documentReference:
+        type: string
+      status:
+        type: string
+  DiscloseResultDto:
+    type: object
+    properties:
+      documentNumber:
+        type: string
+      operationNumber:
+        type: string
+      languageId:
+        format: int32
+        type: integer
+      isValid:
+        type: boolean
+      errorMessage:
+        type: string
+      fileName:
+        type: string
+  CatalogDataDto:
+    type: object
+    properties:
+      text:
+        type: string
+      value:
+        type: string
+  FileVersionModel:
+    type: object
+    properties:
+      id:
+        format: int32
+        type: integer
+      version:
+        type: string
+      subVersion:
+        type: string
+      versionComments:
+        type: string
+      typist:
+        type: string
+      typistId:
+        type: string
+      author:
+        type: string
+      authorId:
+        type: string
+      lastEdit:
+        type: string
+      versionSize:
+        format: int32
+        type: integer
+  InternetPublicationResultModel:
+    type: object
+    properties:
+      authorized:
+        type: string
+      authorizedDate:
+        type: string
+      changeToPublicStatusDate:
+        type: string
+  DocumentInfoRequest:
+    required:
+    - documentNumber
+    type: object
+    properties:
+      documentNumber:
+        type: string
+  BaseResponse:
+    type: object
+    properties: {}
+  DocumentSecurityRequest:
+    type: object
+    properties:
+      documentNumber:
+        type: string
+      trusteeList:
+        type: string
+  CreateTransactionResult:
+    type: object
+    properties:
+      createDocumentAck:
+        "$ref": "#/definitions/CreateDocumentAck"
+      resultDocument:
+        "$ref": "#/definitions/ResultDocumentDto"
+      operationResult:
+        "$ref": "#/definitions/OperationResultDto"
+      isValid:
+        type: boolean
+      errorMessage:
+        type: string
+      fileName:
+        type: string
+      documentId:
+        format: int32
+        type: integer
+  CreateDocumentAck:
+    type: object
+    properties:
+      transactionID:
+        type: string
+      code:
+        format: int32
+        type: integer
+      errorReason:
+        type: string
+      rowId:
+        format: int32
+        type: integer
+  CopyFileRequest:
+    required:
+    - businessArea
+    type: object
+    properties:
+      files:
+        uniqueItems: false
+        type: array
+        items:
+          "$ref": "#/definitions/FileModel"
+        readOnly: true
+      operationNumber:
+        type: string
+      businessArea:
+        type: string
+      trusteeList:
+        type: string
+      folder:
+        type: string
+      accessInformation:
+        type: string
+      multiTopics:
+        type: string
+      formName:
+        type: string
+      typeId:
+        type: string
+      stageCode:
+        type: string
+      stageDescription:
+        type: string
+      keyDocument:
+        type: boolean
+      language:
+        type: string
+      author:
+        type: string
+      replace:
+        type: boolean
+  FileModel:
+    type: object
+    properties:
+      name:
+        type: string
+      number:
+        type: string
+      size:
+        format: int32
+        type: integer
+      stream:
+        format: byte
+        type: string
+      rowId:
+        format: int32
+        type: integer
+  FileContentResult:
+    type: object
+    properties:
+      fileContents:
+        format: byte
+        type: string
+      contentType:
+        type: string
+        readOnly: true
+      fileDownloadName:
+        type: string
+      lastModified:
+        format: date-time
+        type: string
+      entityTag:
+        "$ref": "#/definitions/EntityTagHeaderValue"
+      enableRangeProcessing:
+        type: boolean
+  EntityTagHeaderValue:
+    type: object
+    properties:
+      tag:
+        "$ref": "#/definitions/StringSegment"
+        readOnly: true
+      isWeak:
+        type: boolean
+        readOnly: true
+  StringSegment:
+    type: object
+    properties:
+      buffer:
+        type: string
+        readOnly: true
+      offset:
+        format: int32
+        type: integer
+        readOnly: true
+      length:
+        format: int32
+        type: integer
+        readOnly: true
+      value:
+        type: string
+        readOnly: true
+      hasValue:
+        type: boolean
+        readOnly: true
+  StatusCodeResult:
+    type: object
+    properties:
+      statusCode:
+        format: int32
+        type: integer
+        readOnly: true
+  IActionResult:
+    type: object
+    properties: {}
+  NodeDocumentDtoArray:
+    uniqueItems: false
+    type: array
+    items:
+      "$ref": "#/definitions/NodeDocumentDto"
+  UploadResultDtoArray:
+    uniqueItems: false
+    type: array
+    items:
+      "$ref": "#/definitions/UploadResultDto"
+  DocumentsToLinkResponseArray:
+    uniqueItems: false
+    type: array
+    items:
+      "$ref": "#/definitions/DocumentsToLinkResponse"
+  CatalogDataDtoArray:
+    uniqueItems: false
+    type: array
+    items:
+      "$ref": "#/definitions/CatalogDataDto"
+  FileVersionModelArray:
+    uniqueItems: false
+    type: array
+    items:
+      "$ref": "#/definitions/FileVersionModel"
+  CreateTransactionResultArray:
+    uniqueItems: false
+    type: array
+    items:
+      "$ref": "#/definitions/CreateTransactionResult"
+tags: []
