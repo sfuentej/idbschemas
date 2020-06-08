@@ -33,108 +33,6 @@
 			"value": 5
 		}
 	],
-	"steps": {
-		"pp.upload.package": {
-			"name": "Upload Package and Submit to Division Chief",
-			"permission": "",
-			"optional": false
-		},
-		"pp.submit.vpcmanager": {
-			"name": "Submit Package to VPC Manager",
-			"permission": "",
-			"optional": false
-		},
-		"pp.distribute.erm": {
-			"name": "Distribute and Start ERM Meeting",
-			"permission": "",
-			"optional": false
-		},
-		"pp.erm.circulation.period": {
-			"name": "ERM Circulation Period",
-			"permission": "",
-			"optional": false
-		},
-		"pp.awaiting.f2f.meeting": {
-			"name": "Awaiting Face-to-Face Meeting",
-			"permission": "",
-			"optional": true
-		},
-		"pp.erm.f2f.meeting": {
-			"name": "ERM Face-to-Face Meeting",
-			"permission": "",
-			"optional": true
-		},
-		"pp.prepare.minutes": {
-			"name": "Prepare ERM Minutes",
-			"permission": "",
-			"optional": false
-		},
-		"pp.complete.answers": {
-			"name": "Prepare ERM Minutes - Complete Answers",
-			"permission": "",
-			"optional": false
-		},
-		"pp.upload.main.minutes": {
-			"name": "Prepare ERM Minutes - Upload Main Minutes",
-			"permission": "",
-			"optional": false
-		},
-		"pp.approve.minutes": {
-			"name": "Approve ERM Minutes",
-			"permission": "",
-			"optional": false
-		},
-		"pp.upload.no.package": {
-			"name": "Upload ERM Non-Objection Package",
-			"permission": "",
-			"optional": false
-		},
-		"pp.distribute.erm.no": {
-			"name": "Distribute Package for ERM Non-Objection",
-			"permission": "",
-			"optional": false
-		},
-		"pp.erm.no.period": {
-			"name": "ERM Non-Objection Period",
-			"permission": "",
-			"optional": false
-		},
-		"pp.update.no.answers": {
-			"name": "Update ERM Non-Objection Answers",
-			"permission": "",
-			"optional": true
-		},
-		"pp.confirm.main.minutes": {
-			"name": "Confirm ERM Main Minutes document",
-			"permission": "",
-			"optional": false
-		},
-		"pp.finalize.minutes": {
-			"name": "Finalize ERM Minutes",
-			"permission": "",
-			"optional": false
-		},
-		"pp.upload.approval.package": {
-			"name": "Upload PP Approval Package",
-			"permission": "",
-			"optional": false
-		},
-		"pp.approve.pp.package": {
-			"name": "Approve PP Package",
-			"permission": "",
-			"optional": false
-		},
-		"pp.disclose.package": {
-			"name": "Disclose PP Package",
-			"permission": "",
-			"optional": false
-		},
-		"pp.upload.2nd.no.package": {
-			"name": "Upload 2nd Non-Objection Package",
-			"permission": "",
-			"optional": true
-		}
-	},
 	"stepCommands": {
 		"StartProcess": {
 			"type": "User",
@@ -374,5 +272,515 @@
 				}
 			]
 		}
-	}
+	},
+	"processTemplates": [
+		{
+			"code": "COMPLETE_PROCESS",
+			"name": "Complete process",
+			"phases": [
+				{
+					"code": "PP",
+					"name": "Project Profile",
+					"order": 10,
+					"steps": [
+						{
+							"code": "PP.UPLOAD.PACKAGE",
+							"name": "Upload Package and Submit to Division Chief",
+							"type": "Manual",
+							"order": 10,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "PP.SUBMIT.VPCMANAGER",
+							"name": "Submit to VPC Manager",
+							"type": "Manual",
+							"order": 20,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "PP.DISTRIBUTE.ERM",
+							"name": "Distribute and Start Meeting",
+							"type": "Manual",
+							"order": 30,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "PP.ERM.CIRCULATION.PERIOD",
+							"name": "Circulation period",
+							"type": "Automatic",
+							"order": 40,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "PP.AWAITING.F2F.MEETING",
+							"name": "Awaiting Face-to-face meeting",
+							"type": "Automatic",
+							"order": 50
+						},
+						{
+							"code": "PP.ERM.F2F.MEETING",
+							"name": "Face-to-face meeting",
+							"type": "Automatic",
+							"order": 60
+						},
+						{
+							"code": "PP.PREPARE.MINUTES",
+							"name": "Prepare Minutes",
+							"type": "Manual",
+							"order": 70,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "PP.COMPLETE.ANSWERS",
+							"name": "Prepare Minutes - Complete Answers",
+							"type": "Manual",
+							"order": 80,
+							"parentStepCode": "PP.PREPARE.MINUTES",
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "PP.UPLOAD.MAIN.MINUTES",
+							"name": "Prepare Minutes - Upload Main Minutes",
+							"type": "Manual",
+							"order": 90,
+							"parentStepCode": "PP.PREPARE.MINUTES",
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "PP.APPROVE.MINUTES",
+							"name": "Approve Minutes",
+							"type": "Manual",
+							"order": 100,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "PP.UPLOAD.NO.PACKAGE",
+							"name": "Upload Non-Objection Package",
+							"type": "Manual",
+							"order": 110,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "PP.DISTRIBUTE.ERM.NO",
+							"name": "Distribute Package for ERM Non-Objection",
+							"type": "Manual",
+							"order": 120,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "PP.ERM.NO.PERIOD",
+							"name": "ERM Non-Objection period",
+							"type": "Automatic",
+							"order": 130,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "PP.APPROVE.PACKAGE",
+							"name": "Approve PP Package",
+							"type": "Manual",
+							"order": 140,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "PP.UPLOAD.APPROVAL.PACKAGE.TEAM",
+							"name": "Upload PP Approval Package (Team)",
+							"type": "Manual",
+							"order": 150,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "PP.UPLOAD.APPROVAL.PACKAGE.MANAGER",
+							"name": "Upload PP Approval Package (Manager)",
+							"type": "Manual",
+							"order": 160,
+							"parentStepCode": "PP.UPLOAD.APPROVAL.PACKAGE.TEAM",
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "PP.DISCLOSE.PACKAGE",
+							"name": "Disclose PP Package",
+							"type": "Manual",
+							"order": 170,
+							"loadOnProcessInstantiate": true
+						}
+					],
+					"meetings": [
+						{
+							"name": "ERM",
+							"distributionListMembers": [
+								{
+									"memberId": "Jonathan Tabuenca",
+									"accountType": "Person",
+									"organizationalUnit": "Division Chief - VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								},
+								{
+									"memberId": "Joao Alves",
+									"accountType": "Person",
+									"organizationalUnit": "Division Chief - VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								},
+								{
+									"memberId": "Alvaro Gonzalez",
+									"accountType": "Person",
+									"organizationalUnit": "Division Chief - VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								},
+								{
+									"memberId": "Fernando Berenguer",
+									"accountType": "Person",
+									"organizationalUnit": "VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								},
+								{
+									"memberId": "Juan Luis Sanchez",
+									"accountType": "Person",
+									"organizationalUnit": "VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								},
+								{
+									"memberId": "Fabian Perez",
+									"accountType": "Person",
+									"organizationalUnit": "VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								}
+							]
+						}
+					]
+				},
+				{
+					"code": "POD",
+					"name": "Proposal for Operation Development",
+					"order": 20,
+					"steps": [
+						{
+							"code": "POD.UPLOAD.PACKAGE",
+							"name": "Upload Package and Submit to Division Chief",
+							"type": "Manual",
+							"order": 10,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.SUBMIT.VPSMANAGER",
+							"name": "Submit to VPS Manager",
+							"type": "Manual",
+							"order": 20,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.DISTRIBUTE.QRR",
+							"name": "Distribute and Start Meeting",
+							"type": "Manual",
+							"order": 30,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.QRR.CIRCULATION.PERIOD",
+							"name": "Circulation period",
+							"type": "Automatic",
+							"order": 40,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.AWAITING.F2F.MEETING",
+							"name": "Awaiting Face-to-face meeting",
+							"type": "Automatic",
+							"order": 50
+						},
+						{
+							"code": "POD.QRR.F2F.MEETING",
+							"name": "Face-to-face meeting",
+							"type": "Automatic",
+							"order": 60
+						},
+						{
+							"code": "POD.PREPARE.MINUTES",
+							"name": "Prepare Minutes",
+							"type": "Manual",
+							"order": 70,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.APPROVE.MINUTES",
+							"name": "Approve Minutes",
+							"type": "Manual",
+							"order": 80,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.UPLOAD.NO.PACKAGE",
+							"name": "Upload Non-Objection Package",
+							"type": "Manual",
+							"order": 90,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.SUBMIT.VPSMANAGER.NO",
+							"name": "Submit to VPS Manager for Non-Objection",
+							"type": "Manual",
+							"order": 100,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.DISTRIBUTE.QRR.NO",
+							"name": "Distribute Package for QRR Non-Objection",
+							"type": "Manual",
+							"order": 110,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.QRR.NO.PERIOD",
+							"name": "QRR Non-Objection period",
+							"type": "Automatic",
+							"order": 120,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.UPLOAD.DRAFT.LEGAL.RESOLUTION",
+							"name": "Upload Draft Legal Resolution",
+							"type": "Manual",
+							"order": 130,
+							"parentStepCode": "POD.QRR.NO.PERIOD",
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.UPLOAD.APPROVAL.PACKAGE",
+							"name": "Upload POD Approval Package",
+							"type": "Manual",
+							"order": 140,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.APPROVE.PACKAGE",
+							"name": "Approve POD Package",
+							"type": "Manual",
+							"order": 150,
+							"loadOnProcessInstantiate": true
+						}
+					],
+					"meetings": [
+						{
+							"name": "QRR",
+							"distributionListMembers": [
+								{
+									"memberId": "Jonathan Tabuenca",
+									"accountType": "Person",
+									"organizationalUnit": "Division Chief - VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								},
+								{
+									"memberId": "Joao Alves",
+									"accountType": "Person",
+									"organizationalUnit": "Division Chief - VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								},
+								{
+									"memberId": "Alvaro Gonzalez",
+									"accountType": "Person",
+									"organizationalUnit": "Division Chief - VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								},
+								{
+									"memberId": "Fernando Berenguer",
+									"accountType": "Person",
+									"organizationalUnit": "VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								},
+								{
+									"memberId": "Juan Luis Sanchez",
+									"accountType": "Person",
+									"organizationalUnit": "VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								},
+								{
+									"memberId": "Fabian Perez",
+									"accountType": "Person",
+									"organizationalUnit": "VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"code": "PARTIAL_PROCESS",
+			"name": "Partial process",
+			"phases": [
+				{
+					"code": "POD",
+					"name": "Proposal for Operation Development",
+					"order": 10,
+					"steps": [
+						{
+							"code": "POD.UPLOAD.PACKAGE",
+							"name": "Upload Package and Submit to Division Chief",
+							"type": "Manual",
+							"order": 10,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.SUBMIT.VPSMANAGER",
+							"name": "Submit to VPS Manager",
+							"type": "Manual",
+							"order": 20,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.DISTRIBUTE.QRR",
+							"name": "Distribute and Start Meeting",
+							"type": "Manual",
+							"order": 30,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.QRR.CIRCULATION.PERIOD",
+							"name": "Circulation period",
+							"type": "Automatic",
+							"order": 40,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.AWAITING.F2F.MEETING",
+							"name": "Awaiting Face-to-face meeting",
+							"type": "Automatic",
+							"order": 50
+						},
+						{
+							"code": "POD.QRR.F2F.MEETING",
+							"name": "Face-to-face meeting",
+							"type": "Automatic",
+							"order": 60
+						},
+						{
+							"code": "POD.PREPARE.MINUTES",
+							"name": "Prepare Minutes",
+							"type": "Manual",
+							"order": 70,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.APPROVE.MINUTES",
+							"name": "Approve Minutes",
+							"type": "Manual",
+							"order": 80,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.UPLOAD.NO.PACKAGE",
+							"name": "Upload Non-Objection Package",
+							"type": "Manual",
+							"order": 90,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.SUBMIT.VPSMANAGER.NO",
+							"name": "Submit to VPS Manager for Non-Objection",
+							"type": "Manual",
+							"order": 100,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.DISTRIBUTE.QRR.NO",
+							"name": "Distribute Package for QRR Non-Objection",
+							"type": "Manual",
+							"order": 110,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.QRR.NO.PERIOD",
+							"name": "QRR Non-Objection period",
+							"type": "Automatic",
+							"order": 120,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.UPLOAD.DRAFT.LEGAL.RESOLUTION",
+							"name": "Upload Draft Legal Resolution",
+							"type": "Manual",
+							"order": 130,
+							"parentStepCode": "POD.QRR.NO.PERIOD",
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.UPLOAD.APPROVAL.PACKAGE",
+							"name": "Upload POD Approval Package",
+							"type": "Manual",
+							"order": 140,
+							"loadOnProcessInstantiate": true
+						},
+						{
+							"code": "POD.APPROVE.PACKAGE",
+							"name": "Approve POD Package",
+							"type": "Manual",
+							"order": 150,
+							"loadOnProcessInstantiate": true
+						}
+					],
+					"meetings": [
+						{
+							"name": "QRR",
+							"distributionListMembers": [
+								{
+									"memberId": "Jonathan Tabuenca",
+									"accountType": "Person",
+									"organizationalUnit": "Division Chief - VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								},
+								{
+									"memberId": "Joao Alves",
+									"accountType": "Person",
+									"organizationalUnit": "Division Chief - VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								},
+								{
+									"memberId": "Alvaro Gonzalez",
+									"accountType": "Person",
+									"organizationalUnit": "Division Chief - VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								},
+								{
+									"memberId": "Fernando Berenguer",
+									"accountType": "Person",
+									"organizationalUnit": "VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								},
+								{
+									"memberId": "Juan Luis Sanchez",
+									"accountType": "Person",
+									"organizationalUnit": "VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								},
+								{
+									"memberId": "Fabian Perez",
+									"accountType": "Person",
+									"organizationalUnit": "VPC/VPC",
+									"addedBy": "CONVERGENCE \\ PR-200",
+									"type": "Standard"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	 ]
 }
