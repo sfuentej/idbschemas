@@ -659,6 +659,16 @@ components:
           description: >-
             content of a document after a new upload in ezshare. This allows to
             track changes when its content is updated.
+          enum:
+            - ERM
+            - QRR
+            - Non-Objection
+            - Approval
+            - Disclosure
+            - 2nd Non-Objection
+            - Updated Non-Objection
+            - Updated Approval
+            - Updated Disclosure
     MeetingSchema:
       type: object
       properties:
