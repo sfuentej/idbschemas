@@ -1,909 +1,960 @@
 {
-	"lifeCycleTemplates": [{
+	"lifeCycleTemplates": [
+	  {
 		"lifeCycleTemplateCode": "complete",
 		"processTemplateCode": "COMPLETE_PROCESS"
-	}],
-	"templateVariables": [{
-			"code": "step-code",
-			"description": "Short code used to identify a step"
-		},
-		{
-			"code": "step-name",
-			"description": "User-friendly name of a step"
-		}
+	  }
 	],
-	"globalSettings": [{
-			"key": "standard-circulation-period-erm",
-			"value": 5
-		},
-		{
-			"key": "standard-circulation-period-qrr",
-			"value": 10
-		},
-		{
-			"key": "maximum-meeting-days",
-			"value": 10
-		},
-		{
-			"key": "minimum-circulation-period-days-erm",
-			"value": 3
-		},
-		{
-			"key": "minimum-circulation-period-days-qrr",
-			"value": 5
+	"templateVariables": [
+	  {
+		"code": "step-code",
+		"description": "Short code used to identify a step"
+	  },
+	  {
+		"code": "step-name",
+		"description": "User-friendly name of a step"
+	  }
+	],
+	"globalSettings": [
+	  {
+		"key": "standard-circulation-period-erm",
+		"value": 5
+	  },
+	  {
+		"key": "standard-circulation-period-qrr",
+		"value": 10
+	  },
+	  {
+		"key": "maximum-meeting-days",
+		"value": 10
+	  },
+	  {
+		"key": "minimum-circulation-period-days-erm",
+		"value": 3
+	  },
+	  {
+		"key": "minimum-circulation-period-days-qrr",
+		"value": 5
+	  }
+	],
+	"healthCheckSettings": [
+	  {
+		"function": "GetWorkingDays",
+		"params": {
+		  "circulationWorkingDays": "3",
+		  "startDate": "01/01/2020"
 		}
+	  }
 	],
 	"stepCommands": {
-		"StartProcess": {
-			"type": "User",
-			"permission": "StartProcessPermission",
-			"eventHandlers": [{
-					"handler": "UpdateMilestone",
-					"milestoneCode": "PPPP",
-					"milestoneStatus": "Completed"
-				},
-				{
-					"handler": "AddPhaseHistory",
-					"descriptionTemplate": "op.phasehistory.StartProcess"
-				}
-			]
-		},
-		"SubmitToDivisionChief": {
-			"type": "User",
-			"permission": "SubmitToDivisionChiefPermission",
-			"eventHandlers": [{
-					"handler": "MoveToNextStep"
-				},
-				{
-					"handler": "SendNotification",
-					"notificationCode": "op.pp.001",
-					"destinationRoles": [
-						"Division Chief"
-					]
-				},
-				{
-					"handler": "UpdateMilestone",
-					"milestoneCode": "PPDC",
-					"milestoneStatus": "Completed"
-				},
-				{
-					"handler": "AddPhaseHistory",
-					"descriptionTemplate": "op.phasehistory.SubmitToDivisionChief"
-				}
-			]
-		},
-		"SubmitToVPCManager": {
-			"type": "User",
-			"permission": "SubmitToVPCManagerPermission",
-			"eventHandlers": [{
-					"handler": "MoveToNextStep"
-				},
-				{
-					"handler": "SendNotification",
-					"notificationCode": "op.pp.002",
-					"destinationRoles": [
-						"VPC Manager"
-					]
-				},
-				{
-					"handler": "SendNotification",
-					"notificationCode": "op.pp.003",
-					"destinationRoles": [
-						"Team Leader",
-						"Alternate Team Leader",
-						"Operation Ananlyst",
-						"Project Assistant"
-					]
-				},
-				{
-					"handler": "UpdateMilestone",
-					"milestoneCode": "PERM",
-					"milestoneStatus": "Completed"
-				},
-				{
-					"handler": "AddPhaseHistory",
-					"descriptionTemplate": "op.phasehistory.SubmitToVPCManager"
-				}
-			]
-		},
-		"ReturnToTeamDivisionChief": {
-			"type": "User",
-			"permission": "ReturToTeamDivisionChiefPermission",
-			"eventHandlers": [{
-					"handler": "ReturnToPreviousStep"
-				},
-				{
-					"handler": "SendNotification",
-					"notificationCode": "op.pp.004",
-					"destinationRoles": [
-						"Team Leader",
-						"Alternate Team Leader",
-						"Operation Analyst",
-						"Project Assistant"
-					]
-				},
-				{
-					"handler": "UpdateMilestone",
-					"milestoneCode": "PPDC",
-					"milestoneStatus": "Not Started"
-				},
-				{
-					"handler": "AddPhaseHistory",
-					"descriptionTemplate": "op.phasehistory.RetunToTeamDivisionChief"
-				}
-			]
-		},
-		"ReturnToTeamVPCManager": {
-			"type": "User",
-			"permission": "ReturToTeamVPCManagerPermission",
-			"eventHandlers": [{
-					"handler": "ReturnToSpecificStep",
-					"stepCode": "PP.UPLOAD.PACKAGE"
-				},
-				{
-					"handler": "SendNotification",
-					"notificationCode": "op.pp.005",
-					"destinationRoles": [
-						"Team Leader",
-						"Alternate Team Leader",
-						"Operation Analyst",
-						"Project Assistant"
-					]
-				},
-				{
-					"handler": "UpdateMilestone",
-					"milestoneCode": "PERM",
-					"milestoneStatus": "Not Started"
-				},
-				{
-					"handler": "UpdateMilestone",
-					"milestoneCode": "PPDC",
-					"milestoneStatus": "Not Started"
-				},
-				{
-					"handler": "AddPhaseHistory",
-					"descriptionTemplate": "op.phasehistory.RetunToTeamVPCManager"
-				}
-			]
-		},
-		"AddPodddPassedReason": {
-			"type": "User",
-			"permission": "AddPODDDPassedReasonPermission",
-			"eventHandlers": [{
-				"handler": "AddPhaseHistory",
-				"descriptionTemplate": "op.phasehistory.AddPODDDPassedReason"
-			}]
-		},
-		"DistributeAndStartERMMeeting": {
-			"type": "User",
-			"permission": "DistributeStartERMMeetingPermission",
-			"eventHandlers": [{
-					"handler": "MoveToNextStep"
-				},
-				{
-					"handler": "UpdateMilestone",
-					"milestoneCode": "PPD",
-					"milestoneStatus": "Completed"
-				},
-				{
-					"handler": "AddPhaseHistory",
-					"descriptionTemplate": "op.phasehistory.DistributeStartERMMeeting"
-				}
-			]
-		},
-		"AutomaticReturnToTeam": {
-			"type": "System",
-			"permission": "AutomaticReturnTeamPermission",
-			"eventHandlers": [{
-					"handler": "ReturnToSpecificStep",
-					"stepCode": "PP.UPLOAD.PACKAGE"
-				},
-				{
-					"handler": "SendNotification",
-					"notificationCode": "op.pp.006",
-					"destinationRoles": [
-						"Team Leader",
-						"Alternate Team Leader",
-						"Operation Analyst",
-						"Project Assistant"
-					]
-				},
-				{
-					"handler": "SendNotification",
-					"notificationCode": "op.pp.007",
-					"destinationRoles": [
-						"VPC Manager"
-					]
-				},
-				{
-					"handler": "UpdateMilestone",
-					"milestoneCode": "PERM",
-					"milestoneStatus": "Not Started"
-				},
-				{
-					"handler": "UpdateMilestone",
-					"milestoneCode": "PPDC",
-					"milestoneStatus": "Not Started"
-				},
-				{
-					"handler": "AddPhaseHistory",
-					"descriptionTemplate": "op.phasehistory.AutomaticReturnToTeam"
-				}
-			]
-		},
-		"EditMeetingDetails": {
-			"type": "User",
-			"permission": "EditMeetingDetailsPermission",
-			"eventHandlers": [{}]
-		},
-		"EndCirculationPeriod": {
-			"type": "System",
-			"permission": "EndCirculationPeriodPermission",
-			"eventHandlers": [{
-					"handler": "MoveToNextStep"
-				},
-				{
-					"handler": "AddPhaseHistory",
-					"descriptionTemplate": "op.phasehistory.EndCirculationPeriod"
-				}
-			]
-		},
-		"StartF2FMeeting": {
-			"type": "System",
-			"permission": "StartF2FMeetingPermission",
-			"eventHandlers": [{
-					"handler": "MoveToNextStep"
-				},
-				{
-					"handler": "AddPhaseHistory",
-					"descriptionTemplate": "op.phasehistory.StartF2FMeeting"
-				}
-			]
-		},
-		"EndF2FMeeting": {
-			"type": "System",
-			"permission": "StartF2FMeetingPermission",
-			"eventHandlers": [{
-					"handler": "MoveToNextStep"
-				},
-				{
-					"handler": "AddPhaseHistory",
-					"descriptionTemplate": "op.phasehistory.EndF2FMeeting"
-				}
-			]
-		},
-		"SubmitAnswersToVPCManager": {
-			"type": "User",
-			"permission": "SubmitAnswerstoVPCManagerPermission",
-			"eventHandlers": [{
-					"handler": "UpdateMilestone",
-					"milestoneCode": "QRRR",
-					"milestoneStatus": "Completed"
-				},
-				{
-					"handler": "AddPhaseHistory",
-					"descriptionTemplate": "op.phasehistory.SubmitAnswersToVPCManager"
-				}
-			]
-		},
-		"RecallSubmittedAnswers": {
-			"type": "User",
-			"permission": "RecallSubmittedAnswersPermission",
-			"eventHandlers": [{
-					"handler": "UpdateMilestone",
-					"milestoneCode": "QRRR",
-					"milestoneStatus": "Not Started"
-				},
-				{
-					"handler": "AddPhaseHistory",
-					"descriptionTemplate": "op.phasehistory.RecallSubmittedAnswers"
-				}
-			]
-		},
-		"UploadERMMinutesMainDocument": {
-			"type": "User",
-			"permission": "UploadERMMinutesMainDocumentPermission",
-			"eventHandlers": [{
-				"handler": "AddPhaseHistory",
-				"descriptionTemplate": "op.phasehistory.UploadERMMinutesMainDocument"
-			}]
-		},
-		"ConfirmMinutes": {
-			"type": "User",
-			"permission": "ConfirmMinutesPermission",
-			"eventHandlers": [{
-				"handler": "AddPhaseHistory",
-				"descriptionTemplate": "op.phasehistory.ConfirmMinutes"
-			}]
-		},
-		"GenerateERMMinutesDocument": {
-			"type": "System",
-			"permission": "GenerateERMMinutesDocumentPermission",
-			"eventHandlers": [{
-					"handler": "SendNotification",
-					"notificationCode": "op.pp.008",
-					"destinationRoles": [
-						"VPC Manager"
-					]
-				},
-				{
-					"handler": "AddPhaseHistory",
-					"descriptionTemplate": "op.phasehistory.GenerateERMMinutesDocument"
-				},
-				{
-					"handler": "MoveToNextStep"
-				}
-			]
-		},
-		"ApproveERMMinutes": {
-			"type": "User",
-			"permission": "ApproveERMMinutesPermission",
-			"eventHandlers": [{
-					"handler": "AddPhaseHistory",
-					"descriptionTemplate": "op.phasehistory.ApproveERMMinutes"
-				},
-				{
-					"handler": "MoveToNextStep"
-				}
-			]
-		},
-		"RejectAndAdjustERMMinutes": {
-			"type": "User",
-			"permission": "RejectAndAdjustERMMinutesPermission",
-			"eventHandlers": [{
-					"handler": "AddPhaseHistory",
-					"descriptionTemplate": "op.phasehistory.RejectAndAdjustERMMinutes"
-				},
-				{
-					"handler": "ReturnToPreviousStep"
-				}
-			]
-		},
-		"processTemplates": [{
-				"code": "COMPLETE_PROCESS",
-				"name": "Complete process",
-				"phases": [{
-						"code": "PP",
-						"name": "Project Profile",
-						"order": 10,
-						"steps": [{
-								"code": "PP.UPLOAD.PACKAGE",
-								"name": "Upload Package and Submit to Division Chief",
-								"type": "Manual",
-								"order": 10,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "PP.SUBMIT.VPCMANAGER",
-								"name": "Submit to VPC Manager",
-								"type": "Manual",
-								"order": 20,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "PP.DISTRIBUTE.ERM",
-								"name": "Distribute and Start Meeting",
-								"type": "Manual",
-								"order": 30,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "PP.ERM.CIRCULATION.PERIOD",
-								"name": "Circulation period",
-								"type": "Automatic",
-								"order": 40,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "PP.AWAITING.F2F.MEETING",
-								"name": "Awaiting Face-to-face meeting",
-								"type": "Automatic",
-								"order": 50,
-								"loadOnProcessInstantiate": false,
-								"permission": ""
-							},
-							{
-								"code": "PP.ERM.F2F.MEETING",
-								"name": "Face-to-face meeting",
-								"type": "Automatic",
-								"order": 60,
-								"permission": ""
-							},
-							{
-								"code": "PP.PREPARE.MINUTES",
-								"name": "Prepare Minutes",
-								"type": "Manual",
-								"order": 70,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "PP.COMPLETE.ANSWERS",
-								"name": "Prepare Minutes - Complete Answers",
-								"type": "Manual",
-								"order": 80,
-								"parentStepCode": "PP.PREPARE.MINUTES",
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "PP.UPLOAD.MAIN.MINUTES",
-								"name": "Prepare Minutes - Upload Main Minutes",
-								"type": "Manual",
-								"order": 90,
-								"parentStepCode": "PP.PREPARE.MINUTES",
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "PP.APPROVE.MINUTES",
-								"name": "Approve Minutes",
-								"type": "Manual",
-								"order": 100,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "PP.UPLOAD.NO.PACKAGE",
-								"name": "Upload Non-Objection Package",
-								"type": "Manual",
-								"order": 110,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "PP.DISTRIBUTE.ERM.NO",
-								"name": "Distribute Package for ERM Non-Objection",
-								"type": "Manual",
-								"order": 120,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "PP.ERM.NO.PERIOD",
-								"name": "ERM Non-Objection period",
-								"type": "Automatic",
-								"order": 130,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "PP.APPROVE.PACKAGE",
-								"name": "Approve PP Package",
-								"type": "Manual",
-								"order": 140,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "PP.UPLOAD.APPROVAL.PACKAGE.TEAM",
-								"name": "Upload PP Approval Package (Team)",
-								"type": "Manual",
-								"order": 150,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "PP.UPLOAD.APPROVAL.PACKAGE.MANAGER",
-								"name": "Upload PP Approval Package (Manager)",
-								"type": "Manual",
-								"order": 160,
-								"parentStepCode": "PP.UPLOAD.APPROVAL.PACKAGE.TEAM",
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "PP.DISCLOSE.PACKAGE",
-								"name": "Disclose PP Package",
-								"type": "Manual",
-								"order": 170,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							}
-						],
-						"meetings": [{
-							"name": "ERM",
-							"distributionListMembers": [{
-									"memberId": "Jonathan Tabuenca",
-									"accountType": "Person",
-									"organizationalUnit": "Division Chief - VPC/VPC",
-									"addedBy": "CONVERGENCE \\ PR-200",
-									"type": "Standard"
-								},
-								{
-									"memberId": "Joao Alves",
-									"accountType": "Person",
-									"organizationalUnit": "Division Chief - VPC/VPC",
-									"addedBy": "CONVERGENCE \\ PR-200",
-									"type": "Standard"
-								},
-								{
-									"memberId": "Alvaro Gonzalez",
-									"accountType": "Person",
-									"organizationalUnit": "Division Chief - VPC/VPC",
-									"addedBy": "CONVERGENCE \\ PR-200",
-									"type": "Standard"
-								},
-								{
-									"memberId": "Fernando Berenguer",
-									"accountType": "Person",
-									"organizationalUnit": "VPC/VPC",
-									"addedBy": "CONVERGENCE \\ PR-200",
-									"type": "Standard"
-								},
-								{
-									"memberId": "Juan Luis Sanchez",
-									"accountType": "Person",
-									"organizationalUnit": "VPC/VPC",
-									"addedBy": "CONVERGENCE \\ PR-200",
-									"type": "Standard"
-								},
-								{
-									"memberId": "Fabian Perez",
-									"accountType": "Person",
-									"organizationalUnit": "VPC/VPC",
-									"addedBy": "CONVERGENCE \\ PR-200",
-									"type": "Standard"
-								}
-							]
-						}]
-					},
-					{
-						"code": "POD",
-						"name": "Proposal for Operation Development",
-						"order": 20,
-						"steps": [{
-								"code": "POD.UPLOAD.PACKAGE",
-								"name": "Upload Package and Submit to Division Chief",
-								"type": "Manual",
-								"order": 10,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "POD.SUBMIT.VPSMANAGER",
-								"name": "Submit to VPS Manager",
-								"type": "Manual",
-								"order": 20,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "POD.DISTRIBUTE.QRR",
-								"name": "Distribute and Start Meeting",
-								"type": "Manual",
-								"order": 30,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "POD.QRR.CIRCULATION.PERIOD",
-								"name": "Circulation period",
-								"type": "Automatic",
-								"order": 40,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "POD.AWAITING.F2F.MEETING",
-								"name": "Awaiting Face-to-face meeting",
-								"type": "Automatic",
-								"order": 50,
-								"loadOnProcessInstantiate": false,
-								"permission": ""
-							},
-							{
-								"code": "POD.QRR.F2F.MEETING",
-								"name": "Face-to-face meeting",
-								"type": "Automatic",
-								"order": 60,
-								"loadOnProcessInstantiate": false,
-								"permission": ""
-							},
-							{
-								"code": "POD.PREPARE.MINUTES",
-								"name": "Prepare Minutes",
-								"type": "Manual",
-								"order": 70,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "POD.APPROVE.MINUTES",
-								"name": "Approve Minutes",
-								"type": "Manual",
-								"order": 80,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "POD.UPLOAD.NO.PACKAGE",
-								"name": "Upload Non-Objection Package",
-								"type": "Manual",
-								"order": 90,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "POD.SUBMIT.VPSMANAGER.NO",
-								"name": "Submit to VPS Manager for Non-Objection",
-								"type": "Manual",
-								"order": 100,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "POD.DISTRIBUTE.QRR.NO",
-								"name": "Distribute Package for QRR Non-Objection",
-								"type": "Manual",
-								"order": 110,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "POD.QRR.NO.PERIOD",
-								"name": "QRR Non-Objection period",
-								"type": "Automatic",
-								"order": 120,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "POD.UPLOAD.DRAFT.LEGAL.RESOLUTION",
-								"name": "Upload Draft Legal Resolution",
-								"type": "Manual",
-								"order": 130,
-								"parentStepCode": "POD.QRR.NO.PERIOD",
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "POD.UPLOAD.APPROVAL.PACKAGE",
-								"name": "Upload POD Approval Package",
-								"type": "Manual",
-								"order": 140,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							},
-							{
-								"code": "POD.APPROVE.PACKAGE",
-								"name": "Approve POD Package",
-								"type": "Manual",
-								"order": 150,
-								"loadOnProcessInstantiate": true,
-								"permission": ""
-							}
-						],
-						"meetings": [{
-							"name": "QRR",
-							"distributionListMembers": [{
-									"memberId": "Jonathan Tabuenca",
-									"accountType": "Person",
-									"organizationalUnit": "Division Chief - VPC/VPC",
-									"addedBy": "CONVERGENCE \\ PR-200",
-									"type": "Standard"
-								},
-								{
-									"memberId": "Joao Alves",
-									"accountType": "Person",
-									"organizationalUnit": "Division Chief - VPC/VPC",
-									"addedBy": "CONVERGENCE \\ PR-200",
-									"type": "Standard"
-								},
-								{
-									"memberId": "Alvaro Gonzalez",
-									"accountType": "Person",
-									"organizationalUnit": "Division Chief - VPC/VPC",
-									"addedBy": "CONVERGENCE \\ PR-200",
-									"type": "Standard"
-								},
-								{
-									"memberId": "Fernando Berenguer",
-									"accountType": "Person",
-									"organizationalUnit": "VPC/VPC",
-									"addedBy": "CONVERGENCE \\ PR-200",
-									"type": "Standard"
-								},
-								{
-									"memberId": "Juan Luis Sanchez",
-									"accountType": "Person",
-									"organizationalUnit": "VPC/VPC",
-									"addedBy": "CONVERGENCE \\ PR-200",
-									"type": "Standard"
-								},
-								{
-									"memberId": "Fabian Perez",
-									"accountType": "Person",
-									"organizationalUnit": "VPC/VPC",
-									"addedBy": "CONVERGENCE \\ PR-200",
-									"type": "Standard"
-								}
-							]
-						}]
-					}
-				]
-			},
-			{
-				"code": "PARTIAL_PROCESS",
-				"name": "Partial process",
-				"phases": [{
-					"code": "POD",
-					"name": "Proposal for Operation Development",
-					"order": 10,
-					"steps": [{
-							"code": "POD.UPLOAD.PACKAGE",
-							"name": "Upload Package and Submit to Division Chief",
-							"type": "Manual",
-							"order": 10,
-							"loadOnProcessInstantiate": true,
-							"permission": ""
-						},
-						{
-							"code": "POD.SUBMIT.VPSMANAGER",
-							"name": "Submit to VPS Manager",
-							"type": "Manual",
-							"order": 20,
-							"loadOnProcessInstantiate": true,
-							"permission": ""
-						},
-						{
-							"code": "POD.DISTRIBUTE.QRR",
-							"name": "Distribute and Start Meeting",
-							"type": "Manual",
-							"order": 30,
-							"loadOnProcessInstantiate": true,
-							"permission": ""
-						},
-						{
-							"code": "POD.QRR.CIRCULATION.PERIOD",
-							"name": "Circulation period",
-							"type": "Automatic",
-							"order": 40,
-							"loadOnProcessInstantiate": true,
-							"permission": ""
-						},
-						{
-							"code": "POD.AWAITING.F2F.MEETING",
-							"name": "Awaiting Face-to-face meeting",
-							"type": "Automatic",
-							"order": 50,
-							"loadOnProcessInstantiate": false,
-							"permission": ""
-						},
-						{
-							"code": "POD.QRR.F2F.MEETING",
-							"name": "Face-to-face meeting",
-							"type": "Automatic",
-							"order": 60,
-							"loadOnProcessInstantiate": false,
-							"permission": ""
-						},
-						{
-							"code": "POD.PREPARE.MINUTES",
-							"name": "Prepare Minutes",
-							"type": "Manual",
-							"order": 70,
-							"loadOnProcessInstantiate": true,
-							"permission": ""
-						},
-						{
-							"code": "POD.APPROVE.MINUTES",
-							"name": "Approve Minutes",
-							"type": "Manual",
-							"order": 80,
-							"loadOnProcessInstantiate": true,
-							"permission": ""
-						},
-						{
-							"code": "POD.UPLOAD.NO.PACKAGE",
-							"name": "Upload Non-Objection Package",
-							"type": "Manual",
-							"order": 90,
-							"loadOnProcessInstantiate": true,
-							"permission": ""
-						},
-						{
-							"code": "POD.SUBMIT.VPSMANAGER.NO",
-							"name": "Submit to VPS Manager for Non-Objection",
-							"type": "Manual",
-							"order": 100,
-							"loadOnProcessInstantiate": true,
-							"permission": ""
-						},
-						{
-							"code": "POD.DISTRIBUTE.QRR.NO",
-							"name": "Distribute Package for QRR Non-Objection",
-							"type": "Manual",
-							"order": 110,
-							"loadOnProcessInstantiate": true,
-							"permission": ""
-						},
-						{
-							"code": "POD.QRR.NO.PERIOD",
-							"name": "QRR Non-Objection period",
-							"type": "Automatic",
-							"order": 120,
-							"loadOnProcessInstantiate": true,
-							"permission": ""
-						},
-						{
-							"code": "POD.UPLOAD.DRAFT.LEGAL.RESOLUTION",
-							"name": "Upload Draft Legal Resolution",
-							"type": "Manual",
-							"order": 130,
-							"parentStepCode": "POD.QRR.NO.PERIOD",
-							"loadOnProcessInstantiate": true,
-							"permission": ""
-						},
-						{
-							"code": "POD.UPLOAD.APPROVAL.PACKAGE",
-							"name": "Upload POD Approval Package",
-							"type": "Manual",
-							"order": 140,
-							"loadOnProcessInstantiate": true,
-							"permission": ""
-						},
-						{
-							"code": "POD.APPROVE.PACKAGE",
-							"name": "Approve POD Package",
-							"type": "Manual",
-							"order": 150,
-							"loadOnProcessInstantiate": true,
-							"permission": ""
-						}
-					],
-					"meetings": [{
-						"name": "QRR",
-						"distributionListMembers": [{
-								"memberId": "Jonathan Tabuenca",
-								"accountType": "Person",
-								"organizationalUnit": "Division Chief - VPC/VPC",
-								"addedBy": "CONVERGENCE \\ PR-200",
-								"type": "Standard"
-							},
-							{
-								"memberId": "Joao Alves",
-								"accountType": "Person",
-								"organizationalUnit": "Division Chief - VPC/VPC",
-								"addedBy": "CONVERGENCE \\ PR-200",
-								"type": "Standard"
-							},
-							{
-								"memberId": "Alvaro Gonzalez",
-								"accountType": "Person",
-								"organizationalUnit": "Division Chief - VPC/VPC",
-								"addedBy": "CONVERGENCE \\ PR-200",
-								"type": "Standard"
-							},
-							{
-								"memberId": "Fernando Berenguer",
-								"accountType": "Person",
-								"organizationalUnit": "VPC/VPC",
-								"addedBy": "CONVERGENCE \\ PR-200",
-								"type": "Standard"
-							},
-							{
-								"memberId": "Juan Luis Sanchez",
-								"accountType": "Person",
-								"organizationalUnit": "VPC/VPC",
-								"addedBy": "CONVERGENCE \\ PR-200",
-								"type": "Standard"
-							},
-							{
-								"memberId": "Fabian Perez",
-								"accountType": "Person",
-								"organizationalUnit": "VPC/VPC",
-								"addedBy": "CONVERGENCE \\ PR-200",
-								"type": "Standard"
-							}
-						]
-					}]
-				}]
-			}
+	  "StartProcess": {
+		"type": "User",
+		"permission": "StartProcessPermission",
+		"eventHandlers": [
+		  {
+			"handler": "UpdateMilestone",
+			"milestoneCode": "PPPP",
+			"milestoneStatus": "Completed"
+		  },
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.StartProcess"
+		  }
 		]
-	}
-}
+	  },
+	  "SubmitToDivisionChief": {
+		"type": "User",
+		"permission": "SubmitToDivisionChiefPermission",
+		"eventHandlers": [
+		  {
+			"handler": "MoveToNextStep"
+		  },
+		  {
+			"handler": "SendNotification",
+			"notificationCode": "op.pp.001",
+			"destinationRoles": [
+			  "Division Chief"
+			]
+		  },
+		  {
+			"handler": "UpdateMilestone",
+			"milestoneCode": "PPDC",
+			"milestoneStatus": "Completed"
+		  },
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.SubmitToDivisionChief"
+		  }
+		]
+	  },
+	  "SubmitToVPCManager": {
+		"type": "User",
+		"permission": "SubmitToVPCManagerPermission",
+		"eventHandlers": [
+		  {
+			"handler": "MoveToNextStep"
+		  },
+		  {
+			"handler": "SendNotification",
+			"notificationCode": "op.pp.002",
+			"destinationRoles": [
+			  "VPC Manager"
+			]
+		  },
+		  {
+			"handler": "SendNotification",
+			"notificationCode": "op.pp.003",
+			"destinationRoles": [
+			  "Team Leader",
+			  "Alternate Team Leader",
+			  "Operation Ananlyst",
+			  "Project Assistant"
+			]
+		  },
+		  {
+			"handler": "UpdateMilestone",
+			"milestoneCode": "PERM",
+			"milestoneStatus": "Completed"
+		  },
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.SubmitToVPCManager"
+		  }
+		]
+	  },
+	  "ReturnToTeamDivisionChief": {
+		"type": "User",
+		"permission": "ReturToTeamDivisionChiefPermission",
+		"eventHandlers": [
+		  {
+			"handler": "ReturnToPreviousStep"
+		  },
+		  {
+			"handler": "SendNotification",
+			"notificationCode": "op.pp.004",
+			"destinationRoles": [
+			  "Team Leader",
+			  "Alternate Team Leader",
+			  "Operation Analyst",
+			  "Project Assistant"
+			]
+		  },
+		  {
+			"handler": "UpdateMilestone",
+			"milestoneCode": "PPDC",
+			"milestoneStatus": "Not Started"
+		  },
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.RetunToTeamDivisionChief"
+		  }
+		]
+	  },
+	  "ReturnToTeamVPCManager": {
+		"type": "User",
+		"permission": "ReturToTeamVPCManagerPermission",
+		"eventHandlers": [
+		  {
+			"handler": "ReturnToSpecificStep",
+			"stepCode": "PP.UPLOAD.PACKAGE"
+		  },
+		  {
+			"handler": "SendNotification",
+			"notificationCode": "op.pp.005",
+			"destinationRoles": [
+			  "Team Leader",
+			  "Alternate Team Leader",
+			  "Operation Analyst",
+			  "Project Assistant"
+			]
+		  },
+		  {
+			"handler": "UpdateMilestone",
+			"milestoneCode": "PERM",
+			"milestoneStatus": "Not Started"
+		  },
+		  {
+			"handler": "UpdateMilestone",
+			"milestoneCode": "PPDC",
+			"milestoneStatus": "Not Started"
+		  },
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.RetunToTeamVPCManager"
+		  }
+		]
+	  },
+	  "AddPodddPassedReason": {
+		"type": "User",
+		"permission": "AddPODDDPassedReasonPermission",
+		"eventHandlers": [
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.AddPODDDPassedReason"
+		  }
+		]
+	  },
+	  "DistributeAndStartERMMeeting": {
+		"type": "User",
+		"permission": "DistributeStartERMMeetingPermission",
+		"eventHandlers": [
+		  {
+			"handler": "MoveToNextStep"
+		  },
+		  {
+			"handler": "UpdateMilestone",
+			"milestoneCode": "PPD",
+			"milestoneStatus": "Completed"
+		  },
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.DistributeStartERMMeeting"
+		  }
+		]
+	  },
+	  "AutomaticReturnToTeam": {
+		"type": "System",
+		"permission": "AutomaticReturnTeamPermission",
+		"eventHandlers": [
+		  {
+			"handler": "ReturnToSpecificStep",
+			"stepCode": "PP.UPLOAD.PACKAGE"
+		  },
+		  {
+			"handler": "SendNotification",
+			"notificationCode": "op.pp.006",
+			"destinationRoles": [
+			  "Team Leader",
+			  "Alternate Team Leader",
+			  "Operation Analyst",
+			  "Project Assistant"
+			]
+		  },
+		  {
+			"handler": "SendNotification",
+			"notificationCode": "op.pp.007",
+			"destinationRoles": [
+			  "VPC Manager"
+			]
+		  },
+		  {
+			"handler": "UpdateMilestone",
+			"milestoneCode": "PERM",
+			"milestoneStatus": "Not Started"
+		  },
+		  {
+			"handler": "UpdateMilestone",
+			"milestoneCode": "PPDC",
+			"milestoneStatus": "Not Started"
+		  },
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.AutomaticReturnToTeam"
+		  }
+		]
+	  },
+	  "EditMeetingDetails": {
+		"type": "User",
+		"permission": "EditMeetingDetailsPermission",
+		"eventHandlers": [ {} ]
+	  },
+	  "EndCirculationPeriod": {
+		"type": "System",
+		"permission": "EndCirculationPeriodPermission",
+		"eventHandlers": [
+		  {
+			"handler": "MoveToNextStep"
+		  },
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.EndCirculationPeriod"
+		  }
+		]
+	  },
+	  "StartF2FMeeting": {
+		"type": "System",
+		"permission": "StartF2FMeetingPermission",
+		"eventHandlers": [
+		  {
+			"handler": "MoveToNextStep"
+		  },
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.StartF2FMeeting"
+		  }
+		]
+	  },
+	  "EndF2FMeeting": {
+		"type": "System",
+		"permission": "StartF2FMeetingPermission",
+		"eventHandlers": [
+		  {
+			"handler": "MoveToNextStep"
+		  },
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.EndF2FMeeting"
+		  }
+		]
+	  },
+	  "SubmitAnswersToVPCManager": {
+		"type": "User",
+		"permission": "SubmitAnswerstoVPCManagerPermission",
+		"eventHandlers": [
+		  {
+			"handler": "UpdateMilestone",
+			"milestoneCode": "QRRR",
+			"milestoneStatus": "Completed"
+		  },
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.SubmitAnswersToVPCManager"
+		  }
+		]
+	  },
+	  "RecallSubmittedAnswers": {
+		"type": "User",
+		"permission": "RecallSubmittedAnswersPermission",
+		"eventHandlers": [
+		  {
+			"handler": "UpdateMilestone",
+			"milestoneCode": "QRRR",
+			"milestoneStatus": "Not Started"
+		  },
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.RecallSubmittedAnswers"
+		  }
+		]
+	  },
+	  "UploadERMMinutesMainDocument": {
+		"type": "User",
+		"permission": "UploadERMMinutesMainDocumentPermission",
+		"eventHandlers": [
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.UploadERMMinutesMainDocument"
+		  }
+		]
+	  },
+	  "ConfirmMinutes": {
+		"type": "User",
+		"permission": "ConfirmMinutesPermission",
+		"eventHandlers": [
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.ConfirmMinutes"
+		  }
+		]
+	  },
+	  "GenerateERMMinutesDocument": {
+		"type": "System",
+		"permission": "GenerateERMMinutesDocumentPermission",
+		"eventHandlers": [
+		  {
+			"handler": "SendNotification",
+			"notificationCode": "op.pp.008",
+			"destinationRoles": [
+			  "VPC Manager"
+			]
+		  },
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.GenerateERMMinutesDocument"
+		  },
+		  {
+			"handler": "MoveToNextStep"
+		  }
+		]
+	  },
+	  "ApproveERMMinutes": {
+		"type": "User",
+		"permission": "ApproveERMMinutesPermission",
+		"eventHandlers": [
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.ApproveERMMinutes"
+		  },
+		  {
+			"handler": "MoveToNextStep"
+		  }
+		]
+	  },
+	  "RejectAndAdjustERMMinutes": {
+		"type": "User",
+		"permission": "RejectAndAdjustERMMinutesPermission",
+		"eventHandlers": [
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.RejectAndAdjustERMMinutes"
+		  },
+		  {
+			"handler": "ReturnToPreviousStep"
+		  }
+		]
+	  }
+	},
+	"processTemplates": [
+	  {
+		"code": "COMPLETE_PROCESS",
+		"name": "Complete process",
+		"phases": [
+		  {
+			"code": "PP",
+			"name": "Project Profile",
+			"order": 10,
+			"steps": [
+			  {
+				"code": "PP.UPLOAD.PACKAGE",
+				"name": "Upload Package and Submit to Division Chief",
+				"type": "Manual",
+				"order": 10,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "PP.SUBMIT.VPCMANAGER",
+				"name": "Submit to VPC Manager",
+				"type": "Manual",
+				"order": 20,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "PP.DISTRIBUTE.ERM",
+				"name": "Distribute and Start Meeting",
+				"type": "Manual",
+				"order": 30,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "PP.ERM.CIRCULATION.PERIOD",
+				"name": "Circulation period",
+				"type": "Automatic",
+				"order": 40,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "PP.AWAITING.F2F.MEETING",
+				"name": "Awaiting Face-to-face meeting",
+				"type": "Automatic",
+				"order": 50,
+				"loadOnProcessInstantiate": false,
+				"permission": ""
+			  },
+			  {
+				"code": "PP.ERM.F2F.MEETING",
+				"name": "Face-to-face meeting",
+				"type": "Automatic",
+				"order": 60,
+				"permission": ""
+			  },
+			  {
+				"code": "PP.PREPARE.MINUTES",
+				"name": "Prepare Minutes",
+				"type": "Manual",
+				"order": 70,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "PP.COMPLETE.ANSWERS",
+				"name": "Prepare Minutes - Complete Answers",
+				"type": "Manual",
+				"order": 80,
+				"parentStepCode": "PP.PREPARE.MINUTES",
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "PP.UPLOAD.MAIN.MINUTES",
+				"name": "Prepare Minutes - Upload Main Minutes",
+				"type": "Manual",
+				"order": 90,
+				"parentStepCode": "PP.PREPARE.MINUTES",
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "PP.APPROVE.MINUTES",
+				"name": "Approve Minutes",
+				"type": "Manual",
+				"order": 100,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "PP.UPLOAD.NO.PACKAGE",
+				"name": "Upload Non-Objection Package",
+				"type": "Manual",
+				"order": 110,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "PP.DISTRIBUTE.ERM.NO",
+				"name": "Distribute Package for ERM Non-Objection",
+				"type": "Manual",
+				"order": 120,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "PP.ERM.NO.PERIOD",
+				"name": "ERM Non-Objection period",
+				"type": "Automatic",
+				"order": 130,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "PP.APPROVE.PACKAGE",
+				"name": "Approve PP Package",
+				"type": "Manual",
+				"order": 140,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "PP.UPLOAD.APPROVAL.PACKAGE.TEAM",
+				"name": "Upload PP Approval Package (Team)",
+				"type": "Manual",
+				"order": 150,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "PP.UPLOAD.APPROVAL.PACKAGE.MANAGER",
+				"name": "Upload PP Approval Package (Manager)",
+				"type": "Manual",
+				"order": 160,
+				"parentStepCode": "PP.UPLOAD.APPROVAL.PACKAGE.TEAM",
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "PP.DISCLOSE.PACKAGE",
+				"name": "Disclose PP Package",
+				"type": "Manual",
+				"order": 170,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  }
+			],
+			"meetings": [
+			  {
+				"name": "ERM",
+				"distributionListMembers": [
+				  {
+					"memberId": "Jonathan Tabuenca",
+					"accountType": "Person",
+					"organizationalUnit": "Division Chief - VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  },
+				  {
+					"memberId": "Joao Alves",
+					"accountType": "Person",
+					"organizationalUnit": "Division Chief - VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  },
+				  {
+					"memberId": "Alvaro Gonzalez",
+					"accountType": "Person",
+					"organizationalUnit": "Division Chief - VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  },
+				  {
+					"memberId": "Fernando Berenguer",
+					"accountType": "Person",
+					"organizationalUnit": "VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  },
+				  {
+					"memberId": "Juan Luis Sanchez",
+					"accountType": "Person",
+					"organizationalUnit": "VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  },
+				  {
+					"memberId": "Fabian Perez",
+					"accountType": "Person",
+					"organizationalUnit": "VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  }
+				]
+			  }
+			]
+		  },
+		  {
+			"code": "POD",
+			"name": "Proposal for Operation Development",
+			"order": 20,
+			"steps": [
+			  {
+				"code": "POD.UPLOAD.PACKAGE",
+				"name": "Upload Package and Submit to Division Chief",
+				"type": "Manual",
+				"order": 10,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.SUBMIT.VPSMANAGER",
+				"name": "Submit to VPS Manager",
+				"type": "Manual",
+				"order": 20,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.DISTRIBUTE.QRR",
+				"name": "Distribute and Start Meeting",
+				"type": "Manual",
+				"order": 30,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.QRR.CIRCULATION.PERIOD",
+				"name": "Circulation period",
+				"type": "Automatic",
+				"order": 40,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.AWAITING.F2F.MEETING",
+				"name": "Awaiting Face-to-face meeting",
+				"type": "Automatic",
+				"order": 50,
+				"loadOnProcessInstantiate": false,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.QRR.F2F.MEETING",
+				"name": "Face-to-face meeting",
+				"type": "Automatic",
+				"order": 60,
+				"loadOnProcessInstantiate": false,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.PREPARE.MINUTES",
+				"name": "Prepare Minutes",
+				"type": "Manual",
+				"order": 70,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.APPROVE.MINUTES",
+				"name": "Approve Minutes",
+				"type": "Manual",
+				"order": 80,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.UPLOAD.NO.PACKAGE",
+				"name": "Upload Non-Objection Package",
+				"type": "Manual",
+				"order": 90,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.SUBMIT.VPSMANAGER.NO",
+				"name": "Submit to VPS Manager for Non-Objection",
+				"type": "Manual",
+				"order": 100,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.DISTRIBUTE.QRR.NO",
+				"name": "Distribute Package for QRR Non-Objection",
+				"type": "Manual",
+				"order": 110,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.QRR.NO.PERIOD",
+				"name": "QRR Non-Objection period",
+				"type": "Automatic",
+				"order": 120,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.UPLOAD.DRAFT.LEGAL.RESOLUTION",
+				"name": "Upload Draft Legal Resolution",
+				"type": "Manual",
+				"order": 130,
+				"parentStepCode": "POD.QRR.NO.PERIOD",
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.UPLOAD.APPROVAL.PACKAGE",
+				"name": "Upload POD Approval Package",
+				"type": "Manual",
+				"order": 140,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.APPROVE.PACKAGE",
+				"name": "Approve POD Package",
+				"type": "Manual",
+				"order": 150,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  }
+			],
+			"meetings": [
+			  {
+				"name": "QRR",
+				"distributionListMembers": [
+				  {
+					"memberId": "Jonathan Tabuenca",
+					"accountType": "Person",
+					"organizationalUnit": "Division Chief - VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  },
+				  {
+					"memberId": "Joao Alves",
+					"accountType": "Person",
+					"organizationalUnit": "Division Chief - VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  },
+				  {
+					"memberId": "Alvaro Gonzalez",
+					"accountType": "Person",
+					"organizationalUnit": "Division Chief - VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  },
+				  {
+					"memberId": "Fernando Berenguer",
+					"accountType": "Person",
+					"organizationalUnit": "VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  },
+				  {
+					"memberId": "Juan Luis Sanchez",
+					"accountType": "Person",
+					"organizationalUnit": "VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  },
+				  {
+					"memberId": "Fabian Perez",
+					"accountType": "Person",
+					"organizationalUnit": "VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  }
+				]
+			  }
+			]
+		  }
+		]
+	  },
+	  {
+		"code": "PARTIAL_PROCESS",
+		"name": "Partial process",
+		"phases": [
+		  {
+			"code": "POD",
+			"name": "Proposal for Operation Development",
+			"order": 10,
+			"steps": [
+			  {
+				"code": "POD.UPLOAD.PACKAGE",
+				"name": "Upload Package and Submit to Division Chief",
+				"type": "Manual",
+				"order": 10,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.SUBMIT.VPSMANAGER",
+				"name": "Submit to VPS Manager",
+				"type": "Manual",
+				"order": 20,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.DISTRIBUTE.QRR",
+				"name": "Distribute and Start Meeting",
+				"type": "Manual",
+				"order": 30,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.QRR.CIRCULATION.PERIOD",
+				"name": "Circulation period",
+				"type": "Automatic",
+				"order": 40,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.AWAITING.F2F.MEETING",
+				"name": "Awaiting Face-to-face meeting",
+				"type": "Automatic",
+				"order": 50,
+				"loadOnProcessInstantiate": false,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.QRR.F2F.MEETING",
+				"name": "Face-to-face meeting",
+				"type": "Automatic",
+				"order": 60,
+				"loadOnProcessInstantiate": false,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.PREPARE.MINUTES",
+				"name": "Prepare Minutes",
+				"type": "Manual",
+				"order": 70,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.APPROVE.MINUTES",
+				"name": "Approve Minutes",
+				"type": "Manual",
+				"order": 80,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.UPLOAD.NO.PACKAGE",
+				"name": "Upload Non-Objection Package",
+				"type": "Manual",
+				"order": 90,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.SUBMIT.VPSMANAGER.NO",
+				"name": "Submit to VPS Manager for Non-Objection",
+				"type": "Manual",
+				"order": 100,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.DISTRIBUTE.QRR.NO",
+				"name": "Distribute Package for QRR Non-Objection",
+				"type": "Manual",
+				"order": 110,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.QRR.NO.PERIOD",
+				"name": "QRR Non-Objection period",
+				"type": "Automatic",
+				"order": 120,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.UPLOAD.DRAFT.LEGAL.RESOLUTION",
+				"name": "Upload Draft Legal Resolution",
+				"type": "Manual",
+				"order": 130,
+				"parentStepCode": "POD.QRR.NO.PERIOD",
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.UPLOAD.APPROVAL.PACKAGE",
+				"name": "Upload POD Approval Package",
+				"type": "Manual",
+				"order": 140,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  },
+			  {
+				"code": "POD.APPROVE.PACKAGE",
+				"name": "Approve POD Package",
+				"type": "Manual",
+				"order": 150,
+				"loadOnProcessInstantiate": true,
+				"permission": ""
+			  }
+			],
+			"meetings": [
+			  {
+				"name": "QRR",
+				"distributionListMembers": [
+				  {
+					"memberId": "Jonathan Tabuenca",
+					"accountType": "Person",
+					"organizationalUnit": "Division Chief - VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  },
+				  {
+					"memberId": "Joao Alves",
+					"accountType": "Person",
+					"organizationalUnit": "Division Chief - VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  },
+				  {
+					"memberId": "Alvaro Gonzalez",
+					"accountType": "Person",
+					"organizationalUnit": "Division Chief - VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  },
+				  {
+					"memberId": "Fernando Berenguer",
+					"accountType": "Person",
+					"organizationalUnit": "VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  },
+				  {
+					"memberId": "Juan Luis Sanchez",
+					"accountType": "Person",
+					"organizationalUnit": "VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  },
+				  {
+					"memberId": "Fabian Perez",
+					"accountType": "Person",
+					"organizationalUnit": "VPC/VPC",
+					"addedBy": "CONVERGENCE \\ PR-200",
+					"type": "Standard"
+				  }
+				]
+			  }
+			]
+		  }
+		]
+	  }
+	]
+  }
+  
