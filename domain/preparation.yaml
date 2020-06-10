@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: "1.0.12"
+  version: "1.0.13"
   title: Preparation Process API
   description: Provide necessary resources for handling the operation preparation domain
 paths:
@@ -641,15 +641,6 @@ components:
             - Minutes
             - DraftLegalResolution
             - LegalResolution
-        createdBy:
-          type: string
-          example: lperezga
-          description: user who created the document.
-        created:
-          type: string
-          format: date
-          example: 01/01/2020
-          description: date when the document was created.
         keyDocument:
           type: boolean
           example: true
@@ -662,13 +653,31 @@ components:
           enum:
             - ERM
             - QRR
-            - Non-Objection
+            - NonObjection
             - Approval
             - Disclosure
-            - 2nd Non-Objection
-            - Updated Non-Objection
-            - Updated Approval
-            - Updated Disclosure
+            - SecondNonObjection
+            - UpdatedNonObjection
+            - UpdatedApproval
+            - UpdatedDisclosure
+        createdBy:
+          type: string
+          example: lperezga
+          description: user who created the document.
+        created:
+          type: string
+          format: date
+          example: 01/01/2020
+          description: date when the document was created.
+        modifiedBy:
+          type: string
+          example: lperezga
+          description: user who modified the document.
+        modified:
+          type: string
+          format: date
+          example: 01/01/2020
+          description: date when the document was modifed.
     MeetingSchema:
       type: object
       properties:
