@@ -812,6 +812,10 @@ components:
           type: string
           example: A reason the user specified for changing the face to face end date
           description: Given reason when the face-to-face meeting has been extended or reduced
+        calendarId:
+          type: string
+          description: Id of the Outlook calendar retrieved from the graph API which is used to schedule a meeting in the calendar
+          example: AAMkAGFlNTQ1MDY1LTg4YzAtNGRjMi1hYjUyLTM5YmE3OGE3YWQ5OQBGAAAAAAC0jMBU8aXwRLEJWTXGRsHRBwBelbr790X8RYerUbs_CseeAAAAAAEGAABelbr790X8RYerUbs_CseeAAKd99vpAAA=
       description: >-
         Only when required, it is the gathering of the meeting members in a
         specific date in a physical room to review the documents package, and
