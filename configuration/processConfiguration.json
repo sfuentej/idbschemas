@@ -49,7 +49,7 @@
 	"stepCommands": {
 	  "StartProcess": {
 		"type": "User",
-		"permission": "StartProcessPermission",
+		"permission": "op.pp.StartProcess",
 		"eventHandlers": [
 		  {
 			"handler": "UpdateMilestone",
@@ -64,7 +64,7 @@
 	  },
 	  "SubmitToDivisionChief": {
 		"type": "User",
-		"permission": "SubmitPPPackagePermission",
+		"permission": "op.pp.SubmitPackage",
 		"eventHandlers": [
 		  {
 			"handler": "MoveToNextStep"
@@ -89,7 +89,7 @@
 	  },
 	  "SubmitToVPCManager": {
 		"type": "User",
-		"permission": "SubmitPPToManagerPermission",
+		"permission": "op.pp.SubmitToManager",
 		"eventHandlers": [
 		  {
 			"handler": "MoveToNextStep"
@@ -124,7 +124,7 @@
 	  },
 	  "ReturnToTeamDivisionChief": {
 		"type": "User",
-		"permission": "ReturnPPToTeamFirstValidationPermission",
+		"permission": "op.pp.ReturnToTeamFirstValidation",
 		"eventHandlers": [
 		  {
 			"handler": "ReturnToPreviousStep"
@@ -152,7 +152,7 @@
 	  },
 	  "ReturnToTeamVPCManager": {
 		"type": "User",
-		"permission": "ReturnPPToTeamSecondValidationPermission",
+		"permission": "op.pp.ReturnToTeamFinalValidation",
 		"eventHandlers": [
 		  {
 			"handler": "ReturnToSpecificStep",
@@ -196,7 +196,7 @@
 	  },
 	  "DistributeAndStartERMMeeting": {
 		"type": "User",
-		"permission": "DistributeStartERMMeetingPermission",
+		"permission": "op.pp.DistributeStartMeeting",
 		"eventHandlers": [
 		  {
 			"handler": "MoveToNextStep"
@@ -255,7 +255,7 @@
 	  },
 	  "EditMeetingDetails": {
 		"type": "User",
-		"permission": "EditERMMeetingDetailsPermission",
+		"permission": "op.pp.EditMeetingDetails",
 		"eventHandlers": [ {} ]
 	  },
 	  "EndCirculationPeriod": {
