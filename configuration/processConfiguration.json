@@ -64,7 +64,7 @@
 	  },
 	  "SubmitToDivisionChief": {
 		"type": "User",
-		"permission": "SubmitToDivisionChiefPermission",
+		"permission": "SubmitPPPackagePermission",
 		"eventHandlers": [
 		  {
 			"handler": "MoveToNextStep"
@@ -89,7 +89,7 @@
 	  },
 	  "SubmitToVPCManager": {
 		"type": "User",
-		"permission": "SubmitToVPCManagerPermission",
+		"permission": "SubmitPPToManagerPermission",
 		"eventHandlers": [
 		  {
 			"handler": "MoveToNextStep"
@@ -124,7 +124,7 @@
 	  },
 	  "ReturnToTeamDivisionChief": {
 		"type": "User",
-		"permission": "ReturToTeamDivisionChiefPermission",
+		"permission": "ReturnPPToTeamFirstValidationPermission",
 		"eventHandlers": [
 		  {
 			"handler": "ReturnToPreviousStep"
@@ -152,7 +152,7 @@
 	  },
 	  "ReturnToTeamVPCManager": {
 		"type": "User",
-		"permission": "ReturToTeamVPCManagerPermission",
+		"permission": "ReturnPPToTeamSecondValidationPermission",
 		"eventHandlers": [
 		  {
 			"handler": "ReturnToSpecificStep",
@@ -255,7 +255,7 @@
 	  },
 	  "EditMeetingDetails": {
 		"type": "User",
-		"permission": "EditMeetingDetailsPermission",
+		"permission": "EditERMMeetingDetailsPermission",
 		"eventHandlers": [ {} ]
 	  },
 	  "EndCirculationPeriod": {
