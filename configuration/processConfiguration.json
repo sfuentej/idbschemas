@@ -35,6 +35,30 @@
 	  {
 		"key": "minimum-circulation-period-days-qrr",
 		"value": 5
+	  },
+	  {
+		"key": "outlook-invitation-creation-template-subject",
+		value": ""
+	  },
+	  {
+		"key": "outlook-invitation-creation-template-body",
+		"value": ""
+	  },
+	  {
+		"key": "outlook-invitation-update-template-subject",
+		"value": ""
+	  },
+	  {
+		"key": "outlook-invitation-update-template-body",
+		"value": ""
+	  },
+	  {
+		"key": "outlook-invitation-cancellation-template-subject",
+		"value": ""
+	  },
+	  {
+		"key": "outlook-invitation-cancellation-template-body",
+		"value": ""
 	  }
 	],
 	"healthCheckSettings": [
