@@ -35,6 +35,30 @@
 	  {
 		"key": "minimum-circulation-period-days-qrr",
 		"value": 5
+	  },
+	  {
+		"key": "outlook-invitation-creation-template-subject",
+		"value": ""
+	  },
+	  {
+		"key": "outlook-invitation-creation-template-body",
+		"value": ""
+	  },
+	  {
+		"key": "outlook-invitation-update-template-subject",
+		"value": ""
+	  },
+	  {
+		"key": "outlook-invitation-update-template-body",
+		"value": ""
+	  },
+	  {
+		"key": "outlook-invitation-cancellation-template-subject",
+		"value": ""
+	  },
+	  {
+		"key": "outlook-invitation-cancellation-template-body",
+		"value": ""
 	  }
 	],
 	"healthCheckSettings": [
@@ -49,7 +73,7 @@
 	"stepCommands": {
 	  "StartProcess": {
 		"type": "User",
-		"permission": "StartProcessPermission",
+		"permission": "op.pp.StartProcess",
 		"eventHandlers": [
 		  {
 			"handler": "UpdateMilestone",
@@ -64,7 +88,7 @@
 	  },
 	  "SubmitToDivisionChief": {
 		"type": "User",
-		"permission": "SubmitToDivisionChiefPermission",
+		"permission": "op.pp.SubmitPackage",
 		"eventHandlers": [
 		  {
 			"handler": "MoveToNextStep"
@@ -89,7 +113,7 @@
 	  },
 	  "SubmitToVPCManager": {
 		"type": "User",
-		"permission": "SubmitToVPCManagerPermission",
+		"permission": "op.pp.SubmitToManager",
 		"eventHandlers": [
 		  {
 			"handler": "MoveToNextStep"
@@ -124,7 +148,7 @@
 	  },
 	  "ReturnToTeamDivisionChief": {
 		"type": "User",
-		"permission": "ReturToTeamDivisionChiefPermission",
+		"permission": "op.pp.ReturnToTeamFirstValidation",
 		"eventHandlers": [
 		  {
 			"handler": "ReturnToPreviousStep"
@@ -152,7 +176,7 @@
 	  },
 	  "ReturnToTeamVPCManager": {
 		"type": "User",
-		"permission": "ReturToTeamVPCManagerPermission",
+		"permission": "op.pp.ReturnToTeamFinalValidation",
 		"eventHandlers": [
 		  {
 			"handler": "ReturnToSpecificStep",
@@ -196,7 +220,7 @@
 	  },
 	  "DistributeAndStartERMMeeting": {
 		"type": "User",
-		"permission": "DistributeStartERMMeetingPermission",
+		"permission": "op.pp.DistributeStartMeeting",
 		"eventHandlers": [
 		  {
 			"handler": "MoveToNextStep"
@@ -255,7 +279,7 @@
 	  },
 	  "EditMeetingDetails": {
 		"type": "User",
-		"permission": "EditMeetingDetailsPermission",
+		"permission": "op.pp.EditMeetingDetails",
 		"eventHandlers": [ {} ]
 	  },
 	  "EndCirculationPeriod": {
