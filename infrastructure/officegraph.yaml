@@ -11,7 +11,7 @@ paths:
       summary: Create calendar invitation
       description: Create calendar invitation
       parameters: 
-      - name: token
+      - name: authorization
         in: header
         required: true
         description: session token provided by MS Graph
@@ -25,7 +25,7 @@ paths:
         schema:
           type: string
           description: Id of office online calendar element
-          example: AQMkADg4ATdmYzVhLTQxYzctNDUzNS04NjBlLTdjYjIyATFhZDI2ZQBGAAADNOG_5wQdxUao2Tg14XQBegcAsAY1ki5x0E6JhU_6vrKeAgAAAgEGAAAAsAY1ki5x0E6JhU_6vrKeAgAAAhW-AAAA
+          example: AQMkADg4ATdmYzVhLTQxYzctNDUzNS04NjBlLTdjYjIyATFhZDI2ZQBGAAADNOG_5wQdxUao2Tg14XQBegcAsAY1ki5x0E6JhU_6vrKeAgAAAgEGAAAAsAY1ki5x0E6JhU_6vrKeAgAAAhW-AAAAa
       requestBody:
         $ref: '#/components/requestBodies/Event'
       responses:
@@ -56,7 +56,7 @@ paths:
       summary: Update calendar invitation
       description: Update calendar invitation
       parameters: 
-        - name: token
+        - name: authorization
           in: header
           required: true
           description: session token provided by MS Graph
@@ -99,7 +99,7 @@ paths:
       summary: Deletes calendar invitation
       description: Deletes calendar invitation
       parameters: 
-      - name: token
+      - name: authorization
         in: header
         required: true
         description: session token provided by MS Graph
