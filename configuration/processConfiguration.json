@@ -233,6 +233,9 @@
 		  {
 			"handler": "AddPhaseHistory",
 			"descriptionTemplate": "op.phasehistory.DistributeStartERMMeeting"
+		  },
+		  {
+			"handler": "SendInvitation"
 		  }
 		]
 	  },
@@ -280,11 +283,15 @@
 	  "EditMeetingDetails": {
 		"type": "User",
 		"permission": "op.pp.EditMeetingDetails",
-		"eventHandlers": [ {} ]
+		"eventHandlers": [
+			{
+				"handler": "SendInvitation"
+			}
+		]
 	  },
 	  "EndCirculationPeriod": {
 		"type": "System",
-		"permission": "EndCirculationPeriodPermission",
+		"permission": "op.pp.EndCirculationPeriod",
 		"eventHandlers": [
 		  {
 			"handler": "MoveToNextStep"
@@ -297,7 +304,7 @@
 	  },
 	  "StartF2FMeeting": {
 		"type": "System",
-		"permission": "StartF2FMeetingPermission",
+		"permission": "op.pp.StartF2FMeeting",
 		"eventHandlers": [
 		  {
 			"handler": "MoveToNextStep"
@@ -310,7 +317,7 @@
 	  },
 	  "EndF2FMeeting": {
 		"type": "System",
-		"permission": "StartF2FMeetingPermission",
+		"permission": "op.pp.EndF2FMeeting",
 		"eventHandlers": [
 		  {
 			"handler": "MoveToNextStep"
@@ -323,7 +330,7 @@
 	  },
 	  "SubmitAnswersToVPCManager": {
 		"type": "User",
-		"permission": "SubmitAnswerstoVPCManagerPermission",
+		"permission": "op.pp.SubmitAnswersManager",
 		"eventHandlers": [
 		  {
 			"handler": "UpdateMilestone",
@@ -338,7 +345,7 @@
 	  },
 	  "RecallSubmittedAnswers": {
 		"type": "User",
-		"permission": "RecallSubmittedAnswersPermission",
+		"permission": "op.pp.RecallSubmittedAnswers",
 		"eventHandlers": [
 		  {
 			"handler": "UpdateMilestone",
@@ -353,7 +360,7 @@
 	  },
 	  "UploadERMMinutesMainDocument": {
 		"type": "User",
-		"permission": "UploadERMMinutesMainDocumentPermission",
+		"permission": "op.pp.UploadMinutesMainDocument",
 		"eventHandlers": [
 		  {
 			"handler": "AddPhaseHistory",
@@ -363,7 +370,7 @@
 	  },
 	  "ConfirmMinutes": {
 		"type": "User",
-		"permission": "ConfirmMinutesPermission",
+		"permission": "op.pp.ConfirmMinutes",
 		"eventHandlers": [
 		  {
 			"handler": "AddPhaseHistory",
@@ -373,7 +380,7 @@
 	  },
 	  "GenerateERMMinutesDocument": {
 		"type": "System",
-		"permission": "GenerateERMMinutesDocumentPermission",
+		"permission": "op.pp.GenerateMinutesDocument",
 		"eventHandlers": [
 		  {
 			"handler": "SendNotification",
@@ -393,7 +400,7 @@
 	  },
 	  "ApproveERMMinutes": {
 		"type": "User",
-		"permission": "ApproveERMMinutesPermission",
+		"permission": "op.pp.ApproveMinutes",
 		"eventHandlers": [
 		  {
 			"handler": "AddPhaseHistory",
@@ -406,7 +413,7 @@
 	  },
 	  "RejectAndAdjustERMMinutes": {
 		"type": "User",
-		"permission": "RejectAndAdjustERMMinutesPermission",
+		"permission": "op.pp.RejectAdjustMinutes",
 		"eventHandlers": [
 		  {
 			"handler": "AddPhaseHistory",
@@ -416,7 +423,121 @@
 			"handler": "ReturnToPreviousStep"
 		  }
 		]
-	  }
+	  },
+	  "SubmitNonObjectionPackage": {
+		"type": "User",
+		"permission": "op.pp.SubmitNonObjectionPackage",
+		"eventHandlers": [
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.SubmitNonObjectionPackage"
+		  },
+		  {
+			"handler": "MoveToNextStep"
+		  }
+		]
+	  },
+	  "DistributeForNonObjection": {
+		"type": "User",
+		"permission": "op.pp.DistributeNonObjection",
+		"eventHandlers": [
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.DistributeForNonObjection"
+		  },
+		  {
+			"handler": "MoveToNextStep"
+		  }
+		]
+	  },
+	  "SubmitNonObjectionAnswersToVPCManager": {
+		"type": "User",
+		"permission": "op.pp.SubmitNonObjectionAnswersManager",
+		"eventHandlers": [
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.SubmitNonObjectionAnswersManager"
+		  },
+		  {
+			"handler": "MoveToNextStep"
+		  }
+		]
+	  },
+	  "ReplaceMainMinutesDocument": {
+		"type": "User",
+		"permission": "op.pp.ReplaceMainMinutesDocument",
+		"eventHandlers": [
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.ReplaceMainMinutesDocument"
+		  }
+		]
+	  },
+	  "ConfirmMinutesUpdate": {
+		"type": "User",
+		"permission": "op.pp.ConfirmMinutesUpdate",
+		"eventHandlers": [
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.ConfirmMinutesUpdate"
+		  },
+		  {
+			"handler": "MoveToNextStep"
+		  }
+		]
+	  },
+	  "FinalizeMinutes": {
+		"type": "User",
+		"permission": "op.pp.FinalizeMinutes",
+		"eventHandlers": [
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.FinalizeMinutes"
+		  },
+		  {
+			"handler": "MoveToNextStep"
+		  }
+		]
+	  },
+	  "SubmitApprovalPackage": {
+		"type": "User",
+		"permission": "op.pp.SubmitApprovalPackage",
+		"eventHandlers": [
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.SubmitApprovalPackage"
+		  },
+		  {
+			"handler": "MoveToNextStep"
+		  }
+		]
+	  },
+	  "ApprovePackage": {
+		"type": "User",
+		"permission": "op.pp.ApprovePackage",
+		"eventHandlers": [
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.ApprovePackage"
+		  },
+		  {
+			"handler": "MoveToNextStep"
+		  }
+		]
+	  },
+	  "RequestPackageUpdate": {
+		"type": "User",
+		"permission": "op.pp.RequestPackageUpdate",
+		"eventHandlers": [
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.RequestPackageUpdate"
+		  },
+		  {
+			"handler": "ReturnToPreviousStep"
+		  }
+		]
+	  },
 	},
 	"processTemplates": [
 	  {
@@ -981,4 +1102,3 @@
 	  }
 	]
   }
-  
