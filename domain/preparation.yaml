@@ -788,6 +788,12 @@ components:
           type: string
           example: A reason the user specified for changing the circulation period end date
           description: Given reason when the circulation period has been extended or reduced
+        holidays:
+          type: array
+          items: 
+            type: string
+            format: date-time
+          example: List of holidays between circulation period start date and end date date
       description: >-
         Defined by a window of time for participants to comment after the
         package is distributed
