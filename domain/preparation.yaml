@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: "1.0.13"
+  version: "1.0.14"
   title: Preparation Process API
   description: Provide necessary resources for handling the operation preparation domain
 paths:
@@ -283,6 +283,56 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CommentSchema'
+        '400':
+          description: Bad request
+        '401':
+          description: Unathorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+  '/operations/{operation-number}/meetings/{meeting-id}/download/{file-format}':
+    get:
+      tags:
+        - Comments
+      summary: Download comments
+      description: Download file with comments to the provided meeting
+      parameters:
+        - name: meeting-id
+          in: path
+          description: meeting Id to get comments
+          required: true
+          schema:
+            type: string
+        - name: operation-number
+          in: path
+          description: Operation number over which the operation will be performed
+          required: true
+          schema:
+            type: string
+        - name: file-format
+          in: path
+          description: Operation number over which the operation will be performed
+          required: true
+          schema:
+            type: string
+            enum:
+            - PDF
+            - Excel
+            - Word
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
         '400':
           description: Bad request
         '401':
