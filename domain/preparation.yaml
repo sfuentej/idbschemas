@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: "1.0.14"
+  version: "1.0.15"
   title: Preparation Process API
   description: Provide necessary resources for handling the operation preparation domain
 paths:
@@ -297,7 +297,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorSchema'
-  '/operations/{operation-number}/meetings/{meeting-id}/download/{file-format}':
+  '/operations/{operation-number}/meetings/{meeting-id}/download/{file-format}/{order-by}':
     get:
       tags:
         - Comments
@@ -326,6 +326,19 @@ paths:
             - PDF
             - Excel
             - Word
+        - name: order-by
+          in: path
+          description: Order by over which the comment must be ordered
+          required: true
+          schema:
+            type: string
+            enum:
+            - DateAdded
+            - CommentType
+            - UserGroup
+            - Title
+            - Text
+            - SameAsMinutes
       responses:
         '200':
           description: OK
@@ -535,6 +548,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TimelineSchema'
+        '400':
+          description: Bad request
+        '401':
+          description: Unathorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+  '/job':
+    post:
+      tags:
+        - Job
+      summary: Get process instance timeline
+      description: Get all the phases and processes of a given operation 
+      responses:
+        '200':
+          description: OK
         '400':
           description: Bad request
         '401':
@@ -910,6 +946,14 @@ components:
           type: string
           example: A reason the user specified for changing the face to face end date
           description: Given reason when the face-to-face meeting has been extended or reduced
+        TeamsMeetingRequired:
+          type: boolean
+          example: true
+          description: Marks if the Teams Meeting is required
+        TeamsMeetingUrl:
+          type: string
+          example: https://meeting.teams.com/7gf47h2387
+          description: The url for the Teams Meeting
         calendarId:
           type: string
           description: Id of the Outlook calendar retrieved from the graph API which is used to schedule a meeting in the calendar
