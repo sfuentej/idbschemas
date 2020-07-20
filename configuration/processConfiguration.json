@@ -456,6 +456,19 @@
 		  }
 		]
 	  },
+	  "EndNonObjectionPeriod": {
+		"type": "System",
+		"permission": "op.pp.EndNonObjectionPeriod",
+		"eventHandlers": [
+		  {
+			"handler": "MoveToNextStep"
+		  },
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.EndNonObjectionPeriod"
+		  }
+		]
+	  },
 	  "ReplaceMainMinutesDocument": {
 		"type": "User",
 		"permission": "op.pp.ReplaceMainMinutesDocument",
@@ -476,6 +489,20 @@
 		  },
 		  {
 			"handler": "MoveToNextStep"
+		  }
+		]
+	  },
+	  "RejectAndAdjustERMMinutesUpdate": {
+		"type": "User",
+		"permission": "op.pp.RejectAdjustMinutesUpdate",
+		"eventHandlers": [
+		  {
+			"handler": "AddPhaseHistory",
+			"descriptionTemplate": "op.phasehistory.RejectAndAdjustERMMinutesUpdate"
+		  },
+		  {
+			"handler": "ReturnToSpecificStep",
+			"stepCode": "PP.UPDATE.NO.ANSWERS"
 		  }
 		]
 	  },
@@ -530,7 +557,7 @@
 			"handler": "ReturnToPreviousStep"
 		  }
 		]
-	  },
+	  }
 	},
 	"processTemplates": [
 	  {
