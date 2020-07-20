@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: "1.0.13"
+  version: "1.0.14"
   title: Preparation Process API
   description: Provide necessary resources for handling the operation preparation domain
 paths:
@@ -297,6 +297,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorSchema'
+  '/operations/{operation-number}/meetings/{meeting-id}/download/{file-format}':
+    get:
+      tags:
+        - Comments
+      summary: Download comments
+      description: Download file with comments to the provided meeting
+      parameters:
+        - name: meeting-id
+          in: path
+          description: meeting Id to get comments
+          required: true
+          schema:
+            type: string
+        - name: operation-number
+          in: path
+          description: Operation number over which the operation will be performed
+          required: true
+          schema:
+            type: string
+        - name: file-format
+          in: path
+          description: Operation number over which the operation will be performed
+          required: true
+          schema:
+            type: string
+            enum:
+            - PDF
+            - Excel
+            - Word
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Bad request
+        '401':
+          description: Unathorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
   '/operations/{operation-number}/meetings/{meeting-id}/circulation-period':
     get:
       tags:
@@ -325,6 +375,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CirculationPeriodSchema'
+        '400':
+          description: Bad request
+        '401':
+          description: Unathorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+  '/operations/{operation-number}/meetings/key/{meeting-key}':
+    get:
+      tags:
+        - Meeting
+      summary: Get status and participant from meeting key
+      description: >-
+        Get the initial and end date of the circulation period of a meeting,
+        based on the configuration defined for the standard duration.
+      parameters:
+        - name: meeting-key
+          in: path
+          description: meeting key to get the validity of the participant in the meeting
+          required: true
+          schema:
+            type: string
+        - name: operation-number
+          in: path
+          description: Operation number over which the operation will be performed
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyStatusSchema'
         '400':
           description: Bad request
         '401':
@@ -1106,3 +1198,18 @@ components:
           description: >-
             List of phases for the process. This list will have no
             records in case the process is still not created.
+    KeyStatusSchema:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the meeting key
+          example: Valid
+          enum:
+            - Valid
+            - Invalid
+        memberId:
+          type: string
+          example: vpc-vpc
+          description: >-
+            Id of the participant in the meeting, in case a valid meeting key was passed.

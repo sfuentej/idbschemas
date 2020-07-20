@@ -37,7 +37,7 @@ components:
           format: guid
           description: Unique identifier for the notification processing
           example: 413864a7-f8a1-4914-a952-0d2e9ae5b4b4
-        template:
+        template-code:
           type: string
           example: pp-usernotification-stepcompleted
           description: Code of the template to be used when sending the notification
