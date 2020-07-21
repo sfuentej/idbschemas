@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0-oas3
+  title: Applications critical reporting
+  description: Provides applications an interface to report critical errors which require support and human intervention
+paths:
+  /support-system/ticket:
+    post:
+      description: Reports and error in the bank's support system for the post-production team to check and fix. Messages to this interface must be sent only in critical steps that can generate errors in business processes not solvable by any other interface
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        $ref: '#/components/requestBodies/SendTicketRequest'
+components:
+  requestBodies:
+    SendTicketRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SendTicketRequest'
+      description: The user to create.
+      required: true
+  schemas:
+    SendTicketRequest:
+      type: object
+      required:
+        - id
+        - template
+        - to
+        - subject
+        - channel
+      properties:
+        id:
+          type: string
+          format: guid
+          description: Unique identifier for the request
+          example: 413864a7-f8a1-4914-a952-0d2e9ae5b4b4
+        component:
+          type: string
+          example: PMR Report
+          description: Code of the component in the support system
+        short-description:
+          type: string
+          description: Description used to identify the ticken in the support system
+          example: Document disclose process fail 
+        business-component:
+          type: string
+          example: Public report generation
+          description: Business component that generates the error
+        error-description:
+          type: string
+          description: Technical description of the error
+          example: The report generation has failed. The DocumentManagement service is not available
